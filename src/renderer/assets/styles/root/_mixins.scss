@@ -1,0 +1,60 @@
+@mixin text-style(
+  $font-size: $base-font-size,
+  $font-weight: $base-font-weight,
+  $line-height: $base-line-height,
+  $color: var(--theme-text-color),
+  $font-family: var(--roboto-font),
+  $important: false
+) {
+  font-size: $font-size;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  color: $color;
+  font-family: $font-family;
+
+  @if $important {
+    font-size: $font-size !important;
+    font-weight: $font-weight !important;
+    line-height: $line-height !important;
+    color: $color !important;
+    font-family: $font-family !important;
+  }
+}
+
+@mixin flexbox-style(
+  $gap: 0,
+  $justify-content: center,
+  $align-items: center,
+  $flex-direction: row
+) {
+  display: flex;
+  gap: $gap;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-direction: $flex-direction;
+}
+
+@mixin text-truncate(
+  $width: 100%,
+  $max-width: 100%,
+  $text-overflow: ellipsis,
+  $overflow: hidden,
+  $white-space: nowrap
+) {
+  width: $width;
+  max-width: $max-width;
+  text-overflow: $text-overflow;
+  overflow: $overflow;
+  white-space: $white-space;
+}
+
+@mixin respond($min-breakpoint, $max-breakpoint) {
+  $min-size: map-get($breakpoints, $min-breakpoint);
+  $max-size: map-get($breakpoints, $max-breakpoint);
+
+  @if $min-size and $max-size {
+    @media (min-width: $min-size) and (max-width: $max-size) {
+      @content;
+    }
+  }
+}

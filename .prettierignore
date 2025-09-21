@@ -1,0 +1,8 @@
+.git/
+.husky/
+.vite/
+.idea/
+
+dist/
+node_modules/
+pnpm-lock.yaml

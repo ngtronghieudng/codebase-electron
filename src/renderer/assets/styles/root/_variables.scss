@@ -1,0 +1,21 @@
+// fonts
+$base-font-size: 14px;
+$base-font-weight: 400;
+$base-line-height: 1.5;
+
+// layouts
+$layout-padding: 20px;
+$layout-margin: 20px;
+
+// scrollbars
+$scrollbar-width: 6px;
+
+// breakpoints
+$breakpoints: (
+  xs: 320px,
+  sm: 640px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1280px,
+  '2xl': 1536px,
+);

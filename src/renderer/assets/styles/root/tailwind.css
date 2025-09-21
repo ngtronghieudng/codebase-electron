@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+@source not inline('container');
+
+@theme {
+  --font-roboto: var(--roboto-font);
+  --color-white: var(--white-color);
+  --color-black: var(--black-color);
+  --color-primary: var(--primary-color);
+}
+
+@utility fixed-center {
+  @apply fixed top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%];
+}
+
+@utility flex-between {
+  @apply flex items-center justify-between;
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}

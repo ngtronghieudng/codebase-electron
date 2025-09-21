@@ -1,0 +1,12 @@
+.ant-layout {
+  background: unset;
+
+  &-header {
+    padding: var(--ant-header-padding);
+    height: var(--ant-header-height);
+  }
+
+  &-content {
+    color: unset;
+  }
+}

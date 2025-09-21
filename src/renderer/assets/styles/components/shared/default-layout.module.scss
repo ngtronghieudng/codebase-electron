@@ -1,0 +1,28 @@
+.container {
+  &Sidebar {
+    background-color: var(--theme-bg-content-color) !important;
+    position: fixed !important;
+    box-shadow: 0 2px 6px var(--theme-box-shadow-color);
+    height: 100vh;
+    z-index: 100;
+  }
+
+  &Main {
+    margin-left: var(--ant-aside-width);
+
+    &Header {
+      position: fixed;
+      background-color: var(--theme-bg-content-color);
+      box-shadow: 0 2px 6px var(--theme-box-shadow-color);
+      width: calc(100vw - var(--ant-aside-width));
+      z-index: 99;
+    }
+
+    &Content {
+      padding: calc(var(--ant-main-padding) + $layout-padding);
+      min-height: calc(100vh - var(--ant-header-height));
+      background-color: var(--theme-bg-content-color);
+      margin-top: var(--ant-header-height);
+    }
+  }
+}
