@@ -1,4 +1,4 @@
-import i18next, { TFunction } from 'i18next';
+import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import type { TObjectString } from '@/shared/definitions/types/shared.type';
@@ -31,7 +31,6 @@ Object.keys(locales).forEach((path) => {
   const data = locales[path].default;
 
   if (!Object.values(ELanguageCode).includes(locale)) return;
-
   if (!resources[locale]) resources[locale] = { translation: {} };
 
   Object.assign(resources[locale].translation, data);
@@ -49,5 +48,4 @@ i18next
     resources,
   });
 
-export const t: TFunction = i18next.t.bind(i18next);
 export default i18next;

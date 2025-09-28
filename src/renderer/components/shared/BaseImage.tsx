@@ -2,7 +2,7 @@ import type { ImageProps } from 'antd/es/image';
 
 import { Image } from 'antd';
 
-import { useDynamicImport } from '@/renderer/hooks/shared/use-dynamic-import';
+import { useImageImport } from '@/renderer/hooks/shared/use-image-import';
 
 interface IProps extends ImageProps {}
 
@@ -13,7 +13,10 @@ export const BaseImage: React.FC<IProps> = ({
   ...otherProps
 }) => {
   const isLazy = loading === 'lazy';
-  const imageSrc = useDynamicImport(src, isLazy) || src;
+  const isExternalUrl = src.startsWith('http');
+
+  const assetImageSrc = useImageImport(src, isLazy) || src;
+  const imageSrc = isExternalUrl ? src : assetImageSrc;
 
   return (
     <Image loading={loading} preview={preview} src={imageSrc} {...otherProps} />

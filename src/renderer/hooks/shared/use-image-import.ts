@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const assetsModuleEager = import.meta.glob(
-  '@/assets/**/*.{png,jpg,jpeg,svg,webp,webm,mp4,mov}',
+  '@/assets/**/*.{png,jpg,jpeg,svg,webp}',
   {
     eager: true,
     import: 'default',
@@ -9,13 +9,13 @@ const assetsModuleEager = import.meta.glob(
 ) as Record<string, string>;
 
 const assetsModuleLazy = import.meta.glob(
-  '@/assets/**/*.{png,jpg,jpeg,svg,webp,webm,mp4,mov}',
+  '@/assets/**/*.{png,jpg,jpeg,svg,webp}',
   {
     import: 'default',
   },
 ) as Record<string, () => Promise<string>>;
 
-export const useDynamicImport = (path: string, isLazy: boolean = true) => {
+export const useImageImport = (path: string, isLazy: boolean = true) => {
   const [assetSrc, setAssetSrc] = useState<string>();
 
   useEffect(() => {
