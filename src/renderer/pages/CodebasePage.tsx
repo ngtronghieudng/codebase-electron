@@ -57,6 +57,8 @@ import { EToast } from '@/shared/definitions/enums/shared.enum';
 import { showToast } from '@/shared/utils/notification.util';
 import { sleep } from '@/shared/utils/shared.util';
 
+import { useConfirmModal } from '../hooks/shared/use-confirm-modal';
+
 interface IForm {
   email: string;
   fullName: string;
@@ -89,6 +91,7 @@ export const CodebasePage: React.FC = () => {
   const showLoading = useLoadingStore((state) => state.showLoading);
   const { getThemeColor } = useThemeColor();
   const { pagination, setPagination } = usePagination();
+  const { showConfirmModal } = useConfirmModal();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
   const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
@@ -507,20 +510,35 @@ export const CodebasePage: React.FC = () => {
 
       <section>
         <h4>-- Base Modals --</h4>
-        <BaseButton onClick={() => setBaseModal(true)}>Open Modal</BaseButton>
-        <BaseModal
-          footer={[
-            <BaseButton key="ok" onClick={handleModal}>
-              OK
-            </BaseButton>,
-          ]}
-          onCancel={() => setBaseModal(false)}
-          open={baseModal}
-          title="Modal Title"
-          width={500}
-        >
-          <span>This is a modal content</span>
-        </BaseModal>
+        <div className="flex gap-2">
+          <BaseButton onClick={() => setBaseModal(true)}>Open Modal</BaseButton>
+          <BaseModal
+            footer={[
+              <BaseButton key="ok" onClick={handleModal}>
+                OK
+              </BaseButton>,
+            ]}
+            onCancel={() => setBaseModal(false)}
+            open={baseModal}
+            title="Modal Title"
+            width={500}
+          >
+            <span>This is a modal content</span>
+          </BaseModal>
+
+          <BaseButton
+            onClick={() =>
+              showConfirmModal({
+                content: 'This is a confirm modal content',
+                onCancel: () => showToast('onCancel'),
+                onConfirm: () => showToast('onConfirm'),
+                title: 'Confirm Modal',
+              })
+            }
+          >
+            Confirm Modal
+          </BaseButton>
+        </div>
       </section>
 
       <section>

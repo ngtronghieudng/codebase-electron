@@ -9,7 +9,7 @@
   },
 
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
     "module": "ESNext",
     "allowJs": true,
     "skipLibCheck": true,
