@@ -4,8 +4,6 @@ import { OTPProps, OTPRef } from 'antd/es/input/OTP';
 import { forwardRef } from 'react';
 
 interface IInputProps extends InputProps {}
-interface IOTPProps extends OTPProps {}
-interface ITextAreaProps extends TextAreaProps {}
 
 export const BaseInput = forwardRef<InputRef, IInputProps>(
   ({ type, ...otherProps }, ref) => {
@@ -17,11 +15,15 @@ export const BaseInput = forwardRef<InputRef, IInputProps>(
   },
 );
 
+interface IOTPProps extends OTPProps {}
+
 export const BaseInputOTP = forwardRef<OTPRef, IOTPProps>(
   ({ ...otherProps }, ref) => {
     return <Input.OTP ref={ref} {...otherProps} />;
   },
 );
+
+interface ITextAreaProps extends TextAreaProps {}
 
 export const BaseTextArea = forwardRef<InputRef, ITextAreaProps>(
   ({ ...otherProps }, ref) => {
