@@ -94,6 +94,7 @@ dist/
 
 # Other files
 .idea/
+.claude/
 *.tsbuildinfo
 vite.config.ts.timestamp-*
 

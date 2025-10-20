@@ -1,267 +1,222 @@
-# Codebase Documentation
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
 
-This is an Electron application built with modern web technologies, featuring a robust architecture that separates the main process from the renderer process. The application uses React for the UI, with TypeScript for type safety, and follows best practices for state management and component organization.
+This is an Electron application built with:
+- **Electron Forge** for build/packaging
+- **React 18** with TypeScript
+- **Vite** as build tool with SWC for fast compilation
+- **Ant Design (antd)** component library
+- **TanStack Query** for data fetching
+- **React Router v7** for routing
+- **Zustand** for state management
+- **i18next** for internationalization
+- **Tailwind CSS v4** for styling
 
-## Tech Stack
+**Package Manager**: MUST use `pnpm` (enforced via preinstall hook)
 
-- **Core Framework**: Electron v35.4.0
-- **UI Framework**: React v18.3.1
-- **State Management**:
-  - Zustand for global state
-  - React Query for server state
-- **Styling**:
-  - Tailwind CSS
-  - SCSS Modules
-  - Ant Design v5.23.0
-- **Type Safety**: TypeScript
-- **Package Manager**: pnpm
-- **Build Tools**: Vite
-- **Internationalization**: i18next
-
-## Project Structure
-
-### Main Process (`src/main/`)
-
-- `main.ts`: Entry point for Electron main process
-- `preload.ts`: Bridge between main and renderer processes
-
-### Renderer Process (`src/renderer/`)
-
-#### Core Components
-
-- `App.tsx`: Root component with providers setup
-- `AppRoutes.tsx`: Route configuration with authentication guards
-
-#### Feature Organization
-
-1. **Components**
-
-   - `shared/`: Reusable UI components
-
-   **Base Components** (Ant Design wrappers):
-
-   - `BaseAutocomplete.tsx`: Autocomplete input component
-   - `BaseButton.tsx`: Button component with default styling
-   - `BaseCheckbox.tsx`: Checkbox component
-   - `BaseCheckboxGroup.tsx`: Checkbox group component
-   - `BaseDatePicker.tsx`: Date picker component
-   - `BaseDropdown.tsx`: Dropdown menu component
-   - `BaseFormItem.tsx`: Form item wrapper
-   - `BaseInput.tsx`: Input field component
-   - `BaseInputNumber.tsx`: Number input component
-   - `BaseModal.tsx`: Modal dialog component
-   - `BasePagination.tsx`: Pagination component
-   - `BaseSelect.tsx`: Select dropdown component
-   - `BaseSwitch.tsx`: Toggle switch component
-   - `BaseTable.tsx`: Table component
-   - `BaseTimePicker.tsx`: Time picker component
-
-   **Layout Components**:
-
-   - `TheSidebar.tsx`: Application sidebar navigation
-   - `TheTopbar.tsx`: Top navigation bar
-   - `TheBreadcrumb.tsx`: Breadcrumb navigation
-   - `TheLoading.tsx`: Loading indicator component
-
-2. **Pages**
-
-   - `auth/`: Authentication pages (Login, Register)
-   - `CodebasePage.tsx`: Main application pages
-   - `HomePage.tsx`: Landing page
-
-3. **State Management**
-
-   - `stores/`: Zustand stores with devtools middleware
-     - `auth.store.ts`: Authentication state
-     - `loading.store.ts`: Global loading state
-
-4. **API Integration**
-
-   - `apis/`: API service modules with Axios
-   - `libs/axios/`: Axios configuration
-
-5. **Hooks**
-   - `shared/`: Custom React hooks for theme, breakpoints, error handling
-     - `use-breakpoints.ts`: Responsive breakpoint utilities
-     - `use-handle-catch-error.ts`: Error handling utilities
-     - `use-language.ts`: Language management
-     - `use-pagination.ts`: Pagination logic
-     - `use-theme-color.ts`: Theme color management
-     - `use-theme.ts`: Theme switching
-     - `use-window-scroll.ts`: Window scroll tracking
-
-### Shared Resources (`src/shared/`)
-
-#### Definitions
-
-1. **Constants** (`definitions/constants/`)
-
-   - `route-apis.const.ts`: API endpoint definitions
-   - `route-pages.const.ts`: Page route definitions
-   - `shared.const.ts`: Common constants including:
-     - `ERROR_CODES`: Application error codes
-     - `NODE_ENVS`: Environment definitions
-     - `REGEXES`: Common regex patterns (email, password, phone, etc.)
-     - `STORAGE_KEYS`: Local storage keys
-     - `COOKIE_KEYS`: Cookie storage keys
-     - `BREAKPOINTS`: Responsive breakpoint values
-
-2. **Types & Interfaces** (`definitions/types/` & `definitions/interfaces/`)
-
-   - `auth.type.ts`: Authentication-related types
-   - `shared.type.ts`: Common shared types
-   - `auth.interface.ts`: Authentication interfaces
-   - `shared.interface.ts`: Common shared interfaces
-
-3. **Enums** (`definitions/enums/`)
-
-   - `shared.enum.ts`: Common enumerations
-
-4. **Declarations** (`definitions/declarations/`)
-   - `forge.d.ts`: Forge build tool declarations
-   - `vite.d.ts`: Vite build tool declarations
-
-#### Utils (`utils/`)
-
-- `amount.util.ts`: Currency and amount formatting utilities
-- `convert.util.ts`: Data conversion helpers
-- `format.util.ts`: Formatting utilities including:
-  - `cleanQueryString`: Clean undefined/empty query parameters
-  - `formatDateUTC`: UTC date formatting
-  - `formatQueryString`: Query string formatting
-- `notification.util.ts`: Notification system utilities
-- `shared.util.ts`: Common utility functions
-
-### Assets
-
-- **Fonts**: Roboto variable font family
-- **Icons**: SVG icons organized by category (shared, auth, etc.)
-- **Images**: Image assets with organized structure
-- **Styles**:
-  - Component-specific SCSS modules
-  - Global styles and themes
-  - Ant Design customizations
-  - Tailwind CSS integration
-
-## Key Features
-
-### Authentication
-
-- Complete authentication flow
-- Role-based access control
-- Protected routes
-- Session management
-
-### Internationalization
-
-- Multi-language support (en, ja, vi)
-- Language detection
-- Translation management
-
-### Theming
-
-- Light/Dark mode support
-- Custom theme configuration
-- Ant Design theme customization
-
-### Form Handling
-
-- Form validation with Yup
-- React Hook Form integration
-- Custom form components
-
-### Base Components System
-
-The application implements a comprehensive Base Components system that wraps Ant Design components with consistent styling and behavior:
-
-- **Consistent Styling**: All base components inherit from Ant Design with predefined themes
-- **Type Safety**: Full TypeScript support with proper prop interfaces
-- **Reusability**: Components are designed to be reused across the application
-- **Customization**: Easy to extend and customize for specific use cases
-
-### Shared Utilities
-
-The shared utilities provide common functionality across the application:
-
-- **Formatting**: Date, currency, and string formatting utilities
-- **Validation**: Common regex patterns and validation helpers
-- **Storage**: Local storage and cookie management
-- **Error Handling**: Centralized error handling utilities
-- **Responsive Design**: Breakpoint utilities for responsive layouts
-
-## Development Workflow
-
-### Setup
+## Development Commands
 
 ```bash
-pnpm install
+# Start development mode (opens Electron app)
+pnpm start
+
+# Code quality checks
+pnpm format        # Format with Prettier
+pnpm lint          # Lint with ESLint (auto-fix)
+pnpm type-check    # TypeScript type checking
+pnpm check-all     # Run all checks (format + lint + type-check in parallel)
+
+# Build & distribution
+pnpm package       # Package the application
+pnpm make          # Create distribution files
+pnpm publish       # Publish the application
 ```
 
-### Scripts
+## Project Architecture
 
-- `pnpm start`: Start development server
-- `pnpm package`: Package application
-- `pnpm make`: Create installers
-- `pnpm check-all`: Run all checks (format, lint, type-check)
+### Three-Process Electron Architecture
 
-### Code Quality
+1. **Main Process** (`src/main/`)
+   - Entry: `main.ts` - Electron app lifecycle and window management
+   - Preload: `preload.ts` - IPC bridge between main and renderer
 
-- ESLint configuration
-- Prettier formatting
-- TypeScript strict mode
-- Husky pre-commit hooks
-- Branch naming conventions
+2. **Renderer Process** (`src/renderer/`)
+   - React application running in Electron's browser window
+   - Entry: `renderer.tsx` → `App.tsx` → `AppRoutes.tsx`
 
-### Code Style Rules
+3. **Shared** (`src/shared/`)
+   - Code shared between main and renderer processes
+   - `definitions/` - Constants, enums, interfaces, types, declarations
+   - `utils/` - Utility functions (amount, convert, format, notification, shared)
 
-- **NO COMMENTS**: Do not add any comments (`//` or `/* */`) in code
-- **NO DOCBLOCKS**: Do not use JSDoc-style comments (`/** ... */`) for functions, classes, or methods
+### Renderer Architecture Layers
 
-## Architecture Decisions
+**Component Organization**:
+- `components/shared/` - Reusable Base* components wrapping Ant Design (BaseButton, BaseInput, BaseTable, etc.)
+- `layouts/` - Layout components for page structure
+- `pages/` - Page components mapped to routes
 
-### Why Electron?
+**State Management**:
+- `stores/` - Zustand stores with devtools middleware (auth.store.ts, loading.store.ts)
+- Uses `store2` for localStorage persistence (e.g., ACCESS_TOKEN)
 
-- Cross-platform desktop application
-- Web technologies for UI
-- Native system integration
+**Data Layer**:
+- `apis/` - Axios-based API clients (auth.api.ts, shared.api.ts)
+- `libs/axios/` - Axios configuration and utilities
+- TanStack Query for server state management
 
-### Why React?
+**Routing**:
+- File-based route system: `routes/*.route.tsx` files auto-loaded via Vite glob imports
+- Route metadata supports: `requiresAuth`, `roles`, `title`
+- Protected routes enforce authentication and role-based access control
+- Uses HashRouter for Electron compatibility
 
-- Component-based architecture
-- Rich ecosystem
-- Strong developer tools
-- Performance optimizations
+**Forms & Validation**:
+- `schemas/` - Yup validation schemas
+- React Hook Form with `@hookform/resolvers` and `react-hook-form-antd` integration
 
-### Why Zustand?
+**i18n**:
+- `libs/react-i18next/` - i18next configuration with custom language detector
+- `locales/` directory at project root for translation files
 
-- Simple and lightweight
-- TypeScript support
-- No boilerplate
-- Easy integration with React
+**Utilities**:
+- `hooks/` - Organized by domain (auth/, shared/)
+  - Custom hooks: useConfirmModal, useLanguage, useLocalizedValue, usePagination, useTheme, etc.
 
-### Why Ant Design?
+## Path Aliases
 
-- Comprehensive component library
-- Enterprise-ready components
-- Customization options
-- TypeScript support
+```typescript
+'@/*'  → './src/*'     // Example: '@/renderer/components/shared/BaseButton'
+'@@/*' → './*'         // Example: '@@/locales/en.json'
+```
 
-### Why Base Components?
+## Code Style & Conventions
 
-- **Consistency**: Ensures consistent UI across the application
-- **Maintainability**: Centralized styling and behavior
-- **Developer Experience**: Simplified component usage
-- **Type Safety**: Full TypeScript integration
-- **Performance**: Optimized component implementations
+### Component Naming
+- Shared components: `Base*` prefix (BaseButton, BaseInput, BaseTable)
+- Layout components: Standard PascalCase
+- Global components: `The*` prefix (TheTopbar, TheSidebar, TheLoading, TheBreadcrumb)
 
-## Contributing
+### File Naming
+- React components: `.tsx` extension
+- TypeScript files: `.ts` extension
+- Consistent with ESLint perfectionist plugin (natural sorting)
 
-1. Follow branch naming convention: `feature/`, `bugfix/`, `hotfix/`, `release/`
-2. Ensure all checks pass before committing
-3. Follow TypeScript strict mode
-4. Write meaningful commit messages
-5. Keep components focused and reusable
-6. Use Base Components for new UI elements
-7. Follow the established patterns for shared utilities
+### TypeScript
+- Strict mode enabled with `noImplicitAny`
+- No `any` types allowed (enforced by ESLint: `@typescript-eslint/no-explicit-any: error`)
+- Unused vars with `_` prefix are allowed
+
+### CSS/Styling
+- Tailwind CSS v4 with PostCSS
+- SCSS modules with camelCaseOnly locals convention
+- Global SCSS variables/mixins auto-imported from `@/renderer/assets/styles/root/`
+
+### Linting
+- ESLint with TypeScript, React, i18next, and perfectionist plugins
+- Console statements: Only `console.error` and `console.info` allowed
+- All files must end with newline (`eol-last: always`)
+
+## Git Workflow
+
+### Branch Naming Convention
+Must match pattern: `^(feature|bugfix|hotfix|release)/.+|(master)$`
+
+Example valid branches:
+- `feature/user-authentication`
+- `bugfix/login-error`
+- `hotfix/security-patch`
+- `release/v1.0.0`
+- `master`
+
+### Commit Message Format
+**Required**: All commits must follow this exact format:
+```
+[TICKET-XXX]: Commit message body
+
+Additional details in body (required - body cannot be empty)
+```
+
+Example:
+```
+[TICKET-123]: Add user authentication feature
+
+Implemented JWT-based authentication with refresh token support
+```
+
+**Enforced by**:
+- commitlint with custom prefix rule
+- Husky pre-commit hook runs: lint-staged + validate-branch-name
+
+### Pre-commit Hook
+Automatically runs on `git commit`:
+1. Formats staged files with Prettier
+2. Lints staged files with ESLint
+3. Validates branch name
+4. Stages formatted/fixed files
+
+## Key Technical Patterns
+
+### Authentication Flow
+1. Token stored in localStorage via `store2` (STORAGE_KEYS.ACCESS_TOKEN)
+2. Zustand auth store manages: accessToken, userInfo, isAuthenticated
+3. Auto-initialize on protected routes: calls `authProfileApi()` to verify token
+4. Refresh token support via `authRefreshTokenApi()`
+5. Route guards check authentication + role-based permissions
+
+### Route System
+- Auto-discovered routes from `src/renderer/routes/*.route.tsx`
+- Each route file exports default object with RouteObject + optional meta
+- Meta properties: `requiresAuth`, `roles`, `title`
+- ProtectedRoute component handles auth initialization and access control
+- Uses HashRouter (required for Electron file:// protocol)
+
+### Build Configuration
+- **Vite** for renderer with React SWC plugin and SVGR
+- **Electron Forge** for packaging with VitePlugin
+- Separate configs: `vite.main.config.ts`, `vite.preload.config.ts`, `vite.renderer.config.ts`
+- Fuses plugin for security (cookie encryption, ASAR integrity, etc.)
+
+### State Management Patterns
+- Zustand stores with devtools middleware for debugging
+- Persistent state via store2 (localStorage wrapper)
+- Server state via TanStack Query
+- Loading state centralized in loading.store.ts
+
+## Environment Requirements
+
+- Node.js: `>= 22`
+- pnpm: `>= 10`
+- npm/yarn/bun: Not allowed (enforced)
+
+## Common Development Patterns
+
+### Adding a New Route
+1. Create `src/renderer/routes/[name].route.tsx`
+2. Export default RouteObject with meta (requiresAuth, roles, title)
+3. Route auto-discovered via Vite glob import in AppRoutes.tsx
+
+### Creating Base Components
+1. Add to `src/renderer/components/shared/Base[Name].tsx`
+2. Wrap Ant Design components with project-specific defaults
+3. Use TypeScript interfaces for props
+4. Export as named export
+
+### Adding Custom Hooks
+1. Domain-specific: `src/renderer/hooks/[domain]/use-[name].ts`
+2. Shared utilities: `src/renderer/hooks/shared/use-[name].ts`
+
+### API Integration
+1. Define API function in `src/renderer/apis/[domain].api.ts`
+2. Use configured axios instance from `src/renderer/libs/axios/configs.ts`
+3. Handle errors via `use-handle-catch-error.ts` hook
+4. Integrate with TanStack Query for caching/state
+
+### Adding Shared Types
+1. Interfaces: `src/shared/definitions/interfaces/[domain].interface.ts`
+2. Types: `src/shared/definitions/types/[domain].type.ts`
+3. Enums: `src/shared/definitions/enums/[domain].enum.ts`
+4. Constants: `src/shared/definitions/constants/[domain].const.ts`
