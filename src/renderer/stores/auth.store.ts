@@ -30,8 +30,8 @@ export const useAuthStore = create<IState>()(
       try {
         const response = await authProfileApi();
         get().setUser(response.data);
-      } catch (error) {
-        console.error(error);
+      } catch (_error) {
+        console.error('Auth initialization failed');
       }
     },
 
@@ -51,9 +51,9 @@ export const useAuthStore = create<IState>()(
       try {
         const response = await authRefreshTokenApi();
         get().setToken(response.data.accessToken);
-      } catch (error) {
+      } catch (_error) {
         result = false;
-        console.error(error);
+        console.error('Token refresh failed');
       }
       return result;
     },

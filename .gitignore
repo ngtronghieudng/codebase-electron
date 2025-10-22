@@ -94,9 +94,12 @@ dist/
 
 # Other files
 .idea/
-.claude/
 *.tsbuildinfo
 vite.config.ts.timestamp-*
+
+.claude/
+.serena/
+claudedocs/
 
 .env
 .env.*
