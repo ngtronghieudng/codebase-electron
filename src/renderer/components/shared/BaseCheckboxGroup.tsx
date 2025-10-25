@@ -1,5 +1,6 @@
 import { Checkbox } from 'antd';
 import { CheckboxGroupProps } from 'antd/es/checkbox';
+import { memo } from 'react';
 
 import type { TOptions } from '@/shared/definitions/types/shared.type';
 
@@ -7,17 +8,18 @@ interface IProps extends Omit<CheckboxGroupProps, 'options'> {
   options: TOptions[];
 }
 
-export const BaseCheckboxGroup: React.FC<IProps> = ({
-  options,
-  ...otherProps
-}) => {
-  return (
-    <Checkbox.Group {...otherProps}>
-      {options.map((item, index) => (
-        <Checkbox key={item.key || index} value={item.value}>
-          {item.label}
-        </Checkbox>
-      ))}
-    </Checkbox.Group>
-  );
-};
+export const BaseCheckboxGroup: React.FC<IProps> = memo(
+  ({ options, ...otherProps }) => {
+    return (
+      <Checkbox.Group {...otherProps}>
+        {options.map((item, index) => (
+          <Checkbox key={item.key || index} value={item.value}>
+            {item.label}
+          </Checkbox>
+        ))}
+      </Checkbox.Group>
+    );
+  },
+);
+
+BaseCheckboxGroup.displayName = 'BaseCheckboxGroup';

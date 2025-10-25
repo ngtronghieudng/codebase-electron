@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { EToast } from '@/shared/definitions/enums/shared.enum';
 import { TFailureResponse } from '@/shared/definitions/types/shared.type';
+import { logger } from '@/shared/utils/logger.util';
 import { showToast } from '@/shared/utils/notification.util';
 import { isFailureResponse } from '@/shared/utils/shared.util';
 
@@ -30,7 +31,8 @@ export const useHandleCatchError = () => {
         break;
 
       default:
-        console.error(error);
+        logger.error('Unhandled error', error);
+        showToast('An unexpected error occurred', EToast.Error);
     }
   };
 

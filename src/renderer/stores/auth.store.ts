@@ -5,6 +5,7 @@ import { devtools } from 'zustand/middleware';
 import { authProfileApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
 import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
 import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
+import { logger } from '@/shared/utils/logger.util';
 
 interface IState {
   accessToken: null | string;
@@ -30,8 +31,8 @@ export const useAuthStore = create<IState>()(
       try {
         const response = await authProfileApi();
         get().setUser(response.data);
-      } catch (_error) {
-        console.error('Auth initialization failed');
+      } catch (error) {
+        logger.error('Auth initialization failed', error);
       }
     },
 
@@ -51,9 +52,9 @@ export const useAuthStore = create<IState>()(
       try {
         const response = await authRefreshTokenApi();
         get().setToken(response.data.accessToken);
-      } catch (_error) {
+      } catch (error) {
+        logger.error('Token refresh failed', error);
         result = false;
-        console.error('Token refresh failed');
       }
       return result;
     },

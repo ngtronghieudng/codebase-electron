@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
 import { useAuthStore } from '@/renderer/stores/auth.store';
@@ -69,7 +69,7 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
 
   const [element, setElement] = useState<React.ReactNode>(null);
 
-  const handleRouteGuard = async () => {
+  const handleRouteGuard = useCallback(async () => {
     if (route.meta?.title) document.title = route.meta.title;
 
     if (route.meta?.requiresAuth) {
@@ -92,11 +92,16 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
     }
 
     setElement(route.element);
-  };
+  }, [
+    route.element,
+    route.meta?.requiresAuth,
+    route.meta?.roles,
+    route.meta?.title,
+  ]);
 
   useEffect(() => {
     handleRouteGuard();
-  }, [route]);
+  }, [handleRouteGuard]);
 
   return element;
 };

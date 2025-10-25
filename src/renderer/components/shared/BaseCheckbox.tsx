@@ -1,16 +1,16 @@
 import { Checkbox, CheckboxProps, CheckboxRef } from 'antd';
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 
 interface IProps extends CheckboxProps {}
 
-export const BaseCheckbox = forwardRef<CheckboxRef, IProps>(
-  ({ children, ...otherProps }, ref) => {
+export const BaseCheckbox = memo(
+  forwardRef<CheckboxRef, IProps>(({ children, ...otherProps }, ref) => {
     return (
       <Checkbox ref={ref} {...otherProps}>
         {children}
       </Checkbox>
     );
-  },
+  }),
 );
 
 BaseCheckbox.displayName = 'BaseCheckbox';

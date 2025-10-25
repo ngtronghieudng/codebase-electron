@@ -6,6 +6,7 @@ import {
   TIpcChannelArgs,
   TIpcChannelReturn,
 } from '@/shared/definitions/types/ipc.type';
+import { logger } from '@/shared/utils/logger.util';
 
 const ALLOWED_INVOKE_CHANNELS = Object.values(IPC_CHANNELS) as string[];
 
@@ -23,7 +24,7 @@ const electronHandler = {
         const result = await ipcRenderer.invoke(channel, args);
         return result as TIpcChannelReturn<T>;
       } catch (error) {
-        console.error(`IPC invoke error [${channel}]:`, error);
+        logger.error(`IPC invoke error [${channel}]:`, error);
         throw error;
       }
     },

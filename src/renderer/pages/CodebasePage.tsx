@@ -193,8 +193,7 @@ export const CodebasePage: React.FC = () => {
     setPagination({ currentPage: page, pageSize, total: tableData.length });
   };
 
-  const onSubmit: SubmitHandler<IForm> = async (values) => {
-    console.info('onSubmit:', values);
+  const onSubmit: SubmitHandler<IForm> = async (_values) => {
     showToast('onSubmit: check console');
   };
 

@@ -43,6 +43,7 @@ pnpm publish       # Publish the application
 1. **Main Process** (`src/main/`)
 
    - Entry: `main.ts` - Electron app lifecycle and window management
+   - IPC: `ipc-handlers.ts` - Inter-process communication handlers
    - Preload: `preload.ts` - IPC bridge between main and renderer
 
 2. **Renderer Process** (`src/renderer/`)
@@ -252,3 +253,55 @@ Automatically runs on `git commit`:
 2. Types: `src/shared/definitions/types/[domain].type.ts`
 3. Enums: `src/shared/definitions/enums/[domain].enum.ts`
 4. Constants: `src/shared/definitions/constants/[domain].const.ts`
+
+## Important Implementation Notes
+
+### Error Handling
+
+- React Error Boundary implemented in `ErrorBoundary.tsx` to catch component errors
+- Wraps entire app in `App.tsx` to prevent crashes
+- Shows user-friendly error UI with reload option
+- Logs errors via logger utility for debugging
+
+### Performance Considerations
+
+- Routes use Vite's eager glob imports for optimal loading
+- ProtectedRoute component optimizes auth checks
+- Zustand stores use selective subscriptions to minimize re-renders
+- TanStack Query provides automatic caching and request deduplication
+
+### Security Patterns
+
+- IPC channels use whitelist validation in preload script
+- Context isolation and sandbox mode enabled
+- Access tokens stored via store2 abstraction
+- Axios interceptors handle authentication headers automatically
+- Case conversion (snake_case ↔ camelCase) applied transparently in axios interceptors
+
+### Axios Configuration Details
+
+**Request Interceptor** (`libs/axios/configs.ts`):
+
+- Automatically adds Bearer token from localStorage
+- Converts request params/data to snake_case
+- Preserves FormData without conversion
+
+**Response Interceptor**:
+
+- Converts response data to camelCase
+- Handles 401 Unauthorized errors with `handleUnauthorizedError`
+- Token refresh mechanism prevents session interruption
+
+### IPC Communication Pattern
+
+**Main Process** (`main/ipc-handlers.ts`):
+
+- Registers handlers: app, window, file dialogs, store operations
+- In-memory store for main process data persistence
+- Type-safe channel definitions
+
+**Renderer Process** (`renderer/hooks/shared/use-electron-api.ts`):
+
+- Type-safe IPC invoke wrapper
+- Channel validation against allowlist
+- Error handling with logger integration

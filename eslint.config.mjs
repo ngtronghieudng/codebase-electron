@@ -14,6 +14,9 @@ export default [
       '**/.husky/',
       '**/.vite/',
       '**/.idea/',
+      '**.claude/',
+      '**.serena/',
+      '**/claudedocs/',
       '**/dist/',
       '**/node_modules/',
       '**/pnpm-lock.yaml',
@@ -57,13 +60,7 @@ export default [
 
       'eol-last': ['error', 'always'],
       'i18next/no-literal-string': 'off',
-
-      'no-console': [
-        'warn',
-        {
-          allow: ['error', 'info'],
-        },
-      ],
+      'no-console': 'error',
 
       'react/jsx-filename-extension': [
         'error',

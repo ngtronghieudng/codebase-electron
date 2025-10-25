@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { logger } from '@/shared/utils/logger.util';
+
 export const useElectronAPI = () => {
   const [appVersion, setAppVersion] = useState<string>('');
   const [isMaximized, setIsMaximized] = useState<boolean>(false);
@@ -11,7 +13,7 @@ export const useElectronAPI = () => {
       setAppVersion(version);
       return version;
     } catch (error) {
-      console.error('Failed to get app version:', error);
+      logger.error('Failed to get app version:', error);
       return '';
     }
   }, []);
@@ -20,7 +22,7 @@ export const useElectronAPI = () => {
     try {
       return await window.electron.ipcRenderer.invoke('app:get-platform');
     } catch (error) {
-      console.error('Failed to get platform:', error);
+      logger.error('Failed to get platform:', error);
       return null;
     }
   }, []);
@@ -29,7 +31,7 @@ export const useElectronAPI = () => {
     try {
       await window.electron.ipcRenderer.invoke('window:minimize');
     } catch (error) {
-      console.error('Failed to minimize window:', error);
+      logger.error('Failed to minimize window:', error);
     }
   }, []);
 
@@ -41,7 +43,7 @@ export const useElectronAPI = () => {
       );
       setIsMaximized(maximized);
     } catch (error) {
-      console.error('Failed to maximize window:', error);
+      logger.error('Failed to maximize window:', error);
     }
   }, []);
 
@@ -49,7 +51,7 @@ export const useElectronAPI = () => {
     try {
       await window.electron.ipcRenderer.invoke('window:close');
     } catch (error) {
-      console.error('Failed to close window:', error);
+      logger.error('Failed to close window:', error);
     }
   }, []);
 
@@ -61,7 +63,7 @@ export const useElectronAPI = () => {
       setIsMaximized(maximized);
       return maximized;
     } catch (error) {
-      console.error('Failed to check if maximized:', error);
+      logger.error('Failed to check if maximized:', error);
       return false;
     }
   }, []);
@@ -74,7 +76,7 @@ export const useElectronAPI = () => {
           options,
         );
       } catch (error) {
-        console.error('Failed to open file dialog:', error);
+        logger.error('Failed to open file dialog:', error);
         return undefined;
       }
     },
@@ -89,7 +91,7 @@ export const useElectronAPI = () => {
           options,
         );
       } catch (error) {
-        console.error('Failed to open save dialog:', error);
+        logger.error('Failed to open save dialog:', error);
         return undefined;
       }
     },
@@ -102,7 +104,7 @@ export const useElectronAPI = () => {
         key,
       })) as T | undefined;
     } catch (error) {
-      console.error(`Failed to get store value [${key}]:`, error);
+      logger.error(`Failed to get store value [${key}]:`, error);
       return undefined;
     }
   }, []);
@@ -111,7 +113,7 @@ export const useElectronAPI = () => {
     try {
       await window.electron.ipcRenderer.invoke('store:set', { key, value });
     } catch (error) {
-      console.error(`Failed to set store value [${key}]:`, error);
+      logger.error(`Failed to set store value [${key}]:`, error);
     }
   }, []);
 
@@ -119,7 +121,7 @@ export const useElectronAPI = () => {
     try {
       await window.electron.ipcRenderer.invoke('store:delete', { key });
     } catch (error) {
-      console.error(`Failed to delete store value [${key}]:`, error);
+      logger.error(`Failed to delete store value [${key}]:`, error);
     }
   }, []);
 
