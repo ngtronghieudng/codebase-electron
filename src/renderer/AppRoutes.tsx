@@ -23,7 +23,6 @@ export const AppRoutes: React.FC = () => {
   const modules: TModules = import.meta.glob('@/routes/*.tsx', {
     eager: true,
   });
-
   const routes: TRouteObject[] = Object.values(modules).map((module) => ({
     ...module.default,
   }));
@@ -34,7 +33,6 @@ export const AppRoutes: React.FC = () => {
 const renderRoutes = (routes: TRouteObject[]) => {
   return routes.map((route, index) => {
     const hasChildren = route.children && route.children.length > 0;
-
     if (hasChildren)
       return (
         <Route
@@ -65,32 +63,28 @@ const renderRoutes = (routes: TRouteObject[]) => {
 };
 
 const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
-  const initialize = useAuthStore((state) => state.initialize);
-
   const [element, setElement] = useState<React.ReactNode>(null);
 
   const handleRouteGuard = useCallback(async () => {
     if (route.meta?.title) document.title = route.meta.title;
 
     if (route.meta?.requiresAuth) {
-      await initialize();
+      await useAuthStore.getState().initialize();
 
       const isAuthenticated = useAuthStore.getState().isAuthenticated;
-      const userRole = useAuthStore.getState().userInfo?.role;
-      const requiresRoles = route.meta.roles || [];
-      const hasRequiredRole = requiresRoles.some((role) => role === userRole);
-
       if (!isAuthenticated) {
         setElement(<Navigate replace to={AUTH_PAGE.LOGIN} />);
         return;
       }
 
+      const userRole = useAuthStore.getState().userInfo?.role;
+      const requiresRoles = route.meta.roles || [];
+      const hasRequiredRole = requiresRoles.some((role) => role === userRole);
       if (requiresRoles.length && !hasRequiredRole) {
         setElement(<Navigate replace to={FORBIDDEN_PAGE} />);
         return;
       }
     }
-
     setElement(route.element);
   }, [
     route.element,

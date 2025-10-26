@@ -64,8 +64,9 @@ export const useAuthStore = create<IState>()(
       set({ accessToken: token });
     },
 
-    setUser: (data: IUserInfo) =>
-      set({ isAuthenticated: true, userInfo: data }),
+    setUser: (data: IUserInfo) => {
+      set({ isAuthenticated: true, userInfo: data });
+    },
 
     userInfo: undefined as IUserInfo,
   })),

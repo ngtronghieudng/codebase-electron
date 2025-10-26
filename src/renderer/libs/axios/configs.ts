@@ -42,11 +42,11 @@ axiosInstance.interceptors.response.use(
     if (response.data) response.data = convertToCamelCase(response.data);
     return response;
   },
-  (error: AxiosError<TFailureResponse>) => {
+  async (error: AxiosError<TFailureResponse>) => {
     const statusCode = error.response?.status;
 
     if (statusCode === HttpStatusCode.Unauthorized)
-      handleUnauthorizedError(error);
+      return await handleUnauthorizedError(error);
 
     return Promise.reject(error);
   },

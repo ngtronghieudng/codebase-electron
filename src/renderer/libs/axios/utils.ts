@@ -4,7 +4,6 @@ import {
   type AxiosResponse,
   isAxiosError,
 } from 'axios';
-import store2 from 'store2';
 
 import type {
   TFailureResponse,
@@ -14,10 +13,7 @@ import type {
 import { axiosInstance } from '@/renderer/libs/axios/configs';
 import { useAuthStore } from '@/renderer/stores/auth.store';
 import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
-import {
-  ERROR_CODES,
-  STORAGE_KEYS,
-} from '@/shared/definitions/constants/shared.const';
+import { ERROR_CODES } from '@/shared/definitions/constants/shared.const';
 import { EResponseStatus } from '@/shared/definitions/enums/shared.enum';
 
 interface IAxiosRequestConfig extends AxiosRequestConfig {
@@ -33,9 +29,13 @@ const request = async <D = unknown, M = unknown>(
   config?: AxiosRequestConfig,
 ) => {
   try {
-    const response: AxiosResponse<TSuccessResponse<D, M>> = await axiosInstance[
-      method
-    ](url, data, config);
+    let response: AxiosResponse<TSuccessResponse<D, M>>;
+
+    if (method === 'get' || method === 'delete') {
+      response = await axiosInstance[method](url, config);
+    } else {
+      response = await axiosInstance[method](url, data, config);
+    }
 
     const result: TSuccessResponse<D, M> = {
       data: response.data.data,
@@ -88,24 +88,25 @@ export const handleUnauthorizedError = async (
   error: AxiosError<TFailureResponse>,
 ) => {
   const isTokenRefreshed = await useAuthStore.getState().refreshToken();
-  const accessToken = store2.get(STORAGE_KEYS.ACCESS_TOKEN);
-  const originalRequest = error.config as IAxiosRequestConfig;
-
-  if (!isTokenRefreshed) {
+  const accessToken = useAuthStore.getState().accessToken;
+  if (!isTokenRefreshed || !accessToken) {
     useAuthStore.getState().logout();
     window.location.href = AUTH_PAGE.LOGIN;
-    return;
+    return Promise.reject(error);
   }
 
-  if (originalRequest) {
-    if (!originalRequest.headers) originalRequest.headers = {};
-    originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+  const originalRequest = error.config as IAxiosRequestConfig;
+  if (!originalRequest) return Promise.reject(error);
 
-    if (!originalRequest._retry) {
-      originalRequest._retry = true;
-      await axiosInstance(originalRequest);
-    }
+  if (!originalRequest.headers) originalRequest.headers = {};
+  originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+
+  if (!originalRequest._retry) {
+    originalRequest._retry = true;
+    return await axiosInstance(originalRequest);
   }
+
+  return Promise.reject(error);
 };
 
 export const patch = async <D = unknown, M = unknown>(

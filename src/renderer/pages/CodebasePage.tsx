@@ -53,11 +53,13 @@ import {
 import { codebaseSchema } from '@/renderer/schemas/shared.schema';
 import { useLoadingStore } from '@/renderer/stores/loading.store';
 import { ROOT_THEME } from '@/shared/definitions/constants/theme-colors.const';
-import { EToast } from '@/shared/definitions/enums/shared.enum';
-import { showToast } from '@/shared/utils/notification.util';
+import { EMessage, EToast } from '@/shared/definitions/enums/shared.enum';
+import { logger } from '@/shared/utils/logger.util';
+import { showMessage, showToast } from '@/shared/utils/notification.util';
 import { sleep } from '@/shared/utils/shared.util';
 
 import { useConfirmModal } from '../hooks/shared/use-confirm-modal';
+import { useHandleCatchError } from '../hooks/shared/use-handle-catch-error';
 
 interface IForm {
   email: string;
@@ -71,6 +73,11 @@ interface IForm {
 type TIcons = Record<
   string,
   { default: React.FC<React.SVGProps<SVGSVGElement>> }
+>;
+
+type TNewIcons = Record<
+  string,
+  { component: React.FC; name: string; path: string }
 >;
 
 export const CodebasePage: React.FC = () => {
@@ -92,6 +99,7 @@ export const CodebasePage: React.FC = () => {
   const { getThemeColor } = useThemeColor();
   const { pagination, setPagination } = usePagination();
   const { showConfirmModal } = useConfirmModal();
+  const { handleCatchError } = useHandleCatchError();
 
   const [baseCheckbox, setBaseCheckbox] = useState<boolean>(false);
   const [baseCheckboxAll, setBaseCheckboxAll] = useState<boolean>(false);
@@ -106,27 +114,32 @@ export const CodebasePage: React.FC = () => {
   const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
   const [baseModal, setBaseModal] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [svgIcons, setSvgIcons] = useState<Record<string, React.FC>>({});
+  const [svgIcons, setSvgIcons] = useState<TNewIcons>({});
 
   const handleGetHealthCheck = useDebounceCallback(async () => {
-    await healthCheckApi();
+    try {
+      logger.info('handleGetHealthCheck');
+      await healthCheckApi();
+    } catch (error) {
+      handleCatchError(error);
+    }
   }, 200);
 
-  const handleClickIconSvg = useDebounceCallback(() => {
-    showToast('handleClickIconSvg');
+  const handleClickIconSvg = useDebounceCallback((path: string) => {
+    logger.info(path);
   }, 200);
 
   const handleClickButton = useDebounceCallback(() => {
-    showToast('handleClickButton');
+    logger.info('handleClickButton');
   }, 200);
 
   const handleChangeSelect = (value: string) => {
-    showToast(`handleChangeSelect: ${value}`);
+    logger.info(value);
   };
 
   const handleChangeCheckbox: CheckboxProps['onChange'] = (event) => {
     setBaseCheckbox(event.target.checked);
-    showToast(`handleChangeCheckbox: ${event.target.checked}`);
+    logger.info('handleChangeCheckbox', { value: event.target.checked });
   };
 
   const handleCheckAllChange: CheckboxProps['onChange'] = (event) => {
@@ -150,7 +163,7 @@ export const CodebasePage: React.FC = () => {
 
   const handleChangeSwitch = (checked: boolean) => {
     setBaseSwitch(checked);
-    showToast(`handleChangeSwitch: ${checked}`);
+    logger.info('handleChangeSwitch', { value: checked });
   };
 
   const handleSearch = (value: string) => {
@@ -162,7 +175,7 @@ export const CodebasePage: React.FC = () => {
   };
 
   const handleChangeInput = useDebounceCallback((value: number | string) => {
-    showToast(`handleChangeInput: ${value}`);
+    logger.info('handleChangeInput', { value });
   }, 200);
 
   const handleChangeDatePicker: DatePickerProps['onChange'] = (
@@ -170,7 +183,7 @@ export const CodebasePage: React.FC = () => {
     dateString,
   ) => {
     setBaseDatePicker(date);
-    showToast(`handleChangeDatePicker: ${dateString}`);
+    logger.info('handleChangeDatePicker', { date: dateString });
   };
 
   const handleChangeTimePicker: TimePickerProps['onChange'] = (
@@ -178,12 +191,12 @@ export const CodebasePage: React.FC = () => {
     timeString,
   ) => {
     setBaseTimePicker(time);
-    showToast(`handleChangeTimePicker: ${timeString}`);
+    logger.info('handleChangeTimePicker', { time: timeString });
   };
 
-  const handleModal = () => {
+  const handleActionModal = () => {
     setBaseModal(false);
-    showToast('handleConfirmDialog', EToast.Info);
+    logger.info('handleActionModal');
   };
 
   const handleChangePagination: PaginationProps['onChange'] = (
@@ -193,8 +206,8 @@ export const CodebasePage: React.FC = () => {
     setPagination({ currentPage: page, pageSize, total: tableData.length });
   };
 
-  const onSubmit: SubmitHandler<IForm> = async (_values) => {
-    showToast('onSubmit: check console');
+  const onSubmit: SubmitHandler<IForm> = async (values) => {
+    logger.info('onSubmit', { values });
   };
 
   const handleLoadingFullscreen = async () => {
@@ -204,15 +217,20 @@ export const CodebasePage: React.FC = () => {
   };
 
   const loadSvgIcons = async () => {
-    const icons: TIcons = import.meta.glob('@/renderer/assets/icons/**/*.svg', {
+    const icons: TIcons = import.meta.glob('@/assets/icons/**/*.svg', {
       eager: true,
       query: '?react',
     });
-    const newIcons: Record<string, React.FC> = {};
+    const newIcons: TNewIcons = {};
 
     Object.entries(icons).forEach(([path, module]) => {
       const iconName = path.split('/').pop()?.replace('.svg', '');
-      if (iconName) newIcons[iconName] = module.default;
+      if (path && iconName)
+        newIcons[path] = {
+          component: module.default,
+          name: iconName,
+          path,
+        };
     });
     setSvgIcons(newIcons);
   };
@@ -242,15 +260,65 @@ export const CodebasePage: React.FC = () => {
       </section>
 
       <section>
+        <h4>-- Notifications --</h4>
+        <div className="mb-4 flex gap-2">
+          <BaseButton onClick={() => showToast('Operation succeeded')}>
+            Success Toast
+          </BaseButton>
+          <BaseButton
+            onClick={() => showToast('Information updated', EToast.Info)}
+          >
+            Info Toast
+          </BaseButton>
+          <BaseButton
+            onClick={() => showToast('System warning issued', EToast.Warning)}
+          >
+            Warning Toast
+          </BaseButton>
+          <BaseButton
+            onClick={() => showToast('Transaction failed', EToast.Error)}
+          >
+            Error Toast
+          </BaseButton>
+        </div>
+
+        <div className="flex gap-2">
+          <BaseButton onClick={() => showMessage('Operation succeeded')}>
+            Success Message
+          </BaseButton>
+          <BaseButton
+            onClick={() => showMessage('Information updated', EMessage.Info)}
+          >
+            Info Message
+          </BaseButton>
+          <BaseButton
+            onClick={() =>
+              showMessage('System warning issued', EMessage.Warning)
+            }
+          >
+            Warning Message
+          </BaseButton>
+          <BaseButton
+            onClick={() => showMessage('Transaction failed', EMessage.Error)}
+          >
+            Error Message
+          </BaseButton>
+        </div>
+      </section>
+
+      <section>
         <h4>-- SVG Icons --</h4>
         <div className="flex flex-wrap gap-2">
-          {Object.entries(svgIcons).map(([iconName, IconComponent]) => (
-            <Tooltip key={iconName} title={iconName}>
-              <span onClick={handleClickIconSvg}>
-                <IconComponent />
-              </span>
-            </Tooltip>
-          ))}
+          {Object.entries(svgIcons).map(([_, icon]) => {
+            const IconComponent = icon.component;
+            return (
+              <Tooltip key={icon.path} title={icon.name}>
+                <span onClick={() => handleClickIconSvg(icon.path)}>
+                  <IconComponent />
+                </span>
+              </Tooltip>
+            );
+          })}
         </div>
       </section>
 
@@ -513,7 +581,7 @@ export const CodebasePage: React.FC = () => {
           <BaseButton onClick={() => setBaseModal(true)}>Open Modal</BaseButton>
           <BaseModal
             footer={[
-              <BaseButton key="ok" onClick={handleModal}>
+              <BaseButton key="ok" onClick={handleActionModal}>
                 OK
               </BaseButton>,
             ]}

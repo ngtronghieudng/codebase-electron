@@ -32,7 +32,6 @@ export const useHandleCatchError = () => {
 
       default:
         logger.error('Unhandled error', error);
-        showToast('An unexpected error occurred', EToast.Error);
     }
   };
 
