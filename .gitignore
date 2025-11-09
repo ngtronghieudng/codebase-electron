@@ -92,19 +92,23 @@ typings/
 out/
 dist/
 
-# Other files
-.idea/
-*.tsbuildinfo
-vite.config.ts.timestamp-*
-
-.claude/
-.serena/
-claudedocs/
-
+# Environments
 .env
 .env.*
 !.env.sample
 
+# Claude
+.claude/
+.serena/
+.playwright-mcp/
+claudedocs/
+
+# Lock files
 bun.lockb
 yarn.lock
 package-lock.json
+
+# Other
+.idea/
+*.tsbuildinfo
+vite.config.ts.timestamp-*

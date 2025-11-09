@@ -1,9 +1,13 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
+import jsCookie from 'js-cookie';
 import { stringify } from 'qs';
 import store2 from 'store2';
 
 import { handleUnauthorizedError } from '@/renderer/libs/axios/utils';
-import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
+import {
+  COOKIE_KEYS,
+  STORAGE_KEYS,
+} from '@/shared/definitions/constants/shared.const';
 import {
   TFailureResponse,
   TSuccessResponse,
@@ -25,10 +29,12 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = store2.get(STORAGE_KEYS.ACCESS_TOKEN);
-
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
-    if (config.params) config.params = convertToSnakeCase(config.params);
 
+    const csrftoken = jsCookie.get(COOKIE_KEYS.CSRFTOKEN);
+    if (csrftoken) config.headers['x-csrftoken'] = csrftoken;
+
+    if (config.params) config.params = convertToSnakeCase(config.params);
     if (config.data && !(config.data instanceof FormData))
       config.data = convertToSnakeCase(config.data);
 
@@ -44,7 +50,6 @@ axiosInstance.interceptors.response.use(
   },
   async (error: AxiosError<TFailureResponse>) => {
     const statusCode = error.response?.status;
-
     if (statusCode === HttpStatusCode.Unauthorized)
       return await handleUnauthorizedError(error);
 

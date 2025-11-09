@@ -31,6 +31,7 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const COOKIE_KEYS = {
+  CSRFTOKEN: 'csrftoken',
   REFRESH_TOKEN: 'refresh_token',
 } as const;
 

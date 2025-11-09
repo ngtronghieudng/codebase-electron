@@ -2,7 +2,6 @@ export const formatAmount = (amount: number | string): string => {
   if (!amount) return '';
 
   const cleanNumber = String(amount).replace(/[^0-9.]/g, '');
-
   const number = parseFloat(cleanNumber);
   if (isNaN(number)) return '';
 
@@ -14,7 +13,6 @@ export const parseAmount = (formattedAmount: string): number => {
 
   const cleanNumber = formattedAmount.replace(/[^0-9.]/g, '');
   const number = parseFloat(cleanNumber);
-
   return isNaN(number) ? 0 : number;
 };
 
