@@ -5,7 +5,7 @@ import type { TObjectString } from '@/shared/definitions/types/shared.type';
 
 import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
 
-import { languageDetector } from './language-detector';
+import { languageDetector } from './react-i18next.detector';
 
 type TLocales = Record<string, { default: TObjectString }>;
 type TResources = Record<ELanguageCode, Record<string, TObjectString>>;

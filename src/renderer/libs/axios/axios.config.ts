@@ -3,7 +3,7 @@ import jsCookie from 'js-cookie';
 import { stringify } from 'qs';
 import store2 from 'store2';
 
-import { handleUnauthorizedError } from '@/renderer/libs/axios/utils';
+import { handleUnauthorizedError } from '@/renderer/libs/axios/axios.util';
 import {
   COOKIE_KEYS,
   STORAGE_KEYS,

@@ -4,7 +4,7 @@ import type {
   IAuthRegisterRequest,
 } from '@/shared/definitions/interfaces/auth.interface';
 
-import { get, post } from '@/renderer/libs/axios/utils';
+import { get, post } from '@/renderer/libs/axios/axios.util';
 import { AUTH_API } from '@/shared/definitions/constants/route-apis.const';
 import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
 

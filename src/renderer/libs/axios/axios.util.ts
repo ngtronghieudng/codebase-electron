@@ -10,7 +10,7 @@ import type {
   TSuccessResponse,
 } from '@/shared/definitions/types/shared.type';
 
-import { axiosInstance } from '@/renderer/libs/axios/configs';
+import { axiosInstance } from '@/renderer/libs/axios/axios.config';
 import { useAuthStore } from '@/renderer/stores/auth.store';
 import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
 import { ERROR_CODES } from '@/shared/definitions/constants/shared.const';

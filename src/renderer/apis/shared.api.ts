@@ -1,4 +1,4 @@
-import { get } from '@/renderer/libs/axios/utils';
+import { get } from '@/renderer/libs/axios/axios.util';
 import { HEALTH_CHECK_API } from '@/shared/definitions/constants/route-apis.const';
 
 export const healthCheckApi = async () => {
