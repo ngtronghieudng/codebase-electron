@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { Spin } from 'antd';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
 import { useAuthStore } from '@/renderer/stores/auth.store';
@@ -7,8 +8,6 @@ import {
   FORBIDDEN_PAGE,
 } from '@/shared/definitions/constants/route-pages.const';
 import { EUserRole } from '@/shared/definitions/enums/shared.enum';
-
-type TModules = Record<string, { default: TRouteObject }>;
 
 type TRouteObject = Omit<RouteObject, 'children'> & {
   children?: TRouteObject[];
@@ -19,15 +18,46 @@ type TRouteObject = Omit<RouteObject, 'children'> & {
   };
 };
 
-export const AppRoutes: React.FC = () => {
-  const modules: TModules = import.meta.glob('@/routes/*.tsx', {
-    eager: true,
-  });
-  const routes: TRouteObject[] = Object.values(modules).map((module) => ({
-    ...module.default,
-  }));
+const modules = import.meta.glob<{ default: TRouteObject }>('@/routes/*.tsx');
+const routeCache = new Map<string, TRouteObject>();
 
-  return <Routes>{renderRoutes(routes)}</Routes>;
+export const AppRoutes: React.FC = () => {
+  const [routes, setRoutes] = useState<TRouteObject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loadRouteConfig = async (
+    path: string,
+    loader: () => Promise<{ default: TRouteObject }>,
+  ): Promise<TRouteObject> => {
+    const cached = routeCache.get(path);
+    if (cached) return cached;
+
+    const module = await loader();
+    routeCache.set(path, module.default);
+    return module.default;
+  };
+
+  useEffect(() => {
+    const loadAllRoutes = async () => {
+      const loadedRoutes = await Promise.all(
+        Object.entries(modules).map(([path, loader]) =>
+          loadRouteConfig(path, loader),
+        ),
+      );
+      setRoutes(loadedRoutes);
+      setIsLoading(false);
+    };
+
+    loadAllRoutes();
+  }, []);
+
+  if (isLoading) return <RouteFallback />;
+
+  return (
+    <Suspense fallback={<RouteFallback />}>
+      <Routes>{renderRoutes(routes)}</Routes>
+    </Suspense>
+  );
 };
 
 const renderRoutes = (routes: TRouteObject[]) => {
@@ -98,4 +128,12 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
   }, [handleRouteGuard]);
 
   return element;
+};
+
+const RouteFallback: React.FC = () => {
+  return (
+    <div className="flex-center min-h-screen">
+      <Spin size="large" />
+    </div>
+  );
 };

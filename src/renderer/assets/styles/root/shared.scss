@@ -1,17 +1,52 @@
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--theme-scrollbar-color) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: $scrollbar-width;
+  height: $scrollbar-width;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 50px;
+  background-color: var(--theme-scrollbar-color);
+
+  &:hover {
+    background-color: var(--theme-text-secondary-color);
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--theme-primary-color);
+  outline-offset: 2px;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--theme-primary-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
 body {
   font-style: normal;
   font-optical-sizing: auto;
   background-color: var(--theme-bg-body-color);
   @include text-style;
-}
-
-body::-webkit-scrollbar {
-  width: $scrollbar-width;
-}
-
-body::-webkit-scrollbar-thumb {
-  border-radius: 50px;
-  background-color: var(--theme-scrollbar-color);
 }
 
 h1 {

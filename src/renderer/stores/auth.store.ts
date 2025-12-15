@@ -13,7 +13,7 @@ interface IState {
   isAuthenticated: boolean;
   logout: () => void;
   refreshToken: () => Promise<boolean>;
-  setToken: (token: string) => void;
+  setAccessToken: (token: string) => void;
   setUser: (data: IUserInfo) => void;
   userInfo?: IUserInfo;
 }
@@ -51,7 +51,7 @@ export const useAuthStore = create<IState>()(
       let result = true;
       try {
         const response = await authRefreshTokenApi();
-        get().setToken(response.data.accessToken);
+        get().setAccessToken(response.data.accessToken);
       } catch (error) {
         logger.error('Token refresh failed', error);
         result = false;
@@ -59,7 +59,7 @@ export const useAuthStore = create<IState>()(
       return result;
     },
 
-    setToken: (token: string) => {
+    setAccessToken: (token: string) => {
       store2.set(STORAGE_KEYS.ACCESS_TOKEN, token);
       set({ accessToken: token });
     },

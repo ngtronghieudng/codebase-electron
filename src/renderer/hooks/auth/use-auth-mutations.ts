@@ -15,7 +15,7 @@ import {
 } from '@/shared/definitions/interfaces/auth.interface';
 
 export const useAuthLoginMutation = () => {
-  const setToken = useAuthStore((state) => state.setToken);
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const navigate = useNavigate();
   const { handleCatchError } = useHandleCatchError();
 
@@ -28,7 +28,7 @@ export const useAuthLoginMutation = () => {
       handleCatchError(error);
     },
     onSuccess: async (data) => {
-      setToken(data.accessToken);
+      setAccessToken(data.accessToken);
       await navigate(HOME_PAGE);
     },
   });

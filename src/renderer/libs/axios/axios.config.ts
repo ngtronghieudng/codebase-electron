@@ -31,7 +31,7 @@ axiosInstance.interceptors.request.use(
     const accessToken = store2.get(STORAGE_KEYS.ACCESS_TOKEN);
     if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
 
-    const csrftoken = jsCookie.get(COOKIE_KEYS.CSRFTOKEN);
+    const csrftoken = jsCookie.get(COOKIE_KEYS.CSRF_TOKEN);
     if (csrftoken) config.headers['x-csrftoken'] = csrftoken;
 
     if (config.params) config.params = convertToSnakeCase(config.params);
