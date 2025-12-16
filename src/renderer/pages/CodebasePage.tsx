@@ -1,12 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  CheckboxProps,
-  DatePickerProps,
-  Form,
-  PaginationProps,
-  TimePickerProps,
-  Tooltip,
-} from 'antd';
+import { CheckboxProps, Form, PaginationProps, Tooltip } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
@@ -29,8 +22,10 @@ import IconSettings from '@/renderer/assets/icons/shared/IconSettings.svg?react'
 import styles from '@/renderer/assets/styles/components/shared/codebase-page.module.scss';
 import { BaseAutocomplete } from '@/renderer/components/shared/BaseAutocomplete';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
-import { BaseCheckbox } from '@/renderer/components/shared/BaseCheckbox';
-import { BaseCheckboxGroup } from '@/renderer/components/shared/BaseCheckboxGroup';
+import {
+  BaseCheckbox,
+  BaseCheckboxGroup,
+} from '@/renderer/components/shared/BaseCheckbox';
 import { BaseDatePicker } from '@/renderer/components/shared/BaseDatePicker';
 import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
 import { BaseInput } from '@/renderer/components/shared/BaseInput';
@@ -52,7 +47,7 @@ import {
 } from '@/renderer/mocks/codebase.mock';
 import { codebaseSchema } from '@/renderer/schemas/shared.schema';
 import { useLoadingStore } from '@/renderer/stores/loading.store';
-import { ROOT_THEME } from '@/shared/definitions/constants/theme-colors.const';
+import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
 import { EMessage, EToast } from '@/shared/definitions/enums/shared.enum';
 import { logger } from '@/shared/utils/logger.util';
 import { showMessage, showToast } from '@/shared/utils/notification.util';
@@ -178,17 +173,17 @@ export const CodebasePage: React.FC = () => {
     logger.info('handleChangeInput', { value });
   }, 200);
 
-  const handleChangeDatePicker: DatePickerProps['onChange'] = (
-    date,
-    dateString,
+  const handleChangeDatePicker = (
+    date: Dayjs | null,
+    dateString: string | string[],
   ) => {
     setBaseDatePicker(date);
     logger.info('handleChangeDatePicker', { date: dateString });
   };
 
-  const handleChangeTimePicker: TimePickerProps['onChange'] = (
-    time,
-    timeString,
+  const handleChangeTimePicker = (
+    time: Dayjs | null,
+    timeString: string | string[],
   ) => {
     setBaseTimePicker(time);
     logger.info('handleChangeTimePicker', { time: timeString });
@@ -210,10 +205,9 @@ export const CodebasePage: React.FC = () => {
     logger.info('onSubmit', { values });
   };
 
-  const handleLoadingFullscreen = async () => {
+  const handleLoadingFullscreen = () => {
     showLoading();
-    await sleep(3);
-    hideLoading();
+    sleep(3).then(() => hideLoading());
   };
 
   const loadSvgIcons = async () => {
@@ -496,6 +490,7 @@ export const CodebasePage: React.FC = () => {
             Check all
           </BaseCheckbox>
         </div>
+
         <BaseCheckboxGroup
           onChange={handleCheckboxGroupChange}
           options={baseCheckboxOptions}

@@ -6,7 +6,8 @@ interface ILogContext {
 }
 
 class Logger {
-  private isDevelop = import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOP;
+  private isDevelopment =
+    import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOPMENT;
 
   error(message: string, error?: unknown, context?: ILogContext): void {
     const errorData = {
@@ -17,11 +18,11 @@ class Logger {
       timestamp: new Date().toISOString(),
     };
 
-    if (this.isDevelop) console.error(`[Error] ${message}`, errorData);
+    if (this.isDevelopment) console.error(`[Error] ${message}`, errorData);
   }
 
   info(message: string, context?: ILogContext): void {
-    if (this.isDevelop) {
+    if (this.isDevelopment) {
       console.info(`[Info] ${message}`, {
         context,
         timestamp: new Date().toISOString(),
@@ -30,7 +31,7 @@ class Logger {
   }
 
   warn(message: string, context?: ILogContext): void {
-    if (this.isDevelop) {
+    if (this.isDevelopment) {
       console.warn(`[Warning] ${message}`, {
         context,
         timestamp: new Date().toISOString(),

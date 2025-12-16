@@ -1,10 +1,6 @@
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { stringify } from 'qs';
 
 import { TDate, TObjectUnknown } from '@/shared/definitions/types/shared.type';
-
-dayjs.extend(utc);
 
 export const cleanQueryString = <T>(queryParams: TObjectUnknown): T => {
   const result = Object.fromEntries(
@@ -16,7 +12,7 @@ export const cleanQueryString = <T>(queryParams: TObjectUnknown): T => {
 };
 
 export const formatDateUTC = (date: TDate) => {
-  return dayjs(date).utc().toISOString();
+  return new Date(date).toISOString();
 };
 
 export const formatQueryString = (

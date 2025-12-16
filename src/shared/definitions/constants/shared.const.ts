@@ -1,9 +1,9 @@
 export const ERROR_CODES = {
-  ERR_500: 'ERR_500',
+  INTERNAL_ERROR: 'INTERNAL_ERROR',
 } as const;
 
 export const NODE_ENVS = {
-  DEVELOP: 'develop',
+  DEVELOPMENT: 'development',
   PRODUCTION: 'production',
   STAGING: 'staging',
   TESTING: 'testing',

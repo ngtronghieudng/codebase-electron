@@ -4,7 +4,7 @@ import { CodebasePage } from '@/renderer/pages/CodebasePage';
 import { CODEBASE_PAGE } from '@/shared/definitions/constants/route-pages.const';
 import { NODE_ENVS } from '@/shared/definitions/constants/shared.const';
 
-const isDevelop = import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOP;
+const isDevelopment = import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOPMENT;
 
 export default {
   children: [
@@ -14,7 +14,7 @@ export default {
     },
   ],
 
-  element: isDevelop ? <DefaultLayout /> : <ErrorLayout />,
+  element: isDevelopment ? <DefaultLayout /> : <ErrorLayout />,
 
   meta: {
     requiresAuth: false,

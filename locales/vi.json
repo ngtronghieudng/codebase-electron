@@ -24,7 +24,7 @@
     "search": "Tìm kiếm",
 
     "errorCodes": {
-      "err500": "Đã xảy ra lỗi"
+      "internalError": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại."
     },
 
     "navigator": {

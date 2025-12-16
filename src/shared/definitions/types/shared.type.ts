@@ -1,11 +1,9 @@
-import type { Dayjs } from 'dayjs';
-
 import { HttpStatusCode } from 'axios';
 
 import { ERROR_CODES } from '@/shared/definitions/constants/shared.const';
 import { EResponseStatus } from '@/shared/definitions/enums/shared.enum';
 
-export type TDate = Date | Dayjs | number | string;
+export type TDate = Date | number | string;
 export type TErrorCodes = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
 export type TFailureResponse<D = unknown> = {

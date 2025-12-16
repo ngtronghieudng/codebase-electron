@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
 import { useThemeColor } from '@/renderer/hooks/shared/use-theme-color';
-import { ROOT_THEME } from '@/shared/definitions/constants/theme-colors.const';
+import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
 
 interface IProps {
   children: React.ReactNode;

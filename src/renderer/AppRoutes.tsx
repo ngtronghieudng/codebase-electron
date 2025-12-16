@@ -1,4 +1,3 @@
-import { Spin } from 'antd';
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
@@ -8,6 +7,8 @@ import {
   FORBIDDEN_PAGE,
 } from '@/shared/definitions/constants/route-pages.const';
 import { EUserRole } from '@/shared/definitions/enums/shared.enum';
+
+import { ThePageLoading } from './components/shared/ThePageLoading';
 
 type TRouteObject = Omit<RouteObject, 'children'> & {
   children?: TRouteObject[];
@@ -51,10 +52,10 @@ export const AppRoutes: React.FC = () => {
     loadAllRoutes();
   }, []);
 
-  if (isLoading) return <RouteFallback />;
+  if (isLoading) return <ThePageLoading />;
 
   return (
-    <Suspense fallback={<RouteFallback />}>
+    <Suspense fallback={<ThePageLoading />}>
       <Routes>{renderRoutes(routes)}</Routes>
     </Suspense>
   );
@@ -128,12 +129,4 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
   }, [handleRouteGuard]);
 
   return element;
-};
-
-const RouteFallback: React.FC = () => {
-  return (
-    <div className="flex-center min-h-screen">
-      <Spin size="large" />
-    </div>
-  );
 };

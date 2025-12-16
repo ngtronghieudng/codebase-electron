@@ -1,8 +1,8 @@
 import store2 from 'store2';
-import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 import { authProfileApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
+import { create, resetAllStores } from '@/renderer/libs/zustand/zustand.util';
 import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
 import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
 import { logger } from '@/shared/utils/logger.util';
@@ -39,12 +39,8 @@ export const useAuthStore = create<IState>()(
     isAuthenticated: false,
 
     logout: () => {
-      set({
-        accessToken: null,
-        isAuthenticated: false,
-        userInfo: undefined,
-      });
       store2.remove(STORAGE_KEYS.ACCESS_TOKEN);
+      resetAllStores();
     },
 
     refreshToken: async (): Promise<boolean> => {

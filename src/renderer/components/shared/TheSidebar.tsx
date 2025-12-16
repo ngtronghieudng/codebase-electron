@@ -14,7 +14,7 @@ import {
   CODEBASE_PAGE,
   HOME_PAGE,
 } from '@/shared/definitions/constants/route-pages.const';
-import { ROOT_THEME } from '@/shared/definitions/constants/theme-colors.const';
+import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
 
 export const TheSidebar: React.FC = () => {
   const { t } = useTranslation();

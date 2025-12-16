@@ -1,7 +1,7 @@
 import {
   DARK_THEME,
   LIGHT_THEME,
-} from '@/shared/definitions/constants/theme-colors.const';
+} from '@/shared/definitions/constants/style-themes.const';
 
 import { useTheme } from './use-theme';
 

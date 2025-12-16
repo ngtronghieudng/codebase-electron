@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from '@/renderer/libs/zustand/zustand.util';
 
 interface IState {
   hideLoading: () => void;

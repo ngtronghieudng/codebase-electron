@@ -24,7 +24,7 @@
     "search": "検索",
 
     "errorCodes": {
-      "err500": "エラーが発生しました"
+      "internalError": "予期しないエラーが発生しました。もう一度お試しください。"
     },
 
     "navigator": {

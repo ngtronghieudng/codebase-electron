@@ -1,9 +1,7 @@
 import { DatePicker, DatePickerProps } from 'antd';
-import { MonthPickerProps } from 'antd/es/date-picker';
 import { memo } from 'react';
 
 interface IDatePickerProps extends DatePickerProps {}
-interface IMonthPickerProps extends MonthPickerProps {}
 
 export const BaseDatePicker: React.FC<IDatePickerProps> = memo(
   ({ ...otherProps }) => {
@@ -11,9 +9,11 @@ export const BaseDatePicker: React.FC<IDatePickerProps> = memo(
   },
 );
 
+interface IMonthPickerProps extends Omit<DatePickerProps, 'picker'> {}
+
 export const BaseMonthPicker: React.FC<IMonthPickerProps> = memo(
   ({ ...otherProps }) => {
-    return <DatePicker.MonthPicker {...otherProps} />;
+    return <DatePicker picker="month" {...otherProps} />;
   },
 );
 

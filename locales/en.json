@@ -24,7 +24,7 @@
     "search": "Search",
 
     "errorCodes": {
-      "err500": "An error occurred"
+      "internalError": "An unexpected error occurred. Please try again."
     },
 
     "navigator": {

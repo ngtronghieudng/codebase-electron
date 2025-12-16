@@ -40,6 +40,8 @@ i18next
   .use(languageDetector)
   .use(initReactI18next)
   .init({
+    fallbackLng: ELanguageCode.English,
+
     interpolation: {
       escapeValue: false,
     },
