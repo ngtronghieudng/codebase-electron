@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form } from 'antd';
+import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import {
   FormProvider,
@@ -10,13 +11,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
-import IconEye from '@/renderer/assets/icons/shared/IconEye.svg?react';
-import IconEyeClosed from '@/renderer/assets/icons/shared/IconEyeClosed.svg?react';
 import IconRequired from '@/renderer/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/renderer/assets/styles/components/auth/auth-register-page.module.scss';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
 import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
 import { BaseInput } from '@/renderer/components/shared/BaseInput';
+import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { useAuthRegisterMutation } from '@/renderer/hooks/auth/use-auth-mutations';
 import { registerSchema } from '@/renderer/schemas/auth.schema';
 import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
@@ -52,8 +52,13 @@ export const AuthRegisterPage: React.FC = () => {
   };
 
   const renderIcon = (onClick: () => void) => {
-    const IconComponent = showPassword ? IconEye : IconEyeClosed;
-    return <IconComponent height="22" onClick={onClick} width="22" />;
+    return (
+      <BaseLucideIcon
+        icon={showPassword ? Eye : EyeOff}
+        onClick={onClick}
+        size={22}
+      />
+    );
   };
 
   const authRegisterMutation = useAuthRegisterMutation(registerForm);

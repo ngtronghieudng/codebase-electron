@@ -1,7 +1,7 @@
 import store2 from 'store2';
 import { devtools } from 'zustand/middleware';
 
-import { authProfileApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
+import { authMeApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
 import { create, resetAllStores } from '@/renderer/libs/zustand/zustand.util';
 import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
 import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
@@ -29,7 +29,7 @@ export const useAuthStore = create<IState>()(
       if (!isLoggedIn) return;
 
       try {
-        const response = await authProfileApi();
+        const response = await authMeApi();
         get().setUser(response.data);
       } catch (error) {
         logger.error('Auth initialization failed', error);

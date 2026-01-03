@@ -19,7 +19,7 @@
     }
 
     &Content {
-      padding: calc(var(--ant-main-padding) + $layout-padding);
+      padding: var(--ant-main-padding);
       min-height: calc(100vh - var(--ant-header-height));
       background-color: var(--theme-bg-content-color);
       margin-top: var(--ant-header-height);

@@ -1,106 +1,154 @@
 # Project Index: codebase-electron
 
-Generated: 2025-11-30
-Token Efficiency: ~3K tokens vs ~58K full read (94% reduction)
+**Generated**: 2026-01-31
+**Type**: Electron Desktop Application
+**Stats**: 90+ TypeScript files | ~4,000 LOC
+**Token Efficiency**: ~3K tokens vs ~58K full read (94% reduction)
+
+---
 
 ## 📁 Project Structure
 
 ```
-codebase-electron/
-├── src/
-│   ├── main/                    # Electron Main Process
-│   │   ├── main.ts              # App lifecycle, window creation
-│   │   ├── preload.ts           # IPC bridge (context isolation)
-│   │   └── ipc-handlers.ts      # IPC channel handlers
-│   ├── renderer/                # React Renderer Process
-│   │   ├── renderer.tsx         # React entry point
-│   │   ├── App.tsx              # Root component + providers
-│   │   ├── AppRoutes.tsx        # Auto-discovered routing
-│   │   ├── apis/                # Axios API clients
-│   │   ├── components/shared/   # Base* and The* components
-│   │   ├── contexts/            # React contexts
-│   │   ├── hooks/               # Custom hooks (auth/, shared/)
-│   │   ├── layouts/             # Page layouts
-│   │   ├── libs/                # Library configs (axios, i18next)
-│   │   ├── mocks/               # Mock data
-│   │   ├── pages/               # Page components
-│   │   ├── routes/              # Route definitions (*.route.tsx)
-│   │   ├── schemas/             # Yup validation schemas
-│   │   └── stores/              # Zustand state stores
-│   └── shared/                  # Cross-process shared code
-│       ├── definitions/         # Types, interfaces, constants, enums
-│       └── utils/               # Utility functions
-├── locales/                     # i18n translations (en, ja, vi)
-├── docs/                        # Documentation
-└── scripts/                     # Build/utility scripts
+src/
+├── main/                          # Electron Main Process (Node.js)
+│   ├── main.ts                    # Entry: app lifecycle, window management
+│   ├── preload.ts                 # IPC bridge via contextBridge
+│   └── ipc-handlers.ts            # IPC message handlers
+│
+├── renderer/                      # React Application (Chromium)
+│   ├── renderer.tsx               # Entry point
+│   ├── App.tsx                    # Root component + ErrorBoundary
+│   ├── AppRoutes.tsx              # Route discovery + ProtectedRoute
+│   │
+│   ├── apis/                      # API Layer
+│   │   ├── auth.api.ts            # authLoginApi, authMeApi, authRefreshTokenApi
+│   │   └── shared.api.ts          # Shared API utilities
+│   │
+│   ├── components/shared/         # UI Components
+│   │   ├── Base*.tsx              # Ant Design wrappers (18 components)
+│   │   └── The*.tsx               # Global singletons (Topbar, Sidebar, Loading, Breadcrumb, PageLoading)
+│   │
+│   ├── contexts/
+│   │   └── AntConfigProvider.tsx  # Ant Design theme configuration
+│   │
+│   ├── hooks/
+│   │   ├── auth/                  # use-auth-mutations, use-auth-queries
+│   │   └── shared/                # 10 utility hooks (theme, language, pagination, etc.)
+│   │
+│   ├── layouts/
+│   │   ├── DefaultLayout.tsx      # Authenticated users
+│   │   ├── GuestLayout.tsx        # Unauthenticated users
+│   │   └── ErrorLayout.tsx        # Error pages
+│   │
+│   ├── libs/
+│   │   ├── axios/                 # axios.config.ts, axios.util.ts
+│   │   ├── react-i18next/         # i18n init + custom language detector
+│   │   └── zustand/               # Store utilities + reset helper
+│   │
+│   ├── pages/
+│   │   ├── HomePage.tsx
+│   │   ├── CodebasePage.tsx
+│   │   └── auth/                  # AuthLoginPage, AuthRegisterPage
+│   │
+│   ├── routes/                    # Auto-discovered route files
+│   │   ├── auth.route.tsx
+│   │   ├── home.route.tsx
+│   │   ├── codebase.route.tsx
+│   │   ├── forbidden.route.tsx
+│   │   └── not-found.route.tsx
+│   │
+│   ├── schemas/                   # Yup validation
+│   │   ├── auth.schema.ts
+│   │   └── shared.schema.ts
+│   │
+│   ├── stores/                    # Zustand state
+│   │   ├── auth.store.ts          # Token, user, isAuthenticated
+│   │   └── loading.store.ts       # Global loading state
+│   │
+│   ├── mocks/                     # Mock data for development
+│   └── assets/                    # fonts, icons, images, styles
+│
+└── shared/                        # Shared between main/renderer
+    ├── definitions/
+    │   ├── constants/             # route-apis, route-pages, shared, style-themes
+    │   ├── declarations/          # electron.d.ts, forge.d.ts, vite.d.ts
+    │   ├── enums/                 # shared.enum.ts
+    │   ├── interfaces/            # auth.interface.ts, shared.interface.ts
+    │   └── types/                 # auth.type.ts, ipc.type.ts, shared.type.ts
+    └── utils/                     # amount, convert, format, logger, notification, shared
 ```
+
+---
 
 ## 🚀 Entry Points
 
-| Process      | Entry                       | Description                                    |
-| ------------ | --------------------------- | ---------------------------------------------- |
-| **Main**     | `src/main/main.ts`          | Electron app lifecycle, BrowserWindow creation |
-| **Preload**  | `src/main/preload.ts`       | IPC bridge with context isolation              |
-| **Renderer** | `src/renderer/renderer.tsx` | React application mount point                  |
+| Process  | Entry                       | Purpose                    |
+| -------- | --------------------------- | -------------------------- |
+| Main     | `src/main/main.ts`          | Electron app lifecycle     |
+| Preload  | `src/main/preload.ts`       | IPC bridge (contextBridge) |
+| Renderer | `src/renderer/renderer.tsx` | React app bootstrap        |
+
+---
 
 ## 📦 Core Modules
 
-### Main Process (`src/main/`)
+### Authentication System
 
-| Module            | Exports                                      | Purpose                                 |
-| ----------------- | -------------------------------------------- | --------------------------------------- |
-| `main.ts`         | `createWindow`                               | Window management, app lifecycle events |
-| `ipc-handlers.ts` | `setupIpcHandlers`, `removeIpcHandlers`      | App, window, file, store IPC handlers   |
-| `preload.ts`      | `electronHandler`, `ALLOWED_INVOKE_CHANNELS` | Secure IPC bridge                       |
+- **Store**: `stores/auth.store.ts` - Zustand store with token persistence
+- **APIs**: `apis/auth.api.ts` - authLoginApi, authMeApi, authRefreshTokenApi, authRegisterApi
+- **Hooks**: `hooks/auth/` - TanStack Query mutations/queries (useAuthMeQuery)
+- **Flow**: Token → store2 localStorage → axios interceptor → auto-refresh on 401
 
-### Renderer Core (`src/renderer/`)
+### Routing System
 
-| Module          | Exports                       | Purpose                            |
-| --------------- | ----------------------------- | ---------------------------------- |
-| `App.tsx`       | `App`, `queryClient`          | Root with ErrorBoundary, providers |
-| `AppRoutes.tsx` | `AppRoutes`, `ProtectedRoute` | Auto-route discovery, auth guards  |
+- **Discovery**: `routes/*.route.tsx` auto-loaded via Vite glob
+- **Protection**: `AppRoutes.tsx` → ProtectedRoute → auth check
+- **Meta**: `requiresAuth`, `roles`, `title` per route
+- **Router**: HashRouter (Electron file:// compatibility)
 
-### State Management (`src/renderer/stores/`)
+### Component Library
 
-| Store              | Key Exports       | Purpose                      |
-| ------------------ | ----------------- | ---------------------------- |
-| `auth.store.ts`    | `useAuthStore`    | Token, user info, auth state |
-| `loading.store.ts` | `useLoadingStore` | Global loading state         |
+- **Base Components** (22): Button, Input, Select, Table, Modal, DatePicker, LucideIcon, etc.
+- **Global Components** (5): TheTopbar, TheSidebar, TheLoading, ThePageLoading, TheBreadcrumb
+- **Icons**: BaseLucideIcon (lucide-react) for standard icons; custom SVGs only for brand/flags
+- **Pattern**: Wrap Ant Design with project defaults
 
-### API Layer (`src/renderer/apis/`)
+### State Management
 
-| API             | Endpoints                         | Purpose              |
-| --------------- | --------------------------------- | -------------------- |
-| `auth.api.ts`   | login, register, profile, refresh | Authentication flows |
-| `shared.api.ts` | Generic API helpers               | Shared API utilities |
+- **Client State**: Zustand stores with devtools middleware
+- **Server State**: TanStack Query for API caching
+- **Persistence**: store2 for localStorage (ACCESS_TOKEN, THEME, LANGUAGE)
 
-### Axios Configuration (`src/renderer/libs/axios/`)
+### Axios Layer
 
-| Module       | Purpose                                                                |
-| ------------ | ---------------------------------------------------------------------- |
-| `configs.ts` | Axios instance with interceptors (auto token, snake_case ↔ camelCase) |
-| `utils.ts`   | Request/response transformation utilities                              |
+- **Config**: `libs/axios/axios.config.ts`
+- **Features**: Auto Bearer token, snake_case ↔ camelCase, 401 refresh handling
+
+---
 
 ## 🧩 Component Library
 
 ### Base Components (Ant Design Wrappers)
 
-`BaseAutocomplete` `BaseButton` `BaseCheckbox` `BaseCheckboxGroup` `BaseDatePicker` `BaseDropdown` `BaseFormItem` `BaseImage` `BaseInput` `BaseInputNumber` `BaseMenu` `BaseModal` `BasePagination` `BasePopover` `BaseSelect` `BaseSwitch` `BaseTable` `BaseTimePicker`
+`BaseAutocomplete` `BaseButton` `BaseCheckbox` `BaseDatePicker` `BaseDrawer` `BaseDropdown` `BaseFormItem` `BaseImage` `BaseInput` `BaseInputNumber` `BaseLucideIcon` `BaseMenu` `BaseModal` `BasePagination` `BasePopover` `BaseSelect` `BaseSwitch` `BaseTable` `BaseTag` `BaseTimePicker` `BaseTooltip` `BaseUpload`
 
 ### Global Components
 
-`TheBreadcrumb` `TheLoading` `TheSidebar` `TheTopbar`
+`TheBreadcrumb` `TheLoading` `ThePageLoading` `TheSidebar` `TheTopbar`
 
 ### Layouts
 
 `DefaultLayout` `ErrorLayout` `GuestLayout`
+
+---
 
 ## 🪝 Custom Hooks
 
 ### Auth Hooks (`hooks/auth/`)
 
 - `use-auth-mutations.ts` - Login, register, logout mutations
-- `use-auth-queries.ts` - Profile, session queries
+- `use-auth-queries.ts` - useAuthMeQuery for user session
 
 ### Shared Hooks (`hooks/shared/`)
 
@@ -113,6 +161,8 @@ codebase-electron/
 - `use-breakpoints.ts` - Responsive breakpoint detection
 - `use-window-scroll.ts` - Scroll position tracking
 
+---
+
 ## 🛤️ Routes (Auto-Discovered)
 
 | Route File            | Path        | Auth |
@@ -123,65 +173,52 @@ codebase-electron/
 | `forbidden.route.tsx` | `/403`      | No   |
 | `not-found.route.tsx` | `/404`      | No   |
 
-## 📋 Shared Definitions (`src/shared/definitions/`)
+---
 
-### Constants
+## 📋 Key Constants
 
-`BREAKPOINTS` `COOKIE_KEYS` `ERROR_CODES` `NODE_ENVS` `QUERY_KEYS` `REGEXES` `STORAGE_KEYS`
+| Constant       | Location              | Values                             |
+| -------------- | --------------------- | ---------------------------------- |
+| `AUTH_API`     | `route-apis.const.ts` | LOGIN, ME, REFRESH_TOKEN, REGISTER |
+| `STORAGE_KEYS` | `shared.const.ts`     | ACCESS_TOKEN, LANGUAGE, THEME      |
+| `QUERY_KEYS`   | `shared.const.ts`     | AUTH.ME                            |
+| `BREAKPOINTS`  | `shared.const.ts`     | MOBILE: 768, TABLET: 1024          |
 
-### Types/Interfaces
-
-- `auth.type.ts` / `auth.interface.ts` - Authentication types
-- `shared.type.ts` / `shared.interface.ts` - Common types
-- `ipc.type.ts` - IPC channel types
-
-### Utilities (`src/shared/utils/`)
-
-`amount.util` `convert.util` `format.util` `logger.util` `notification.util` `shared.util`
+---
 
 ## 🔧 Configuration Files
 
-| File                      | Purpose                                    |
-| ------------------------- | ------------------------------------------ |
-| `forge.config.ts`         | Electron Forge packaging/distribution      |
-| `vite.main.config.ts`     | Vite config for main process               |
-| `vite.preload.config.ts`  | Vite config for preload script             |
-| `vite.renderer.config.ts` | Vite config for renderer (React)           |
-| `tsconfig.json`           | TypeScript configuration                   |
-| `eslint.config.mjs`       | ESLint with perfectionist, i18next plugins |
-| `commitlint.config.mjs`   | Commit message validation                  |
-| `prettier.config.mjs`     | Code formatting                            |
-| `tailwind.config.ts`      | Tailwind CSS v4 configuration              |
+| File                      | Purpose                                  |
+| ------------------------- | ---------------------------------------- |
+| `forge.config.ts`         | Electron Forge build/packaging           |
+| `vite.main.config.ts`     | Main process Vite config                 |
+| `vite.preload.config.ts`  | Preload script Vite config               |
+| `vite.renderer.config.ts` | Renderer Vite config (React, SVGR, SCSS) |
+| `tsconfig.json`           | TypeScript strict mode                   |
+| `eslint.config.mjs`       | ESLint flat config                       |
+| `commitlint.config.mjs`   | Commit message format                    |
 
-## 🌐 i18n Languages
-
-- English (`locales/en.json`)
-- Japanese (`locales/ja.json`)
-- Vietnamese (`locales/vi.json`)
-
-## 📝 Quick Commands
-
-```bash
-pnpm start          # Development mode
-pnpm check-all      # Format + Lint + Type-check (parallel)
-pnpm package        # Package for distribution
-pnpm make           # Create installers
-```
+---
 
 ## 🔗 Key Dependencies
 
 | Package               | Version | Purpose              |
 | --------------------- | ------- | -------------------- |
-| electron              | 35.x    | Desktop framework    |
-| react                 | 18.x    | UI library           |
-| antd                  | 5.23.x  | Component library    |
-| zustand               | 5.x     | State management     |
-| @tanstack/react-query | 5.x     | Server state         |
-| react-router          | 7.x     | Routing              |
-| axios                 | 1.x     | HTTP client          |
-| i18next               | 24.x    | Internationalization |
-| tailwindcss           | 4.x     | Utility CSS          |
-| yup                   | 1.x     | Validation           |
+| electron              | 35.4.0  | Desktop framework    |
+| react                 | 18.3.1  | UI library           |
+| antd                  | 5.23.0  | Component library    |
+| lucide-react          | 0.556.0 | Icon library         |
+| @tanstack/react-query | 5.75.2  | Server state         |
+| zustand               | 5.0.2   | Client state         |
+| react-router          | 7.12.0  | Routing              |
+| i18next               | 24.2.0  | Internationalization |
+| tailwindcss           | 4.1.11  | Styling              |
+| yup                   | 1.6.1   | Validation           |
+| axios                 | 1.13.2  | HTTP client          |
+| react-error-boundary  | 6.0.0   | Error handling       |
+| js-cookie             | 3.0.5   | Cookie management    |
+
+---
 
 ## 🏗️ Architecture Patterns
 
@@ -203,20 +240,83 @@ Zustand Store ←── Response Interceptor ←─┘
 (auth, loading)    (camelCase conversion)
 ```
 
-### Route Discovery
+---
 
+## 📝 Quick Commands
+
+```bash
+# Setup
+pnpm install && pnpm prepare
+
+# Development
+pnpm start                    # Launch Electron dev
+
+# Quality (before commit)
+pnpm check-all                # format + lint + type-check
+
+# Build
+pnpm package                  # Package app
+pnpm make                     # Create distributables
 ```
-routes/*.route.tsx → Vite glob import → AppRoutes → ProtectedRoute wrapper
-                                              ↓
-                                    Auth check (useAuthStore)
-```
+
+---
+
+## 🎨 Theme System
+
+- `useTheme()` hook: dark/light mode with localStorage persistence via `data-theme` attribute
+- `getThemeColor('ICON_SVG')` for theme-aware colors (DARK_THEME / LIGHT_THEME / ROOT_THEME)
+- Theme constants: `@/shared/definitions/constants/style-themes.const`
+
+---
+
+## 📡 IPC Channels
+
+| Channel                | Purpose                    |
+| ---------------------- | -------------------------- |
+| `app:get-version`      | Application version        |
+| `app:get-platform`     | OS platform                |
+| `window:minimize`      | Minimize window            |
+| `window:maximize`      | Maximize/restore window    |
+| `window:close`         | Close window               |
+| `file:open-dialog`     | Open file picker           |
+| `file:save-dialog`     | Save file dialog           |
+| `store:get/set/delete` | Persistent key-value store |
+
+---
 
 ## ⚠️ Critical Patterns
 
 1. **Package Manager**: pnpm only (enforced by preinstall hook)
 2. **No `any` types**: ESLint error on explicit any
-3. **Console**: Only `console.error` and `console.info` allowed
+3. **Logging**: Use `logger.error()` / `logger.info()` only
 4. **Commits**: Must follow `[TICKET-XXX]: Message` format
 5. **Branches**: Must match `feature|bugfix|hotfix|release/*` or `master`
 6. **Router**: HashRouter required for Electron file:// protocol
 7. **IPC Security**: Channel whitelist in preload.ts
+
+---
+
+## 🏷️ Naming Conventions
+
+| Type             | Pattern          | Example             |
+| ---------------- | ---------------- | ------------------- |
+| Base Component   | `Base*.tsx`      | `BaseButton.tsx`    |
+| Global Component | `The*.tsx`       | `TheTopbar.tsx`     |
+| Route File       | `*.route.tsx`    | `auth.route.tsx`    |
+| Hook             | `use-*.ts`       | `use-theme.ts`      |
+| Store            | `*.store.ts`     | `auth.store.ts`     |
+| API              | `*.api.ts`       | `auth.api.ts`       |
+| Schema           | `*.schema.ts`    | `auth.schema.ts`    |
+| Constant         | `*.const.ts`     | `shared.const.ts`   |
+| Interface        | `*.interface.ts` | `auth.interface.ts` |
+| Type             | `*.type.ts`      | `auth.type.ts`      |
+| Util             | `*.util.ts`      | `format.util.ts`    |
+
+---
+
+## ⚡ Path Aliases
+
+```typescript
+'@/*'  → './src/*'       // @/renderer/stores/auth.store
+'@@/*' → './*'           // @@/locales/en.json
+```

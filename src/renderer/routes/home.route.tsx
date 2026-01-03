@@ -1,7 +1,14 @@
+import { lazy } from 'react';
+
 import { DefaultLayout } from '@/renderer/layouts/DefaultLayout';
-import { HomePage } from '@/renderer/pages/HomePage';
 import { HOME_PAGE } from '@/shared/definitions/constants/route-pages.const';
 import { EUserRole } from '@/shared/definitions/enums/shared.enum';
+
+const HomePage = lazy(() =>
+  import('@/renderer/pages/HomePage').then((module) => ({
+    default: module.HomePage,
+  })),
+);
 
 export default {
   children: [

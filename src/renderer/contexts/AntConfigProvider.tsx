@@ -9,7 +9,6 @@ import enUS from 'antd/locale/en_US';
 import { useState } from 'react';
 
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
-import { useThemeColor } from '@/renderer/hooks/shared/use-theme-color';
 import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
 
 interface IProps {
@@ -19,8 +18,7 @@ interface IProps {
 type TLocale = ConfigProviderProps['locale'];
 
 export const AntConfigProvider: React.FC<IProps> = ({ children }) => {
-  const { isDark } = useTheme();
-  const { getThemeColor } = useThemeColor();
+  const { getThemeColor, isDark } = useTheme();
 
   const [locale, _setLocale] = useState<TLocale>(enUS);
 

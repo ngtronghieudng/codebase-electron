@@ -1,29 +1,26 @@
 import { Avatar, Badge, MenuProps } from 'antd';
+import { Bell, Moon, Sun } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-import IconDarkMode from '@/renderer/assets/icons/shared/IconDarkMode.svg?react';
 import IconEnglish from '@/renderer/assets/icons/shared/IconEnglish.svg?react';
 import IconJapanese from '@/renderer/assets/icons/shared/IconJapanese.svg?react';
-import IconLightMode from '@/renderer/assets/icons/shared/IconLightMode.svg?react';
-import IconNotification from '@/renderer/assets/icons/shared/IconNotification.svg?react';
 import IconVietnamese from '@/renderer/assets/icons/shared/IconVietnamese.svg?react';
 import styles from '@/renderer/assets/styles/components/shared/the-topbar.module.scss';
 import { BaseDropdown } from '@/renderer/components/shared/BaseDropdown';
+import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { TheBreadcrumb } from '@/renderer/components/shared/TheBreadcrumb';
 import { useLanguage } from '@/renderer/hooks/shared/use-language';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
-import { useThemeColor } from '@/renderer/hooks/shared/use-theme-color';
 import { notifications } from '@/renderer/mocks/the-topbar.mock';
 import { useAuthStore } from '@/renderer/stores/auth.store';
 import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
 import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
 
 export const TheTopbar: React.FC = () => {
-  const { isDark, setTheme } = useTheme();
+  const { getThemeColor, isDark, setTheme } = useTheme();
   const { language, setLanguage } = useLanguage();
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
-  const { getThemeColor } = useThemeColor();
 
   const i18nOptions = Object.entries(ELanguageCode).map(([key, value]) => ({
     label: key,
@@ -76,10 +73,10 @@ export const TheTopbar: React.FC = () => {
   };
 
   const renderIcon = () => {
-    const IconComponent = isDark ? IconLightMode : IconDarkMode;
     return (
-      <IconComponent
-        fill={getThemeColor('ICON_SVG')}
+      <BaseLucideIcon
+        color={getThemeColor('ICON_SVG')}
+        icon={isDark ? Sun : Moon}
         onClick={() => setTheme(isDark ? 'light' : 'dark')}
       />
     );
@@ -100,7 +97,7 @@ export const TheTopbar: React.FC = () => {
 
         <BaseDropdown menu={notificationMenu}>
           <Badge count={notifications.length}>
-            <IconNotification fill={getThemeColor('ICON_SVG')} />
+            <BaseLucideIcon color={getThemeColor('ICON_SVG')} icon={Bell} />
           </Badge>
         </BaseDropdown>
 

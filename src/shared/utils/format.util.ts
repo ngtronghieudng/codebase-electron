@@ -8,6 +8,7 @@ export const cleanQueryString = <T>(queryParams: TObjectUnknown): T => {
       ([_, value]) => value !== undefined && value !== '',
     ),
   );
+
   return result as T;
 };
 

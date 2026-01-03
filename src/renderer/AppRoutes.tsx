@@ -111,11 +111,13 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
       const userRole = useAuthStore.getState().userInfo?.role;
       const requiresRoles = route.meta.roles || [];
       const hasRequiredRole = requiresRoles.some((role) => role === userRole);
+
       if (requiresRoles.length && !hasRequiredRole) {
         setElement(<Navigate replace to={FORBIDDEN_PAGE} />);
         return;
       }
     }
+
     setElement(route.element);
   }, [
     route.element,

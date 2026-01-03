@@ -4,6 +4,28 @@ import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
+  build: {
+    chunkSizeWarningLimit: 500,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-antd': ['antd'],
+          'vendor-form': ['react-hook-form', '@hookform/resolvers', 'yup'],
+          'vendor-react': ['react', 'react-dom', 'react-router'],
+          'vendor-state': ['zustand', '@tanstack/react-query'],
+          'vendor-utils': [
+            'axios',
+            'dayjs',
+            'lodash-es',
+            'i18next',
+            'react-i18next',
+          ],
+        },
+      },
+    },
+    sourcemap: false,
+  },
+
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',

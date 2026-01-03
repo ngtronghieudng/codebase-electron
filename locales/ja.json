@@ -17,6 +17,15 @@
     "loginNow": "今すぐログイン"
   },
 
+  "errors": {
+    "code": "エラー",
+    "somethingWentWrong": "問題が発生しました",
+    "pageNotFound": "ページが見つかりません",
+    "description": "ご心配なく、あなたのせいではありません。もう一度お試しいただくか、ホームページに戻ってください。",
+    "tryAgain": "再試行",
+    "goBack": "戻る"
+  },
+
   "shared": {
     "hello": "こんにちは",
     "dashboard": "ダッシュボード",

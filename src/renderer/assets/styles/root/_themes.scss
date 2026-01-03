@@ -1,23 +1,29 @@
 :root {
   --roboto-font: 'Roboto', sans-serif;
 
-  --white-color: #fff;
-  --black-color: #000;
+  --white-color: #ffffff;
+  --black-color: #000000;
   --primary-color: #01c0c8;
 
   --theme-primary-color: #01c0c8;
-  --theme-text-color: #000;
+  --theme-text-color: #000000;
+  --theme-text-tertiary-color: rgba(0, 0, 0, 0.4);
+
   --theme-bg-body-color: #f0f2f5;
-  --theme-bg-content-color: #fff;
+  --theme-bg-content-color: #ffffff;
+
   --theme-box-shadow-color: #2553b91a;
   --theme-scrollbar-color: #b0b0b0;
 }
 
 [data-theme='dark'] {
   --theme-primary-color: #01c0c8;
-  --theme-text-color: #fff;
+  --theme-text-color: #ffffff;
+  --theme-text-tertiary-color: rgba(255, 255, 255, 0.5);
+
   --theme-bg-body-color: #16293e;
   --theme-bg-content-color: #111c2d;
+
   --theme-box-shadow-color: #2553b91a;
   --theme-scrollbar-color: #555;
 }

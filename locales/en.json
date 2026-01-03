@@ -17,6 +17,15 @@
     "loginNow": "Login now"
   },
 
+  "errors": {
+    "code": "Error",
+    "somethingWentWrong": "Something went wrong",
+    "pageNotFound": "Page not found",
+    "description": "Don't worry, it's not your fault. Please try again or go back to the home page.",
+    "tryAgain": "Try again",
+    "goBack": "Go back"
+  },
+
   "shared": {
     "hello": "Hello",
     "dashboard": "Dashboard",

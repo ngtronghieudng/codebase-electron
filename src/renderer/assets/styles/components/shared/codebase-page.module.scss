@@ -1,5 +1,5 @@
 .container {
-  @include flexbox-style($flex-direction: column);
+  @include flexbox-style($align-items: unset, $flex-direction: column);
 
   > section {
     position: relative;

@@ -1,39 +1,52 @@
-import { Result } from 'antd';
+import { XCircle } from 'lucide-react';
 import { FallbackProps } from 'react-error-boundary';
-import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
+import styles from '@/renderer/assets/styles/components/shared/error-layout.module.scss';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
+import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { HOME_PAGE } from '@/shared/definitions/constants/route-pages.const';
 
 type TProps = Partial<FallbackProps>;
 
 export const ErrorLayout: React.FC<TProps> = ({ resetErrorBoundary }) => {
-  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleRetry = () => {
     if (resetErrorBoundary) resetErrorBoundary();
     else window.location.reload();
   };
 
+  const handleGoBack = () => {
+    window.location.href = HOME_PAGE;
+  };
+
   return (
-    <div className="flex-center min-h-screen p-4">
-      <Result
-        extra={[
-          <BaseButton key="retry" onClick={handleRetry}>
-            Try again
-          </BaseButton>,
-          <BaseButton
-            key="home"
-            onClick={() => navigate(HOME_PAGE)}
-            type="default"
-          >
-            Go back
-          </BaseButton>,
-        ]}
-        status="error"
-        subTitle="We're sorry for the inconvenience. Please try again or go back."
-        title="Something went wrong"
-      />
+    <div className={styles.errorPage}>
+      <div className={styles.errorPageContainer}>
+        <div className={styles.errorPageIconWrapper}>
+          <BaseLucideIcon
+            className={styles.errorPageIcon}
+            icon={XCircle}
+            strokeWidth={2}
+          />
+        </div>
+
+        <p className={styles.errorPageCode}>{t('errors.code')}</p>
+        <h1 className={styles.errorPageTitle}>
+          {t('errors.somethingWentWrong')}
+        </h1>
+        <p className={styles.errorPageDescription}>{t('errors.description')}</p>
+
+        <div className={styles.errorPageActions}>
+          <BaseButton onClick={handleRetry} type="primary">
+            {t('errors.tryAgain')}
+          </BaseButton>
+          <BaseButton onClick={handleGoBack} type="default">
+            {t('errors.goBack')}
+          </BaseButton>
+        </div>
+      </div>
     </div>
   );
 };

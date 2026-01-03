@@ -23,6 +23,7 @@ export const convertToCamelCase = <T>(
     }
     result[newKey] = value;
   });
+
   return result as T;
 };
 
@@ -44,5 +45,6 @@ export const convertToSnakeCase = <T>(
     }
     result[newKey] = value;
   });
+
   return result as T;
 };

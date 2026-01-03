@@ -6,6 +6,7 @@ import {
 } from 'axios';
 
 import type {
+  TErrorCodes,
   TFailureResponse,
   TSuccessResponse,
 } from '@/shared/definitions/types/shared.type';
@@ -45,7 +46,7 @@ const request = async <D = unknown, M = unknown>(
     };
     return result;
   } catch (error) {
-    let errorCode = ERROR_CODES.INTERNAL_ERROR;
+    let errorCode: TErrorCodes = ERROR_CODES.INTERNAL_ERROR;
     let errorData = null;
     let errorMessage = 'An error occurred';
     let statusCode = 500;

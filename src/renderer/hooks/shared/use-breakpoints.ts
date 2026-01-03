@@ -5,15 +5,17 @@ import { BREAKPOINTS } from '@/shared/definitions/constants/shared.const';
 export const useBreakpoints = () => {
   const { width } = useWindowSize();
 
-  const isMobile = width ? width < BREAKPOINTS.MOBILE : false;
-  const isTablet = width
-    ? width >= BREAKPOINTS.MOBILE && width < BREAKPOINTS.TABLET
-    : false;
-  const isDesktop = width ? width >= BREAKPOINTS.TABLET : false;
+  const isTablet = width >= BREAKPOINTS.MD && width < BREAKPOINTS.LG;
+  const isLaptop = width >= BREAKPOINTS.LG && width < BREAKPOINTS.XL;
+  const isMobileDown = width < BREAKPOINTS.MD;
+  const isDesktopUp = width >= BREAKPOINTS.XL;
+  const isLaptopUp = width >= BREAKPOINTS.LG;
 
   return {
-    isDesktop,
-    isMobile,
+    isDesktopUp,
+    isLaptop,
+    isLaptopUp,
+    isMobileDown,
     isTablet,
     screenWidth: width,
   };

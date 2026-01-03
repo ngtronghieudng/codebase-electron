@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CheckboxProps, Form, PaginationProps, Tooltip } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
+import { Bell, LayoutDashboard, Search, Settings, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import {
   FormProvider,
@@ -13,12 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { useDebounceCallback } from 'usehooks-ts';
 
 import { healthCheckApi } from '@/renderer/apis/shared.api';
-import IconDashboard from '@/renderer/assets/icons/shared/IconDashboard.svg?react';
-import IconDelete from '@/renderer/assets/icons/shared/IconDelete.svg?react';
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
-import IconNotification from '@/renderer/assets/icons/shared/IconNotification.svg?react';
-import IconSearch from '@/renderer/assets/icons/shared/IconSearch.svg?react';
-import IconSettings from '@/renderer/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/renderer/assets/styles/components/shared/codebase-page.module.scss';
 import { BaseAutocomplete } from '@/renderer/components/shared/BaseAutocomplete';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
@@ -30,6 +26,7 @@ import { BaseDatePicker } from '@/renderer/components/shared/BaseDatePicker';
 import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
 import { BaseInput } from '@/renderer/components/shared/BaseInput';
 import { BaseInputNumber } from '@/renderer/components/shared/BaseInputNumber';
+import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { BaseModal } from '@/renderer/components/shared/BaseModal';
 import { BasePagination } from '@/renderer/components/shared/BasePagination';
 import { BaseSelect } from '@/renderer/components/shared/BaseSelect';
@@ -37,7 +34,7 @@ import { BaseSwitch } from '@/renderer/components/shared/BaseSwitch';
 import { BaseTable } from '@/renderer/components/shared/BaseTable';
 import { BaseTimePicker } from '@/renderer/components/shared/BaseTimePicker';
 import { usePagination } from '@/renderer/hooks/shared/use-pagination';
-import { useThemeColor } from '@/renderer/hooks/shared/use-theme-color';
+import { useTheme } from '@/renderer/hooks/shared/use-theme';
 import {
   baseCheckboxOptions,
   baseSelectOptions,
@@ -91,7 +88,7 @@ export const CodebasePage: React.FC = () => {
   const { t } = useTranslation();
   const hideLoading = useLoadingStore((state) => state.hideLoading);
   const showLoading = useLoadingStore((state) => state.showLoading);
-  const { getThemeColor } = useThemeColor();
+  const { getThemeColor } = useTheme();
   const { pagination, setPagination } = usePagination();
   const { showConfirmModal } = useConfirmModal();
   const { handleCatchError } = useHandleCatchError();
@@ -396,14 +393,24 @@ export const CodebasePage: React.FC = () => {
 
         <div className="mb-4 flex gap-2">
           <BaseButton
-            icon={<IconSearch fill={ROOT_THEME.WHITE} height="14" width="14" />}
+            icon={
+              <BaseLucideIcon
+                color={ROOT_THEME.WHITE}
+                icon={Search}
+                size={14}
+              />
+            }
             onClick={handleClickButton}
             shape="circle"
           />
           <BaseButton
             color="blue"
             icon={
-              <IconSettings fill={ROOT_THEME.WHITE} height="14" width="14" />
+              <BaseLucideIcon
+                color={ROOT_THEME.WHITE}
+                icon={Settings}
+                size={14}
+              />
             }
             onClick={handleClickButton}
             shape="circle"
@@ -412,7 +419,11 @@ export const CodebasePage: React.FC = () => {
           <BaseButton
             color="green"
             icon={
-              <IconDashboard fill={ROOT_THEME.WHITE} height="14" width="14" />
+              <BaseLucideIcon
+                color={ROOT_THEME.WHITE}
+                icon={LayoutDashboard}
+                size={14}
+              />
             }
             onClick={handleClickButton}
             shape="circle"
@@ -433,7 +444,13 @@ export const CodebasePage: React.FC = () => {
           />
           <BaseButton
             color="danger"
-            icon={<IconDelete fill={ROOT_THEME.WHITE} height="14" width="14" />}
+            icon={
+              <BaseLucideIcon
+                color={ROOT_THEME.WHITE}
+                icon={Trash2}
+                size={14}
+              />
+            }
             onClick={handleClickButton}
             shape="circle"
             variant="solid"
@@ -441,10 +458,10 @@ export const CodebasePage: React.FC = () => {
           <BaseButton
             color="default"
             icon={
-              <IconNotification
-                fill={getThemeColor('ICON_SVG')}
-                height="14"
-                width="14"
+              <BaseLucideIcon
+                color={getThemeColor('ICON_SVG')}
+                icon={Bell}
+                size={14}
               />
             }
             onClick={handleClickButton}

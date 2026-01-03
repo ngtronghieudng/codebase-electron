@@ -13,8 +13,8 @@ export const authLoginApi = async (data: IAuthLoginRequest) => {
   return await post<IAuthLoginResponse>(url, data, { withCredentials: true });
 };
 
-export const authProfileApi = async () => {
-  const url = AUTH_API.PROFILE;
+export const authMeApi = async () => {
+  const url = AUTH_API.ME;
   return await get<IUserInfo>(url);
 };
 

@@ -33,6 +33,6 @@ export enum EUserRole {
   Admin = 'admin',
   Guest = 'guest',
   Moderator = 'moderator',
-  SuperAdmin = 'superAdmin',
+  SuperAdmin = 'super_admin',
   User = 'user',
 }

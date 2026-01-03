@@ -4,304 +4,176 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an Electron application built with:
+Electron desktop application with React 18, TypeScript, Vite, and Ant Design.
 
-- **Electron Forge** for build/packaging
-- **React 18** with TypeScript
-- **Vite** as build tool with SWC for fast compilation
-- **Ant Design (antd)** component library
-- **TanStack Query** for data fetching
-- **React Router v7** for routing
-- **Zustand** for state management
-- **i18next** for internationalization
-- **Tailwind CSS v4** for styling
+**Tech Stack**: Electron Forge | React 18 | TypeScript | Vite + SWC | Ant Design | TanStack Query | Zustand | React Router v7 | i18next | Tailwind CSS v4
 
-**Package Manager**: MUST use `pnpm` (enforced via preinstall hook)
+**Package Manager**: MUST use `pnpm` (npm/yarn/bun rejected via preinstall hook)
 
 ## Development Commands
 
 ```bash
-# Start development mode (opens Electron app)
-pnpm start
+# Setup (first time)
+pnpm install && pnpm prepare
 
-# Code quality checks
-pnpm format        # Format with Prettier
-pnpm lint          # Lint with ESLint (auto-fix)
-pnpm type-check    # TypeScript type checking
-pnpm check-all     # Run all checks (format + lint + type-check in parallel)
+# Development
+pnpm start              # Start Electron app in dev mode
 
-# Build & distribution
-pnpm package       # Package the application
-pnpm make          # Create distribution files
-pnpm publish       # Publish the application
+# Code quality (run before commits)
+pnpm check-all          # Run all checks in parallel (format + lint + type-check)
+pnpm format             # Format with Prettier
+pnpm lint               # Lint with ESLint (auto-fix)
+pnpm type-check         # TypeScript validation
+
+# Build & Distribution
+pnpm package            # Package the application
+pnpm make               # Create distribution files
 ```
 
-## Project Architecture
+## Architecture
 
-### Three-Process Electron Architecture
+### Three-Process Electron Model
 
-1. **Main Process** (`src/main/`)
+```
+src/
+├── main/               # Electron main process (Node.js)
+│   ├── main.ts         # Entry: app lifecycle, window management
+│   ├── preload.ts      # IPC bridge (contextBridge)
+│   └── ipc-handlers.ts # IPC message handlers
+├── renderer/           # React application (Chromium)
+│   └── Entry: renderer.tsx → App.tsx → AppRoutes.tsx
+└── shared/             # Code shared between processes
+    ├── definitions/    # constants, enums, interfaces, types
+    └── utils/          # Utility functions
+```
 
-   - Entry: `main.ts` - Electron app lifecycle and window management
-   - IPC: `ipc-handlers.ts` - Inter-process communication handlers
-   - Preload: `preload.ts` - IPC bridge between main and renderer
+### Renderer Layer Structure
 
-2. **Renderer Process** (`src/renderer/`)
-
-   - React application running in Electron's browser window
-   - Entry: `renderer.tsx` → `App.tsx` → `AppRoutes.tsx`
-
-3. **Shared** (`src/shared/`)
-   - Code shared between main and renderer processes
-   - `definitions/` - Constants, enums, interfaces, types, declarations
-   - `utils/` - Utility functions (amount, convert, format, notification, shared)
-
-### Renderer Architecture Layers
-
-**Component Organization**:
-
-- `components/shared/` - Reusable Base\* components wrapping Ant Design (BaseButton, BaseInput, BaseTable, etc.)
-- `layouts/` - Layout components for page structure
-- `pages/` - Page components mapped to routes
-
-**State Management**:
-
-- `stores/` - Zustand stores with devtools middleware (auth.store.ts, loading.store.ts)
-- Uses `store2` for localStorage persistence (e.g., ACCESS_TOKEN)
-
-**Data Layer**:
-
-- `apis/` - Axios-based API clients (auth.api.ts, shared.api.ts)
-- `libs/axios/` - Axios configuration and utilities
-- TanStack Query for server state management
-
-**Routing**:
-
-- File-based route system: `routes/*.route.tsx` files auto-loaded via Vite glob imports
-- Route metadata supports: `requiresAuth`, `roles`, `title`
-- Protected routes enforce authentication and role-based access control
-- Uses HashRouter for Electron compatibility
-
-**Forms & Validation**:
-
-- `schemas/` - Yup validation schemas
-- React Hook Form with `@hookform/resolvers` and `react-hook-form-antd` integration
-
-**i18n**:
-
-- `libs/react-i18next/` - i18next configuration with custom language detector
-- `locales/` directory at project root for translation files
-
-**Utilities**:
-
-- `hooks/` - Organized by domain (auth/, shared/)
-  - Custom hooks: useConfirmModal, useLanguage, useLocalizedValue, usePagination, useTheme, etc.
+| Layer      | Location              | Purpose                                                   |
+| ---------- | --------------------- | --------------------------------------------------------- |
+| Components | `components/shared/`  | `Base*` wrappers for Ant Design, `The*` global components |
+| Pages      | `pages/`              | Page components                                           |
+| Routes     | `routes/*.route.tsx`  | Auto-discovered via Vite glob imports                     |
+| State      | `stores/`             | Zustand stores with devtools                              |
+| APIs       | `apis/`               | Axios-based API clients                                   |
+| Hooks      | `hooks/{domain}/`     | Domain-organized custom hooks                             |
+| Schemas    | `schemas/`            | Yup validation schemas                                    |
+| i18n       | `libs/react-i18next/` | i18next config; translations in `@@/locales/`             |
 
 ## Path Aliases
 
 ```typescript
-'@/*'  → './src/*'     // Example: '@/renderer/components/shared/BaseButton'
-'@@/*' → './*'         // Example: '@@/locales/en.json'
+'@/*'  → './src/*'      // @/renderer/components/shared/BaseButton
+'@@/*' → './*'          // @@/locales/en.json
 ```
 
-## Code Style & Conventions
+## Ant Design
 
-### Component Naming
+- Refer to `@docs/llms.txt` for official Ant Design component documentation and patterns
+- Prefer Ant Design official patterns. Avoid deprecated props
+- Use `Base*` wrapper components when available before using Ant Design components directly
 
-- Shared components: `Base*` prefix (BaseButton, BaseInput, BaseTable)
-- Layout components: Standard PascalCase
-- Global components: `The*` prefix (TheTopbar, TheSidebar, TheLoading, TheBreadcrumb)
+## Code Conventions
 
-### File Naming
+### Naming
 
-- React components: `.tsx` extension
-- TypeScript files: `.ts` extension
-- Consistent with ESLint perfectionist plugin (natural sorting)
+- **Components**: `Base*` (shared wrappers), `The*` (global singletons), PascalCase (regular)
+- **Files**: `.tsx` for React, `.ts` for TypeScript
+- **Unused vars**: Prefix with `_` to allow
+- **No abbreviations**: Use full, descriptive names for variables, parameters, and functions (e.g. `response` not `res`, `button` not `btn`, `handleSubmit` not `hdlSub`)
 
-### TypeScript
+### TypeScript Rules
 
-- Strict mode enabled with `noImplicitAny`
-- No `any` types allowed (enforced by ESLint: `@typescript-eslint/no-explicit-any: error`)
-- Unused vars with `_` prefix are allowed
+- Strict mode with `noImplicitAny`
+- **No `any` types** (ESLint enforced: `@typescript-eslint/no-explicit-any: error`)
+- **No commented-out code**: Remove unused code instead of commenting it out
 
-### CSS/Styling
+### Logging
 
-- Tailwind CSS v4 with PostCSS
-- SCSS modules with camelCaseOnly locals convention
-- Global SCSS variables/mixins auto-imported from `@/renderer/assets/styles/root/`
+- Use `logger` from `@/shared/utils/logger.util`
+- Only `logger.error()` and `logger.info()` (console.log/warn forbidden)
 
-### Linting
+### Icons
 
-- ESLint with TypeScript, React, i18next, and perfectionist plugins
-- Console statements: Only `console.error` and `console.info` allowed
-- All files must end with newline (`eol-last: always`)
+- **Primary**: Use `BaseLucideIcon` wrapper with icons from `lucide-react`
+  ```tsx
+  import { Search } from 'lucide-react';
+  <BaseLucideIcon icon={Search} color="#fff" size={14} />;
+  ```
+- **Custom SVGs**: Only for brand/flag icons (`assets/icons/shared/`) imported via `?react` suffix
+  ```tsx
+  import IconLogo from '@/renderer/assets/icons/shared/IconLogo.svg?react';
+  <IconLogo fill="currentColor" />;
+  ```
+
+### Styling
+
+- Tailwind CSS v4 + SCSS modules (camelCaseOnly)
+- Global SCSS auto-imported from `@/renderer/assets/styles/root/`
+- Ant Design customizations in `assets/styles/custom/ant-*.scss`
+
+### Theming
+
+- `useTheme()` hook manages dark/light mode (persisted to localStorage)
+- Colors via `getThemeColor('ICON_SVG')` with optional per-theme overrides
+- Applied via `data-theme` attribute on document root
+- Theme constants in `@/shared/definitions/constants/style-themes.const`
 
 ## Git Workflow
 
-### Branch Naming Convention
+### Branch Naming
 
-Must match pattern: `^(feature|bugfix|hotfix|release)/.+|(master)$`
+Pattern: `^(feature|bugfix|hotfix|release)/.+|(master)$`
 
-Example valid branches:
-
-- `feature/user-authentication`
-- `bugfix/login-error`
-- `hotfix/security-patch`
-- `release/v1.0.0`
-- `master`
-
-### Commit Message Format
-
-**Required**: All commits must follow this exact format:
+### Commit Format (Required)
 
 ```
-[TICKET-XXX]: Commit message body
+[TICKET-XXX]: Summary
 
-Additional details in body (required - body cannot be empty)
+Body (required - cannot be empty)
 ```
 
-Example:
+### Pre-commit Hook (Husky)
 
-```
-[TICKET-123]: Add user authentication feature
+Runs automatically: format → lint → validate-branch-name
 
-Implemented JWT-based authentication with refresh token support
-```
-
-**Enforced by**:
-
-- commitlint with custom prefix rule
-- Husky pre-commit hook runs: lint-staged + validate-branch-name
-
-### Pre-commit Hook
-
-Automatically runs on `git commit`:
-
-1. Formats staged files with Prettier
-2. Lints staged files with ESLint
-3. Validates branch name
-4. Stages formatted/fixed files
-
-## Key Technical Patterns
+## Key Patterns
 
 ### Authentication Flow
 
-1. Token stored in localStorage via `store2` (STORAGE_KEYS.ACCESS_TOKEN)
-2. Zustand auth store manages: accessToken, userInfo, isAuthenticated
-3. Auto-initialize on protected routes: calls `authProfileApi()` to verify token
-4. Refresh token support via `authRefreshTokenApi()`
-5. Route guards check authentication + role-based permissions
+1. Token in localStorage via `store2` (STORAGE_KEYS.ACCESS_TOKEN)
+2. Zustand `auth.store` manages: accessToken, userInfo, isAuthenticated
+3. Protected routes call `authMeApi()` to verify token
+4. Refresh token via `authRefreshTokenApi()` on 401
 
 ### Route System
 
-- Auto-discovered routes from `src/renderer/routes/*.route.tsx`
-- Each route file exports default object with RouteObject + optional meta
+- File-based: `routes/*.route.tsx` auto-discovered
 - Meta properties: `requiresAuth`, `roles`, `title`
-- ProtectedRoute component handles auth initialization and access control
-- Uses HashRouter (required for Electron file:// protocol)
+- `ProtectedRoute` handles auth + role-based access
+- Uses **HashRouter** (required for Electron file:// protocol)
 
-### Build Configuration
+### Axios Interceptors
 
-- **Vite** for renderer with React SWC plugin and SVGR
-- **Electron Forge** for packaging with VitePlugin
-- Separate configs: `vite.main.config.ts`, `vite.preload.config.ts`, `vite.renderer.config.ts`
-- Fuses plugin for security (cookie encryption, ASAR integrity, etc.)
+- **Request**: Auto-adds Bearer token, converts to snake_case
+- **Response**: Converts to camelCase, handles 401 with token refresh
 
-### State Management Patterns
+### IPC Communication
 
-- Zustand stores with devtools middleware for debugging
-- Persistent state via store2 (localStorage wrapper)
-- Server state via TanStack Query
-- Loading state centralized in loading.store.ts
-
-## Environment Requirements
-
-- Node.js: `>= 22`
-- pnpm: `>= 10`
-- npm/yarn/bun: Not allowed (enforced)
-
-## Common Development Patterns
-
-### Adding a New Route
-
-1. Create `src/renderer/routes/[name].route.tsx`
-2. Export default RouteObject with meta (requiresAuth, roles, title)
-3. Route auto-discovered via Vite glob import in AppRoutes.tsx
-
-### Creating Base Components
-
-1. Add to `src/renderer/components/shared/Base[Name].tsx`
-2. Wrap Ant Design components with project-specific defaults
-3. Use TypeScript interfaces for props
-4. Export as named export
-
-### Adding Custom Hooks
-
-1. Domain-specific: `src/renderer/hooks/[domain]/use-[name].ts`
-2. Shared utilities: `src/renderer/hooks/shared/use-[name].ts`
-
-### API Integration
-
-1. Define API function in `src/renderer/apis/[domain].api.ts`
-2. Use configured axios instance from `src/renderer/libs/axios/configs.ts`
-3. Handle errors via `use-handle-catch-error.ts` hook
-4. Integrate with TanStack Query for caching/state
-
-### Adding Shared Types
-
-1. Interfaces: `src/shared/definitions/interfaces/[domain].interface.ts`
-2. Types: `src/shared/definitions/types/[domain].type.ts`
-3. Enums: `src/shared/definitions/enums/[domain].enum.ts`
-4. Constants: `src/shared/definitions/constants/[domain].const.ts`
-
-## Important Implementation Notes
+- Main process: `ipc-handlers.ts` with whitelist validation
+- Renderer: `use-electron-api.ts` hook with type-safe invoke
 
 ### Error Handling
 
-- React Error Boundary implemented in `ErrorBoundary.tsx` to catch component errors
-- Wraps entire app in `App.tsx` to prevent crashes
-- Shows user-friendly error UI with reload option
-- Logs errors via logger utility for debugging
+- `ErrorBoundary.tsx` wraps entire app
+- Errors logged via `logger.error()`
 
-### Performance Considerations
+### Import Ordering
 
-- Routes use Vite's eager glob imports for optimal loading
-- ProtectedRoute component optimizes auth checks
-- Zustand stores use selective subscriptions to minimize re-renders
-- TanStack Query provides automatic caching and request deduplication
+ESLint `perfectionist` plugin enforces import order: external libraries first, then `@/` aliases, then relative imports. Run `pnpm lint` to auto-fix.
 
-### Security Patterns
+## Environment
 
-- IPC channels use whitelist validation in preload script
-- Context isolation and sandbox mode enabled
-- Access tokens stored via store2 abstraction
-- Axios interceptors handle authentication headers automatically
-- Case conversion (snake_case ↔ camelCase) applied transparently in axios interceptors
-
-### Axios Configuration Details
-
-**Request Interceptor** (`libs/axios/configs.ts`):
-
-- Automatically adds Bearer token from localStorage
-- Converts request params/data to snake_case
-- Preserves FormData without conversion
-
-**Response Interceptor**:
-
-- Converts response data to camelCase
-- Handles 401 Unauthorized errors with `handleUnauthorizedError`
-- Token refresh mechanism prevents session interruption
-
-### IPC Communication Pattern
-
-**Main Process** (`main/ipc-handlers.ts`):
-
-- Registers handlers: app, window, file dialogs, store operations
-- In-memory store for main process data persistence
-- Type-safe channel definitions
-
-**Renderer Process** (`renderer/hooks/shared/use-electron-api.ts`):
-
-- Type-safe IPC invoke wrapper
-- Channel validation against allowlist
-- Error handling with logger integration
+- Node.js: `>= 22`
+- pnpm: `>= 10`
+- Env vars prefixed with `VITE_` (see `.env.sample`): `VITE_API_BASE_URL`, `VITE_NODE_ENV`, `VITE_PORT`

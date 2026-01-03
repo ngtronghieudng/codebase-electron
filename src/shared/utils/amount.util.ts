@@ -13,6 +13,7 @@ export const parseAmount = (formattedAmount: string): number => {
 
   const cleanNumber = formattedAmount.replace(/[^0-9.]/g, '');
   const number = parseFloat(cleanNumber);
+
   return isNaN(number) ? 0 : number;
 };
 

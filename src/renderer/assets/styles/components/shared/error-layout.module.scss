@@ -1,0 +1,105 @@
+.errorPage {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--theme-bg-body-color);
+  @include flexbox-style(0, center, center);
+  padding: 24px;
+
+  &Container {
+    width: 100%;
+    max-width: 480px;
+    padding: 56px 48px;
+    text-align: center;
+    background: var(--theme-bg-card-color);
+    border-radius: 24px;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  &IconWrapper {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    @include flexbox-style(0, center, center);
+
+    [data-theme='dark'] & {
+      background: linear-gradient(
+        135deg,
+        rgba(239, 68, 68, 0.2) 0%,
+        rgba(220, 38, 38, 0.15) 100%
+      );
+    }
+  }
+
+  &Icon {
+    width: 40px;
+    height: 40px;
+    color: #dc2626;
+
+    [data-theme='dark'] & {
+      color: #f87171;
+    }
+  }
+
+  &Code {
+    margin: 0 0 12px 0;
+    @include text-style(
+      14px,
+      600,
+      1,
+      var(--theme-text-tertiary-color),
+      inherit,
+      true
+    );
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  &Title {
+    margin: 0 0 12px 0;
+    @include text-style(28px, 700, 1.3, var(--theme-text-color), inherit, true);
+    letter-spacing: -0.5px;
+  }
+
+  &Description {
+    margin: 0 0 36px 0;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    @include text-style(14px, 400, 1.7, var(--theme-text-color), inherit, true);
+  }
+
+  &Actions {
+    @include flexbox-style(12px, center, center);
+  }
+}
+
+@include respond(xs, md) {
+  .errorPage {
+    padding: 16px;
+
+    &Container {
+      padding: 40px 24px;
+    }
+
+    &IconWrapper {
+      margin-bottom: 24px;
+    }
+
+    &Description {
+      margin-bottom: 28px;
+    }
+
+    &Actions {
+      flex-direction: column;
+      width: 100%;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

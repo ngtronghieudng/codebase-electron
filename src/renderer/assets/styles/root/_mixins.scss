@@ -53,7 +53,7 @@
   $max-size: map-get($breakpoints, $max-breakpoint);
 
   @if $min-size and $max-size {
-    @media (min-width: $min-size) and (max-width: $max-size) {
+    @media (width >= #{$min-size}) and (width < #{$max-size}) {
       @content;
     }
   }

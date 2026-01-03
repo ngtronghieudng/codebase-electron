@@ -1,14 +1,13 @@
 import { Menu } from 'antd';
+import { LayoutDashboard, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router';
 
-import IconDashboard from '@/renderer/assets/icons/shared/IconDashboard.svg?react';
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
 import IconLogo from '@/renderer/assets/icons/shared/IconLogo.svg?react';
-import IconSettings from '@/renderer/assets/icons/shared/IconSettings.svg?react';
 import styles from '@/renderer/assets/styles/components/shared/the-sidebar.module.scss';
+import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
-import { useThemeColor } from '@/renderer/hooks/shared/use-theme-color';
 import {
   AUTH_PAGE,
   CODEBASE_PAGE,
@@ -18,19 +17,25 @@ import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
 
 export const TheSidebar: React.FC = () => {
   const { t } = useTranslation();
-  const { isDark } = useTheme();
+  const { getThemeColor, isDark } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const { getThemeColor } = useThemeColor();
 
   const menuItems = [
     {
-      icon: <IconDashboard fill={getThemeColor('ICON_SVG')} />,
+      icon: (
+        <BaseLucideIcon
+          color={getThemeColor('ICON_SVG')}
+          icon={LayoutDashboard}
+        />
+      ),
       key: AUTH_PAGE.LOGIN,
       label: t('shared.navigator.login'),
     },
     {
-      icon: <IconSettings fill={getThemeColor('ICON_SVG')} />,
+      icon: (
+        <BaseLucideIcon color={getThemeColor('ICON_SVG')} icon={Settings} />
+      ),
       key: AUTH_PAGE.REGISTER,
       label: t('shared.navigator.register'),
     },

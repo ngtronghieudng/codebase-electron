@@ -25,9 +25,9 @@ export const REGEXES = {
 } as const;
 
 export const STORAGE_KEYS = {
-  ACCESS_TOKEN: 'reactAccessToken',
-  LANGUAGE: 'reactLanguage',
-  THEME: 'reactTheme',
+  ACCESS_TOKEN: 'codebaseElectronAccessToken',
+  LANGUAGE: 'codebaseElectronLanguage',
+  THEME: 'codebaseElectronTheme',
 } as const;
 
 export const COOKIE_KEYS = {
@@ -36,12 +36,22 @@ export const COOKIE_KEYS = {
 } as const;
 
 export const BREAKPOINTS = {
-  MOBILE: 768,
-  TABLET: 1024,
+  LG: 1024,
+  MD: 768,
+  SM: 640,
+  XL: 1280,
+  XS: 320,
+  XXL: 1536,
+} as const;
+
+export const PAGINATION = {
+  DEFAULT_LIMIT: 20,
+  DEFAULT_OFFSET: 0,
+  DEFAULT_PAGE_SIZE: 50,
 } as const;
 
 export const QUERY_KEYS = {
   AUTH: {
-    PROFILE: 'authProfile',
+    ME: 'authMe',
   },
 } as const;

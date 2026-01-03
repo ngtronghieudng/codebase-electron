@@ -97,18 +97,20 @@ dist/
 .env.*
 !.env.sample
 
-# Claude
+# Claude Code
 .claude/
 .serena/
 .playwright-mcp/
 claudedocs/
+**/CLAUDE.md
+!/CLAUDE.md
 
 # Lock files
 bun.lockb
 yarn.lock
 package-lock.json
 
-# Other
+# Others
 .idea/
 *.tsbuildinfo
 vite.config.ts.timestamp-*

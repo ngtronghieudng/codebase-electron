@@ -1,6 +1,6 @@
 export const AUTH_API = {
   LOGIN: '/api/v1/auth/login',
-  PROFILE: '/api/v1/auth/profile',
+  ME: '/api/v1/auth/me',
   REFRESH_TOKEN: '/api/v1/auth/refresh-token',
   REGISTER: '/api/v1/auth/register',
 } as const;
