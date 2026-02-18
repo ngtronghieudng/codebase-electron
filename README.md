@@ -2,7 +2,6 @@
 
 > This template will help you get started with Electron using ElectronForge
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D22-brightgreen.svg)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-%3E%3D10-orange.svg)](https://pnpm.io/)
 
@@ -15,7 +14,6 @@
 | **Name**        | codebase-electron                                                         |
 | **Description** | This template will help you get started with Electron using ElectronForge |
 | **Version**     | 0.1.0                                                                     |
-| **License**     | MIT                                                                       |
 | **Main**        | .vite/build/main.js                                                       |
 
 ## ⚙️ Requirements
@@ -48,6 +46,16 @@ pnpm check-all      # Run all checks
 pnpm package        # Package application
 pnpm make           # Build distributables
 pnpm publish        # Publish application
+```
+
+### Testing
+
+```bash
+pnpm test                     # Run tests in watch mode
+pnpm test:ui                  # Run tests with UI
+pnpm test:run                 # Run tests once
+pnpm test:coverage            # Run tests with coverage report
+pnpm test:run tests/auth      # Run tests in a specific directory
 ```
 
 ## 🚀 Getting Started

@@ -10,14 +10,18 @@ import tsLint from 'typescript-eslint';
 export default [
   {
     ignores: [
+      // Claude Code
+      '**/.claude/',
+      '**/.playwright-mcp/',
+      '**/.serena/',
+      '**/claudedocs/',
+
+      // Others
       '**/.git/',
       '**/.husky/',
-      '**/.vite/',
       '**/.idea/',
-      '**/.claude/',
-      '**/.serena/',
-      '**/.playwright-mcp/',
-      '**/claudedocs/',
+      '**/.vite/',
+      '**/coverage/',
       '**/dist/',
       '**/node_modules/',
       '**/pnpm-lock.yaml',

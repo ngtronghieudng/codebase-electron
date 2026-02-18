@@ -1,8 +1,8 @@
 # Project Index: codebase-electron
 
-**Generated**: 2026-01-31
+**Generated**: 2026-02-18
 **Type**: Electron Desktop Application
-**Stats**: 90+ TypeScript files | ~4,000 LOC
+**Stats**: 90+ TypeScript files | ~4,000 LOC | Vitest + RTL
 **Token Efficiency**: ~3K tokens vs ~58K full read (94% reduction)
 
 ---
@@ -254,10 +254,31 @@ pnpm start                    # Launch Electron dev
 # Quality (before commit)
 pnpm check-all                # format + lint + type-check
 
+# Testing
+pnpm test                     # Watch mode
+pnpm test:run                 # Single run
+pnpm test:coverage            # With coverage report
+pnpm test:ui                  # Vitest UI
+
 # Build
 pnpm package                  # Package app
 pnpm make                     # Create distributables
 ```
+
+---
+
+## 🧪 Testing
+
+| Tool                          | Purpose                     |
+| ----------------------------- | --------------------------- |
+| `vitest`                      | Test runner (jsdom)         |
+| `@testing-library/react`      | Component testing           |
+| `@testing-library/jest-dom`   | DOM assertions              |
+| `@testing-library/user-event` | User interaction simulation |
+| `@vitest/coverage-v8`         | Code coverage (V8 provider) |
+
+**Test Files**: `src/**/*.{test,spec}.{ts,tsx}` or `tests/**/*.{test,spec}.{ts,tsx}`
+**Setup**: `tests/vitest.setup.ts` (mocks for matchMedia, ResizeObserver for Ant Design)
 
 ---
 

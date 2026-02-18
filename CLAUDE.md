@@ -25,10 +25,24 @@ pnpm format             # Format with Prettier
 pnpm lint               # Lint with ESLint (auto-fix)
 pnpm type-check         # TypeScript validation
 
+# Testing (Vitest + React Testing Library)
+pnpm test               # Run tests in watch mode
+pnpm test:run           # Run tests once
+pnpm test:coverage      # Run tests with coverage report
+pnpm test:ui            # Run tests with Vitest UI
+
 # Build & Distribution
 pnpm package            # Package the application
 pnpm make               # Create distribution files
 ```
+
+## Testing
+
+- **Framework**: Vitest with jsdom environment
+- **Libraries**: @testing-library/react, @testing-library/jest-dom, @testing-library/user-event
+- **Test files**: `*.test.tsx` or `*.spec.tsx` alongside source files or in `tests/` directory
+- **Setup file**: `tests/vitest.setup.ts` (mocks for matchMedia, ResizeObserver for Ant Design)
+- **Coverage**: V8 provider, excludes main process and config files
 
 ## Architecture
 

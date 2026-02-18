@@ -1,14 +1,15 @@
-# Claude
+# Claude Code
 .claude/
-.serena/
 .playwright-mcp/
+.serena/
 claudedocs/
 
-# Other
+# Others
 .git/
 .husky/
-.vite/
 .idea/
+.vite/
+coverage/
 dist/
 node_modules/
 pnpm-lock.yaml

@@ -20,11 +20,7 @@ pids
 lib-cov
 
 # Coverage directory used by tools like istanbul
-coverage
 *.lcov
-
-# nyc test coverage
-.nyc_output
 
 # node-waf configuration
 .lock-wscript
@@ -38,9 +34,6 @@ jspm_packages/
 
 # TypeScript v1 declaration files
 typings/
-
-# TypeScript cache
-*.tsbuildinfo
 
 # Optional npm cache directory
 .npm
@@ -99,16 +92,20 @@ dist/
 
 # Claude Code
 .claude/
-.serena/
 .playwright-mcp/
+.serena/
 claudedocs/
 **/CLAUDE.md
 !/CLAUDE.md
 
 # Lock files
 bun.lockb
-yarn.lock
 package-lock.json
+yarn.lock
+
+# Tests
+.nyc_output/
+coverage/
 
 # Others
 .idea/
