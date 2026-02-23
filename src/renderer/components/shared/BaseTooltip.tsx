@@ -1,25 +1,33 @@
 import { Tooltip, TooltipProps } from 'antd';
-import { memo } from 'react';
+import { CSSProperties, memo, useMemo } from 'react';
 
-type IProps = TooltipProps;
+import { BORDER_RADIUS } from '@/shared/definitions/constants/style-variables.const';
 
-export const BaseTooltip: React.FC<IProps> = memo(
-  ({ children, placement = 'bottom', styles, ...otherProps }) => {
+type TProps = TooltipProps;
+
+export const BaseTooltip: React.FC<TProps> = memo(
+  ({
+    arrow = false,
+    children,
+    placement = 'bottom',
+    styles,
+    ...otherProps
+  }) => {
+    const mergedStyles = useMemo(
+      () => ({
+        ...styles,
+        body: { ...DEFAULT_BODY_STYLE, ...styles?.body },
+        root: { ...DEFAULT_ROOT_STYLE, ...styles?.root },
+      }),
+      [styles],
+    );
+
     return (
       <Tooltip
+        arrow={arrow}
         color="var(--theme-bg-content-color)"
         placement={placement}
-        styles={{
-          body: {
-            color: 'var(--theme-text-color)',
-            fontSize: '12px',
-            fontWeight: 500,
-            minHeight: 'auto',
-            padding: '2px 6px',
-            ...styles?.body,
-          },
-          ...styles,
-        }}
+        styles={mergedStyles}
         {...otherProps}
       >
         {children}
@@ -27,5 +35,19 @@ export const BaseTooltip: React.FC<IProps> = memo(
     );
   },
 );
+
+const DEFAULT_ROOT_STYLE: CSSProperties = {
+  border: '1px solid var(--theme-border-color)',
+  borderRadius: BORDER_RADIUS.TOOLTIP,
+};
+
+const DEFAULT_BODY_STYLE: CSSProperties = {
+  color: 'var(--theme-text-color)',
+  fontSize: '12px',
+  fontWeight: 500,
+  minHeight: 'auto',
+  padding: '2px 6px',
+  whiteSpace: 'pre-line',
+};
 
 BaseTooltip.displayName = 'BaseTooltip';

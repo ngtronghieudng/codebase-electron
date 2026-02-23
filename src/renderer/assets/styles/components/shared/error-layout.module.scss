@@ -24,24 +24,12 @@
     border-radius: 50%;
     background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
     @include flexbox-style(0, center, center);
-
-    [data-theme='dark'] & {
-      background: linear-gradient(
-        135deg,
-        rgba(239, 68, 68, 0.2) 0%,
-        rgba(220, 38, 38, 0.15) 100%
-      );
-    }
   }
 
   &Icon {
     width: 40px;
     height: 40px;
     color: #dc2626;
-
-    [data-theme='dark'] & {
-      color: #f87171;
-    }
   }
 
   &Code {
@@ -74,6 +62,22 @@
 
   &Actions {
     @include flexbox-style(12px, center, center);
+  }
+}
+
+[data-theme='dark'] {
+  .errorPage {
+    &IconWrapper {
+      background: linear-gradient(
+        135deg,
+        rgba(239, 68, 68, 0.2) 0%,
+        rgba(220, 38, 38, 0.15) 100%
+      );
+    }
+
+    &Icon {
+      color: #f87171;
+    }
   }
 }
 

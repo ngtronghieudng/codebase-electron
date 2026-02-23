@@ -1,6 +1,6 @@
 # Project Index: codebase-electron
 
-**Generated**: 2026-02-18
+**Generated**: 2026-02-27
 **Type**: Electron Desktop Application
 **Stats**: 90+ TypeScript files | ~4,000 LOC | Vitest + RTL
 **Token Efficiency**: ~3K tokens vs ~58K full read (94% reduction)
@@ -26,15 +26,15 @@ src/
 │   │   └── shared.api.ts          # Shared API utilities
 │   │
 │   ├── components/shared/         # UI Components
-│   │   ├── Base*.tsx              # Ant Design wrappers (18 components)
+│   │   ├── Base*.tsx              # Ant Design wrappers (22 components)
 │   │   └── The*.tsx               # Global singletons (Topbar, Sidebar, Loading, Breadcrumb, PageLoading)
 │   │
 │   ├── contexts/
-│   │   └── AntConfigProvider.tsx  # Ant Design theme configuration
+│   │   └── ConfigProvider.tsx     # Ant Design theme configuration
 │   │
 │   ├── hooks/
 │   │   ├── auth/                  # use-auth-mutations, use-auth-queries
-│   │   └── shared/                # 10 utility hooks (theme, language, pagination, etc.)
+│   │   └── shared/                # 9 utility hooks (theme, language, pagination, etc.)
 │   │
 │   ├── layouts/
 │   │   ├── DefaultLayout.tsx      # Authenticated users
@@ -123,7 +123,20 @@ src/
 ### Axios Layer
 
 - **Config**: `libs/axios/axios.config.ts`
-- **Features**: Auto Bearer token, snake_case ↔ camelCase, 401 refresh handling
+- **Features**: Auto Bearer token + CSRF token, snake_case ↔ camelCase conversion (skips FormData), 401 refresh with promise deduplication
+
+### Form Handling
+
+- **Pattern**: `react-hook-form` + `yupResolver` + `react-hook-form-antd` (FormItem)
+- **Flow**: `useForm()` → `FormProvider` → `BaseFormItem` (uses `useFormContext()`) → `BaseInput`
+- **Schemas**: `schemas/` directory (Yup validation)
+
+### Shared Utilities (`shared/utils/`)
+
+- `cn()` - Class name merging (`clsx` + `tailwind-merge`)
+- `isFailureResponse()` - API error type guard
+- `convertToCamelCase()` / `convertToSnakeCase()` - Recursive key conversion for API communication
+- `logger` - Dev-only logging with timestamps and context
 
 ---
 
@@ -156,7 +169,7 @@ src/
 - `use-handle-catch-error.ts` - Centralized error handling
 - `use-confirm-modal.ts` - Confirmation dialogs
 - `use-pagination.ts` - Table pagination logic
-- `use-theme.ts` / `use-theme-color.ts` - Theme management
+- `use-theme.ts` - Theme management (dark/light, getThemeColor)
 - `use-language.ts` / `use-localized-value.ts` - i18n utilities
 - `use-breakpoints.ts` - Responsive breakpoint detection
 - `use-window-scroll.ts` - Scroll position tracking
@@ -177,12 +190,12 @@ src/
 
 ## 📋 Key Constants
 
-| Constant       | Location              | Values                             |
-| -------------- | --------------------- | ---------------------------------- |
-| `AUTH_API`     | `route-apis.const.ts` | LOGIN, ME, REFRESH_TOKEN, REGISTER |
-| `STORAGE_KEYS` | `shared.const.ts`     | ACCESS_TOKEN, LANGUAGE, THEME      |
-| `QUERY_KEYS`   | `shared.const.ts`     | AUTH.ME                            |
-| `BREAKPOINTS`  | `shared.const.ts`     | MOBILE: 768, TABLET: 1024          |
+| Constant       | Location              | Values                                             |
+| -------------- | --------------------- | -------------------------------------------------- |
+| `AUTH_API`     | `route-apis.const.ts` | LOGIN, ME, REFRESH_TOKEN, REGISTER                 |
+| `STORAGE_KEYS` | `shared.const.ts`     | ACCESS_TOKEN, LANGUAGE, THEME                      |
+| `QUERY_KEYS`   | `shared.const.ts`     | AUTH.ME                                            |
+| `BREAKPOINTS`  | `shared.const.ts`     | XS:320, SM:640, MD:768, LG:1024, XL:1280, XXL:1536 |
 
 ---
 
@@ -277,8 +290,8 @@ pnpm make                     # Create distributables
 | `@testing-library/user-event` | User interaction simulation |
 | `@vitest/coverage-v8`         | Code coverage (V8 provider) |
 
-**Test Files**: `src/**/*.{test,spec}.{ts,tsx}` or `tests/**/*.{test,spec}.{ts,tsx}`
-**Setup**: `tests/vitest.setup.ts` (mocks for matchMedia, ResizeObserver for Ant Design)
+**Test Files**: `tests/**/*.{test,spec}.{ts,tsx}` (all tests go in `tests/` directory)
+**Setup**: `tests/vitest.setup.ts` (mocks for matchMedia, cleanup after each test)
 
 ---
 

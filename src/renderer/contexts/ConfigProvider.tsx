@@ -1,6 +1,6 @@
 import {
+  ConfigProvider as AntConfigProvider,
   theme as antTheme,
-  ConfigProvider,
   ConfigProviderProps,
   type ThemeConfig,
 } from 'antd';
@@ -17,7 +17,7 @@ interface IProps {
 
 type TLocale = ConfigProviderProps['locale'];
 
-export const AntConfigProvider: React.FC<IProps> = ({ children }) => {
+export const ConfigProvider: React.FC<IProps> = ({ children }) => {
   const { getThemeColor, isDark } = useTheme();
 
   const [locale, _setLocale] = useState<TLocale>(enUS);
@@ -56,8 +56,8 @@ export const AntConfigProvider: React.FC<IProps> = ({ children }) => {
   };
 
   return (
-    <ConfigProvider locale={locale} theme={config}>
+    <AntConfigProvider locale={locale} theme={config}>
       <AntApp>{children}</AntApp>
-    </ConfigProvider>
+    </AntConfigProvider>
   );
 };

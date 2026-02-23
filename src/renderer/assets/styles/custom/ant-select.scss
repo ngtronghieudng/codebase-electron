@@ -1,0 +1,7 @@
+.ant-select:focus-visible,
+.ant-select-selector:focus-visible,
+.ant-select [tabindex]:focus-visible,
+.ant-select input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}

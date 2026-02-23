@@ -28,6 +28,7 @@ pnpm type-check         # TypeScript validation
 # Testing (Vitest + React Testing Library)
 pnpm test               # Run tests in watch mode
 pnpm test:run           # Run tests once
+pnpm test:run tests/components/shared/BaseButton.test.tsx  # Run a single test file
 pnpm test:coverage      # Run tests with coverage report
 pnpm test:ui            # Run tests with Vitest UI
 
@@ -38,11 +39,11 @@ pnpm make               # Create distribution files
 
 ## Testing
 
-- **Framework**: Vitest with jsdom environment
+- **Framework**: Vitest with jsdom environment, globals enabled (no need to import `describe`/`it`/`expect`)
 - **Libraries**: @testing-library/react, @testing-library/jest-dom, @testing-library/user-event
-- **Test files**: `*.test.tsx` or `*.spec.tsx` alongside source files or in `tests/` directory
-- **Setup file**: `tests/vitest.setup.ts` (mocks for matchMedia, ResizeObserver for Ant Design)
-- **Coverage**: V8 provider, excludes main process and config files
+- **Test location**: All tests go in `tests/` directory (vitest include pattern: `tests/**/*.{test,spec}.*`)
+- **Setup file**: `tests/vitest.setup.ts` (mocks for `matchMedia` and cleanup after each test)
+- **Coverage**: V8 provider, excludes main process, config files, `shared/definitions/`, and assets
 
 ## Architecture
 
@@ -123,15 +124,17 @@ src/
 ### Styling
 
 - Tailwind CSS v4 + SCSS modules (camelCaseOnly)
-- Global SCSS auto-imported from `@/renderer/assets/styles/root/`
+- Use `cn()` from `@/shared/utils/shared.util` for conditional classes (`clsx` + `tailwind-merge`)
+- Global SCSS auto-imported from `@/renderer/assets/styles/root/` (available in all SCSS modules)
 - Ant Design customizations in `assets/styles/custom/ant-*.scss`
 
 ### Theming
 
 - `useTheme()` hook manages dark/light mode (persisted to localStorage)
 - Colors via `getThemeColor('ICON_SVG')` with optional per-theme overrides
-- Applied via `data-theme` attribute on document root
+- Applied via `data-theme` attribute on document root; use `[data-theme='dark']` selector in CSS
 - Theme constants in `@/shared/definitions/constants/style-themes.const`
+- Ant Design theme algorithm switches via `ConfigProvider` context (`contexts/ConfigProvider.tsx`)
 
 ## Git Workflow
 
@@ -147,9 +150,11 @@ Pattern: `^(feature|bugfix|hotfix|release)/.+|(master)$`
 Body (required - cannot be empty)
 ```
 
+Note: This project does NOT use conventional commit types (feat:, fix:, etc.). The `[TICKET-XXX]:` prefix replaces them. Commitlint rules `subject-empty` and `type-empty` are disabled.
+
 ### Pre-commit Hook (Husky)
 
-Runs automatically: format → lint → validate-branch-name
+Runs automatically via lint-staged: format → lint → git add (for `*.{js,jsx,ts,tsx}`) + validate-branch-name
 
 ## Key Patterns
 
@@ -158,29 +163,43 @@ Runs automatically: format → lint → validate-branch-name
 1. Token in localStorage via `store2` (STORAGE_KEYS.ACCESS_TOKEN)
 2. Zustand `auth.store` manages: accessToken, userInfo, isAuthenticated
 3. Protected routes call `authMeApi()` to verify token
-4. Refresh token via `authRefreshTokenApi()` on 401
+4. On 401: `handleUnauthorizedError()` in `axios.util.ts` deduplicates concurrent refresh calls, retries original request, or logs out on failure
 
 ### Route System
 
-- File-based: `routes/*.route.tsx` auto-discovered
-- Meta properties: `requiresAuth`, `roles`, `title`
-- `ProtectedRoute` handles auth + role-based access
+- File-based: `routes/*.route.tsx` auto-discovered via `import.meta.glob`
+- Each route exports a `TRouteObject` with optional `meta`: `requiresAuth`, `roles` (EUserRole[]), `title`
+- `ProtectedRoute` in `AppRoutes.tsx` handles auth check + role-based access + document title
 - Uses **HashRouter** (required for Electron file:// protocol)
 
 ### Axios Interceptors
 
-- **Request**: Auto-adds Bearer token, converts to snake_case
-- **Response**: Converts to camelCase, handles 401 with token refresh
+- **Request**: Auto-adds Bearer token from store, CSRF token from cookies, converts params/data to snake_case (skips FormData)
+- **Response**: Converts to camelCase, handles 401 with token refresh + request retry
+
+### Zustand Stores
+
+- Custom `create()` wrapper in `libs/zustand/zustand.util.ts` registers all stores for bulk reset
+- `resetAllStores()` clears all registered stores (used on logout)
+- All stores use `devtools()` middleware
+
+### Form Handling
+
+- `react-hook-form` + `yupResolver` for validation + `react-hook-form-antd` for Ant Design integration
+- Pattern: `useForm()` → `FormProvider` wraps children → `BaseFormItem` (uses `useFormContext()`) → `BaseInput`
+- Schemas in `schemas/` directory (Yup)
 
 ### IPC Communication
 
-- Main process: `ipc-handlers.ts` with whitelist validation
-- Renderer: `use-electron-api.ts` hook with type-safe invoke
+- Channels defined in `shared/definitions/types/ipc.type.ts` with `IIpcInvokeMap` type mapping `[Args, ReturnType]` tuples
+- Main process: `ipc-handlers.ts` registers handlers on `app.ready`, removes on `app.before-quit`
+- Preload: `contextBridge.exposeInMainWorld('electron', ...)` with channel whitelist validation
+- Renderer: `use-electron-api.ts` hook provides type-safe wrappers for all IPC channels
 
 ### Error Handling
 
-- `ErrorBoundary.tsx` wraps entire app
-- Errors logged via `logger.error()`
+- `react-error-boundary` wraps entire app in `App.tsx` with `ErrorLayout` fallback
+- API errors: `useHandleCatchError()` hook checks `isFailureResponse()`, translates error codes via i18n, shows toast
 
 ### Import Ordering
 

@@ -64,6 +64,6 @@ export const useAuthStore = create<IState>()(
       set({ isAuthenticated: true, userInfo: data });
     },
 
-    userInfo: undefined as IUserInfo,
+    userInfo: undefined,
   })),
 );

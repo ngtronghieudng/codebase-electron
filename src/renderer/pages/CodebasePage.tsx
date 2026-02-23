@@ -16,7 +16,7 @@ import { useDebounceCallback } from 'usehooks-ts';
 import { healthCheckApi } from '@/renderer/apis/shared.api';
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
 import styles from '@/renderer/assets/styles/components/shared/codebase-page.module.scss';
-import { BaseAutocomplete } from '@/renderer/components/shared/BaseAutocomplete';
+import { BaseAutoComplete } from '@/renderer/components/shared/BaseAutoComplete';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
 import {
   BaseCheckbox,
@@ -98,7 +98,7 @@ export const CodebasePage: React.FC = () => {
   const [isIndeterminate, setIsIndeterminate] = useState<boolean>(false);
   const [baseCheckboxGroup, setBaseCheckboxGroup] = useState<unknown[]>([]);
   const [baseSwitch, setBaseSwitch] = useState<boolean>(true);
-  const [baseAutocomplete, setBaseAutocomplete] = useState<string>('');
+  const [baseAutoComplete, setBaseAutoComplete] = useState<string>('');
   const [options, setOptions] = useState<DefaultOptionType[]>([]);
   const [baseInput, setBaseInput] = useState<number | string>();
   const [baseInputNumber, setBaseInputNumber] = useState<number | string>();
@@ -162,7 +162,7 @@ export const CodebasePage: React.FC = () => {
     const results = suggestions.filter((suggestion) =>
       suggestion.value.toLowerCase().includes(value.toLowerCase()),
     );
-    setBaseAutocomplete(value);
+    setBaseAutoComplete(value);
     setOptions(results);
   };
 
@@ -525,13 +525,13 @@ export const CodebasePage: React.FC = () => {
 
       <section>
         <h4>-- Base Autocompletes --</h4>
-        <BaseAutocomplete
-          onChange={setBaseAutocomplete}
+        <BaseAutoComplete
+          onChange={setBaseAutoComplete}
           onSearch={handleSearch}
           options={options}
           placeholder="Please input"
           style={{ width: 200 }}
-          value={baseAutocomplete}
+          value={baseAutoComplete}
         />
       </section>
 

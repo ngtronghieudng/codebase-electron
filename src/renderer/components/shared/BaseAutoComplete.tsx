@@ -3,8 +3,8 @@ import { memo } from 'react';
 
 interface IProps extends AutoCompleteProps {}
 
-export const BaseAutocomplete: React.FC<IProps> = memo(({ ...otherProps }) => {
+export const BaseAutoComplete: React.FC<IProps> = memo(({ ...otherProps }) => {
   return <AutoComplete {...otherProps} />;
 });
 
-BaseAutocomplete.displayName = 'BaseAutocomplete';
+BaseAutoComplete.displayName = 'BaseAutoComplete';

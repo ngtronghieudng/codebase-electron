@@ -1,0 +1,16 @@
+export const BORDER_RADIUS = {
+  BADGE: '6px',
+  BUTTON: '10px',
+  CARD: '12px',
+  CARD_LG: '16px',
+  DROPDOWN: '12px',
+  FULL: '9999px',
+  INPUT: '8px',
+  MODAL: '16px',
+  NONE: '0',
+  POPOVER: '12px',
+  SELECT: '12px',
+  TAB_ITEM: '10px',
+  TABS: '14px',
+  TOOLTIP: '8px',
+} as const;

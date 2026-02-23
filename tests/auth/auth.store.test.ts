@@ -1,28 +1,33 @@
 import store2 from 'store2';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { authMeApi, authRefreshTokenApi } from '@/apis/auth.api';
-import { STORAGE_KEYS } from '@/definitions/constants/shared.const';
-import { EResponseStatus, EUserRole } from '@/definitions/enums/shared.enum';
-import { IUserInfo } from '@/definitions/interfaces/shared.interface';
-import { resetAllStores } from '@/libs/zustand/zustand.util';
-import { useAuthStore } from '@/stores/auth.store';
+import { authMeApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
+import { resetAllStores } from '@/renderer/libs/zustand/zustand.util';
+import { useAuthStore } from '@/renderer/stores/auth.store';
+import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
+import {
+  EResponseStatus,
+  EUserRole,
+} from '@/shared/definitions/enums/shared.enum';
+import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
 
-vi.mock('@/apis/auth.api', () => ({
+vi.mock('@/renderer/apis/auth.api', () => ({
   authMeApi: vi.fn(),
   authRefreshTokenApi: vi.fn(),
 }));
 
-vi.mock('@/libs/zustand/zustand.util', async (importOriginal) => {
+vi.mock('@/renderer/libs/zustand/zustand.util', async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import('@/libs/zustand/zustand.util')>();
+    await importOriginal<
+      typeof import('@/renderer/libs/zustand/zustand.util')
+    >();
   return {
     ...actual,
     resetAllStores: vi.fn(),
   };
 });
 
-vi.mock('@/utils/logger.util', () => ({
+vi.mock('@/shared/utils/logger.util', () => ({
   logger: {
     error: vi.fn(),
     info: vi.fn(),

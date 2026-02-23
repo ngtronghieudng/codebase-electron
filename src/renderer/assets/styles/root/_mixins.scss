@@ -58,3 +58,17 @@
     }
   }
 }
+
+@mixin respond-up($breakpoint) {
+  $size: map-get($breakpoints, $breakpoint);
+  @media (width >= #{$size}) {
+    @content;
+  }
+}
+
+@mixin respond-down($breakpoint) {
+  $size: map-get($breakpoints, $breakpoint);
+  @media (width < #{$size}) {
+    @content;
+  }
+}
