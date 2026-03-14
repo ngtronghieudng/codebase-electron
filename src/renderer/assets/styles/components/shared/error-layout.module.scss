@@ -81,7 +81,7 @@
   }
 }
 
-@include respond(xs, md) {
+@include respond-down(md) {
   .errorPage {
     padding: 16px;
 

@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { CheckboxProps, Form, PaginationProps, Tooltip } from 'antd';
+import { CheckboxProps, PaginationProps } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
 import { Dayjs } from 'dayjs';
 import { Bell, LayoutDashboard, Search, Settings, Trash2 } from 'lucide-react';
@@ -23,6 +23,7 @@ import {
   BaseCheckboxGroup,
 } from '@/renderer/components/shared/BaseCheckbox';
 import { BaseDatePicker } from '@/renderer/components/shared/BaseDatePicker';
+import { BaseForm } from '@/renderer/components/shared/BaseForm';
 import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
 import { BaseInput } from '@/renderer/components/shared/BaseInput';
 import { BaseInputNumber } from '@/renderer/components/shared/BaseInputNumber';
@@ -33,6 +34,9 @@ import { BaseSelect } from '@/renderer/components/shared/BaseSelect';
 import { BaseSwitch } from '@/renderer/components/shared/BaseSwitch';
 import { BaseTable } from '@/renderer/components/shared/BaseTable';
 import { BaseTimePicker } from '@/renderer/components/shared/BaseTimePicker';
+import { BaseTooltip } from '@/renderer/components/shared/BaseTooltip';
+import { useConfirmModal } from '@/renderer/hooks/shared/use-confirm-modal';
+import { useHandleCatchError } from '@/renderer/hooks/shared/use-handle-catch-error';
 import { usePagination } from '@/renderer/hooks/shared/use-pagination';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
 import {
@@ -49,9 +53,6 @@ import { EMessage, EToast } from '@/shared/definitions/enums/shared.enum';
 import { logger } from '@/shared/utils/logger.util';
 import { showMessage, showToast } from '@/shared/utils/notification.util';
 import { sleep } from '@/shared/utils/shared.util';
-
-import { useConfirmModal } from '../hooks/shared/use-confirm-modal';
-import { useHandleCatchError } from '../hooks/shared/use-handle-catch-error';
 
 interface IForm {
   email: string;
@@ -303,11 +304,11 @@ export const CodebasePage: React.FC = () => {
           {Object.entries(svgIcons).map(([_, icon]) => {
             const IconComponent = icon.component;
             return (
-              <Tooltip key={icon.path} title={icon.name}>
+              <BaseTooltip key={icon.path} title={icon.name}>
                 <span onClick={() => handleClickIconSvg(icon.path)}>
                   <IconComponent />
                 </span>
-              </Tooltip>
+              </BaseTooltip>
             );
           })}
         </div>
@@ -642,7 +643,7 @@ export const CodebasePage: React.FC = () => {
       <section>
         <h4>-- Base Forms --</h4>
         <FormProvider {...codebaseForm}>
-          <Form
+          <BaseForm
             layout="vertical"
             onFinish={codebaseForm.handleSubmit(onSubmit)}
             style={{ maxWidth: '600px' }}
@@ -695,7 +696,7 @@ export const CodebasePage: React.FC = () => {
                 Reset
               </BaseButton>
             </div>
-          </Form>
+          </BaseForm>
         </FormProvider>
       </section>
     </div>

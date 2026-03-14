@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Form } from 'antd';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import {
@@ -14,6 +13,7 @@ import { Link } from 'react-router';
 import IconRequired from '@/renderer/assets/icons/shared/IconRequired.svg?react';
 import styles from '@/renderer/assets/styles/components/auth/auth-register-page.module.scss';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
+import { BaseForm } from '@/renderer/components/shared/BaseForm';
 import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
 import { BaseInput } from '@/renderer/components/shared/BaseInput';
 import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
@@ -69,7 +69,7 @@ export const AuthRegisterPage: React.FC = () => {
         <h4>{t('auth.register')}</h4>
 
         <FormProvider {...registerForm}>
-          <Form
+          <BaseForm
             layout="vertical"
             onFinish={registerForm.handleSubmit(onSubmit)}
           >
@@ -144,7 +144,7 @@ export const AuthRegisterPage: React.FC = () => {
             <BaseButton className="mt-2 w-full" htmlType="submit">
               {t('auth.register')}
             </BaseButton>
-          </Form>
+          </BaseForm>
         </FormProvider>
 
         <div className={styles.containerLoginNow}>
