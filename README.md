@@ -1,20 +1,21 @@
 # 📱 codebase-electron
 
-> This template will help you get started with Electron using ElectronForge
+> This template will help you get started with Electron
 
-[![Node Version](https://img.shields.io/badge/node-%3E%3D22-brightgreen.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://reactjs.org/)
+[![Node](https://img.shields.io/badge/Node-%3E%3D22-brightgreen.svg)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-%3E%3D10-orange.svg)](https://pnpm.io/)
 
 ---
 
 ## 📋 Overview
 
-| Property        | Value                                                                     |
-| --------------- | ------------------------------------------------------------------------- |
-| **Name**        | codebase-electron                                                         |
-| **Description** | This template will help you get started with Electron using ElectronForge |
-| **Version**     | 0.1.0                                                                     |
-| **Main**        | .vite/build/main.js                                                       |
+| Property        | Value                                                 |
+| --------------- | ----------------------------------------------------- |
+| **Name**        | codebase-electron                                     |
+| **Description** | This template will help you get started with Electron |
+| **Version**     | 0.1.0                                                 |
+| **Main**        | .vite/build/main.js                                   |
 
 ## ⚙️ Requirements
 
@@ -23,8 +24,8 @@
 | **Node**    | `>= 22`           |
 | **pnpm**    | `>= 10`           |
 | **npm**     | `please-use-pnpm` |
-| **yarn**    | `please-use-pnpm` |
-| **bun**     | `please-use-pnpm` |
+| **Yarn**    | `please-use-pnpm` |
+| **Bun**     | `please-use-pnpm` |
 
 ## 🛠️ Scripts
 
@@ -75,6 +76,6 @@ pnpm start
 
 <div align="center">
 
-Made with ❤️ using [Electron](https://www.electronjs.org/) and [ElectronForge](https://www.electronforge.io/)
+Made with ❤️ using [Electron](https://www.electronjs.org/)
 
 </div>

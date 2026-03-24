@@ -59,7 +59,7 @@ export const TheSidebar: React.FC = () => {
     menuItems.find((item) => item.key === location.pathname)?.key || '';
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <div className={styles.containerLogo}>
         <Link to={HOME_PAGE}>
           <IconLogo />
@@ -77,6 +77,6 @@ export const TheSidebar: React.FC = () => {
         selectedKeys={[selectedKey]}
         theme={isDark ? 'dark' : 'light'}
       />
-    </div>
+    </section>
   );
 };

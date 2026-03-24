@@ -83,12 +83,12 @@ export const TheTopbar: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <section className="flex-center">
+    <section className={styles.container}>
+      <div className="flex-center">
         <TheBreadcrumb />
-      </section>
+      </div>
 
-      <section className={styles.containerMenu}>
+      <div className={styles.containerMenu}>
         {renderIcon()}
 
         <BaseDropdown menu={languageMenu}>
@@ -113,7 +113,7 @@ export const TheTopbar: React.FC = () => {
         >
           <Avatar className="cursor-pointer">H</Avatar>
         </BaseDropdown>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };

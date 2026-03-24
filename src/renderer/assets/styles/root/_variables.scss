@@ -1,5 +1,5 @@
 // fonts
-$base-font-size: 14px;
+$base-font-size: 1rem;
 $base-font-weight: 400;
 $base-line-height: 1.5;
 
@@ -12,9 +12,9 @@ $scrollbar-width: 8px;
 
 // breakpoints
 $breakpoints: (
-  sm: 640px,
-  md: 768px,
-  lg: 1024px,
-  xl: 1280px,
-  xxl: 1536px,
+  sm: 40rem,
+  md: 48rem,
+  lg: 64rem,
+  xl: 80rem,
+  xxl: 96rem,
 );

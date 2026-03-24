@@ -1,0 +1,13 @@
+@use 'sass:math';
+
+@function rem($pixel-value) {
+  @if unitless($pixel-value) {
+    @error '#{$pixel-value} must have px unit. Usage: rem(14px)';
+  }
+
+  @if unit($pixel-value) != 'px' {
+    @error '#{$pixel-value} must be in px. Usage: rem(14px)';
+  }
+
+  @return math.div($pixel-value, 14px) * 1rem;
+}

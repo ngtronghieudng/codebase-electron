@@ -16,7 +16,9 @@ const createStore = <T>(stateCreator: StateCreator<T>) => {
 };
 
 export const create = (<T>(stateCreator?: StateCreator<T>) => {
-  if (stateCreator) return createStore(stateCreator);
+  if (stateCreator) {
+    return createStore(stateCreator);
+  }
   return (initializer: StateCreator<T>) => createStore(initializer);
 }) as typeof actualCreate;
 

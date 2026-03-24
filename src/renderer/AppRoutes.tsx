@@ -31,7 +31,9 @@ export const AppRoutes: React.FC = () => {
     loader: () => Promise<{ default: TRouteObject }>,
   ): Promise<TRouteObject> => {
     const cached = routeCache.get(path);
-    if (cached) return cached;
+    if (cached) {
+      return cached;
+    }
 
     const module = await loader();
     routeCache.set(path, module.default);
@@ -52,7 +54,9 @@ export const AppRoutes: React.FC = () => {
     loadAllRoutes();
   }, []);
 
-  if (isLoading) return <ThePageLoading />;
+  if (isLoading) {
+    return <ThePageLoading />;
+  }
 
   return (
     <Suspense fallback={<ThePageLoading />}>
@@ -64,7 +68,7 @@ export const AppRoutes: React.FC = () => {
 const renderRoutes = (routes: TRouteObject[]) => {
   return routes.map((route, index) => {
     const hasChildren = route.children && route.children.length > 0;
-    if (hasChildren)
+    if (hasChildren) {
       return (
         <Route
           element={<ProtectedRoute route={route} />}
@@ -82,6 +86,7 @@ const renderRoutes = (routes: TRouteObject[]) => {
             ))}
         </Route>
       );
+    }
 
     return (
       <Route
@@ -97,7 +102,9 @@ const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
   const [element, setElement] = useState<React.ReactNode>(null);
 
   const handleRouteGuard = useCallback(async () => {
-    if (route.meta?.title) document.title = route.meta.title;
+    if (route.meta?.title) {
+      document.title = route.meta.title;
+    }
 
     if (route.meta?.requiresAuth) {
       await useAuthStore.getState().initialize();

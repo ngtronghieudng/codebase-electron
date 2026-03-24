@@ -7,9 +7,12 @@ interface IInputProps extends InputProps {}
 
 export const BaseInput = memo(
   forwardRef<InputRef, IInputProps>(({ type, ...otherProps }, ref) => {
-    if (type === 'search') return <Input.Search ref={ref} {...otherProps} />;
-    if (type === 'password')
+    if (type === 'search') {
+      return <Input.Search ref={ref} {...otherProps} />;
+    }
+    if (type === 'password') {
       return <Input.Password ref={ref} {...otherProps} />;
+    }
 
     return <Input ref={ref} {...otherProps} />;
   }),

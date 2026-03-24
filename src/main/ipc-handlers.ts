@@ -33,7 +33,9 @@ const registerWindowHandlers = () => {
 
   ipcMain.handle(IPC_CHANNELS.WINDOW_MAXIMIZE, (event) => {
     const window = BrowserWindow.fromWebContents(event.sender);
-    if (!window) return;
+    if (!window) {
+      return;
+    }
 
     if (window.isMaximized()) {
       window.unmaximize();
@@ -61,7 +63,9 @@ const registerFileHandlers = () => {
       args: { filters?: Electron.FileFilter[]; title?: string },
     ) => {
       const window = BrowserWindow.fromWebContents(event.sender);
-      if (!window) return undefined;
+      if (!window) {
+        return undefined;
+      }
 
       const result = await dialog.showOpenDialog(window, {
         filters: args?.filters || [],
@@ -77,7 +81,9 @@ const registerFileHandlers = () => {
     IPC_CHANNELS.FILE_SAVE_DIALOG,
     async (event, args: { defaultPath?: string; title?: string }) => {
       const window = BrowserWindow.fromWebContents(event.sender);
-      if (!window) return undefined;
+      if (!window) {
+        return undefined;
+      }
 
       const result = await dialog.showSaveDialog(window, {
         defaultPath: args?.defaultPath,

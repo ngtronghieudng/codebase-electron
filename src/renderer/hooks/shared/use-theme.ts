@@ -25,7 +25,9 @@ export const useTheme = () => {
   const isLight = theme === 'light';
 
   const getThemeColor = (colorName: TColorName, customTheme?: ICustomTheme) => {
-    if (customTheme && customTheme[theme]) return customTheme[theme];
+    if (customTheme && customTheme[theme]) {
+      return customTheme[theme];
+    }
 
     const themeColor: ICustomTheme = {
       dark: DARK_THEME[colorName],
@@ -35,7 +37,9 @@ export const useTheme = () => {
   };
 
   useEffect(() => {
-    if (document) document.documentElement.setAttribute('data-theme', theme);
+    if (document) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
   }, [theme]);
 
   return {

@@ -10,7 +10,9 @@ export const languageDetector: LanguageDetectorModule = {
   cacheUserLanguage: (lng: string) => {
     try {
       const existingLanguage = store2.get(STORAGE_KEYS.LANGUAGE);
-      if (!existingLanguage) store2.set(STORAGE_KEYS.LANGUAGE, lng);
+      if (!existingLanguage) {
+        store2.set(STORAGE_KEYS.LANGUAGE, lng);
+      }
     } catch (error) {
       logger.error('Failed to save language:', error);
     }

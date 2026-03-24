@@ -5,7 +5,9 @@ import { useLoadingStore } from '@/renderer/stores/loading.store';
 export const TheLoading: React.FC = () => {
   const isLoading = useLoadingStore((state) => state.isLoading);
 
-  if (!isLoading) return null;
+  if (!isLoading) {
+    return null;
+  }
 
   return <Spin fullscreen={true} size="large" tip="Loading" />;
 };

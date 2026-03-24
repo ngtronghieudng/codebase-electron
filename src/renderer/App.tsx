@@ -3,7 +3,7 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { HashRouter } from 'react-router';
 
 import { TheLoading } from '@/renderer/components/shared/TheLoading';
-import { ConfigProvider } from '@/renderer/contexts/ConfigProvider';
+import { AntConfigProvider } from '@/renderer/contexts/AntConfigProvider';
 import { logger } from '@/shared/utils/logger.util';
 
 import { AppRoutes } from './AppRoutes';
@@ -20,7 +20,7 @@ export const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ConfigProvider>
+      <AntConfigProvider>
         <ErrorBoundary
           FallbackComponent={ErrorLayout as React.ComponentType<FallbackProps>}
           onError={handleError}
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
             <AppRoutes />
           </HashRouter>
         </ErrorBoundary>
-      </ConfigProvider>
+      </AntConfigProvider>
     </QueryClientProvider>
   );
 };

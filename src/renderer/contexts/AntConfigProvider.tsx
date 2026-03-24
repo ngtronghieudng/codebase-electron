@@ -1,10 +1,10 @@
 import {
-  ConfigProvider as AntConfigProvider,
-  theme as antTheme,
+  ConfigProvider,
   ConfigProviderProps,
+  theme,
   type ThemeConfig,
 } from 'antd';
-import { App as AntApp } from 'antd';
+import { App } from 'antd';
 import enUS from 'antd/locale/en_US';
 import { useState } from 'react';
 
@@ -17,14 +17,13 @@ interface IProps {
 
 type TLocale = ConfigProviderProps['locale'];
 
-export const ConfigProvider: React.FC<IProps> = ({ children }) => {
+export const AntConfigProvider: React.FC<IProps> = ({ children }) => {
   const { getThemeColor, isDark } = useTheme();
 
   const [locale, _setLocale] = useState<TLocale>(enUS);
 
   const config: ThemeConfig = {
-    algorithm: isDark ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
-
+    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
     components: {
       Button: {
         primaryShadow: '',
@@ -41,10 +40,8 @@ export const ConfigProvider: React.FC<IProps> = ({ children }) => {
         borderColor: getThemeColor('BORDER'),
       },
     },
-
     cssVar: false,
     hashed: false,
-
     token: {
       colorBgContainer: getThemeColor('BACKGROUND_CONTAINER'),
       colorBgElevated: getThemeColor('BACKGROUND_ELEVATED'),
@@ -56,8 +53,8 @@ export const ConfigProvider: React.FC<IProps> = ({ children }) => {
   };
 
   return (
-    <AntConfigProvider locale={locale} theme={config}>
-      <AntApp>{children}</AntApp>
-    </AntConfigProvider>
+    <ConfigProvider locale={locale} theme={config}>
+      <App>{children}</App>
+    </ConfigProvider>
   );
 };

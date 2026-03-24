@@ -15,7 +15,6 @@ export default [
       '**/.playwright-mcp/',
       '**/.serena/',
       '**/claudedocs/',
-
       // Others
       '**/.git/',
       '**/.husky/',
@@ -27,7 +26,6 @@ export default [
       '**/pnpm-lock.yaml',
     ],
   },
-
   jsLint.configs.recommended,
   ...tsLint.configs.recommended,
   reactLint.configs.flat.recommended,
@@ -35,10 +33,8 @@ export default [
   i18next.configs['flat/recommended'],
   perfectionist.configs['recommended-natural'],
   configPrettier,
-
   {
     files: ['**/*.{cjs,cts,mjs,mts,js,jsx,ts,tsx}'],
-
     languageOptions: {
       globals: {
         ...globals.browser,
@@ -49,11 +45,9 @@ export default [
         sourceType: 'module',
       },
     },
-
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
-
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -62,23 +56,20 @@ export default [
           varsIgnorePattern: '^_',
         },
       ],
-
+      curly: ['error', 'all'],
       'eol-last': ['error', 'always'],
       'i18next/no-literal-string': 'off',
       'no-console': 'error',
-
       'react/jsx-filename-extension': [
         'error',
         {
           extensions: ['.jsx', '.tsx'],
         },
       ],
-
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
       'react/prop-types': 'off',
     },
-
     settings: {
       react: {
         version: 'detect',

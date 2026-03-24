@@ -13,8 +13,11 @@ export const ErrorLayout: React.FC<TProps> = ({ resetErrorBoundary }) => {
   const { t } = useTranslation();
 
   const handleRetry = () => {
-    if (resetErrorBoundary) resetErrorBoundary();
-    else window.location.reload();
+    if (resetErrorBoundary) {
+      resetErrorBoundary();
+    } else {
+      window.location.reload();
+    }
   };
 
   const handleGoBack = () => {

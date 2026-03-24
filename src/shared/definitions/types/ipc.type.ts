@@ -13,7 +13,7 @@ export const IPC_CHANNELS = {
 } as const;
 
 export interface IIpcInvokeMap {
-  [IPC_CHANNELS.APP_GET_PLATFORM]: [undefined, NodeJS.Platform];
+  [IPC_CHANNELS.APP_GET_PLATFORM]: [undefined, string];
   [IPC_CHANNELS.APP_GET_VERSION]: [undefined, string];
   [IPC_CHANNELS.FILE_OPEN_DIALOG]: [
     { filters?: Electron.FileFilter[]; title?: string },

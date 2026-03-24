@@ -1,6 +1,6 @@
 {
   "name": "codebase-electron",
-  "description": "This template will help you get started with Electron using ElectronForge",
+  "description": "This template will help you get started with Electron",
   "version": "0.1.0",
   "main": ".vite/build/main.js",
   "engines": {
@@ -121,5 +121,6 @@
     "vite": "^6.4.1",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^4.0.18"
-  }
+  },
+  "packageManager": "pnpm@10.33.0"
 }

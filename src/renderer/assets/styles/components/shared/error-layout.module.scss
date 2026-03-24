@@ -35,7 +35,7 @@
   &Code {
     margin: 0 0 12px 0;
     @include text-style(
-      14px,
+      rem(14px),
       600,
       1,
       var(--theme-text-tertiary-color),
@@ -48,7 +48,14 @@
 
   &Title {
     margin: 0 0 12px 0;
-    @include text-style(28px, 700, 1.3, var(--theme-text-color), inherit, true);
+    @include text-style(
+      rem(28px),
+      700,
+      1.3,
+      var(--theme-text-color),
+      inherit,
+      true
+    );
     letter-spacing: -0.5px;
   }
 
@@ -57,7 +64,14 @@
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
-    @include text-style(14px, 400, 1.7, var(--theme-text-color), inherit, true);
+    @include text-style(
+      rem(14px),
+      400,
+      1.7,
+      var(--theme-text-color),
+      inherit,
+      true
+    );
   }
 
   &Actions {

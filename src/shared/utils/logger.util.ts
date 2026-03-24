@@ -17,23 +17,27 @@ class Logger {
       stack: error instanceof Error ? error.stack : undefined,
       timestamp: new Date().toISOString(),
     };
-    if (this.isDevelopment) console.error(`[Error] ${message}`, errorData);
+    if (this.isDevelopment) {
+      console.error(`[Error] ${message}`, errorData);
+    }
   }
 
   info(message: string, context?: ILogContext): void {
-    if (this.isDevelopment)
+    if (this.isDevelopment) {
       console.info(`[Info] ${message}`, {
         context,
         timestamp: new Date().toISOString(),
       });
+    }
   }
 
   warn(message: string, context?: ILogContext): void {
-    if (this.isDevelopment)
+    if (this.isDevelopment) {
       console.warn(`[Warning] ${message}`, {
         context,
         timestamp: new Date().toISOString(),
       });
+    }
   }
 }
 

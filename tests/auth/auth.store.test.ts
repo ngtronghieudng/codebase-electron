@@ -21,6 +21,7 @@ vi.mock('@/renderer/libs/zustand/zustand.util', async (importOriginal) => {
     await importOriginal<
       typeof import('@/renderer/libs/zustand/zustand.util')
     >();
+
   return {
     ...actual,
     resetAllStores: vi.fn(),

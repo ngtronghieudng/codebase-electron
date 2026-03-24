@@ -29,14 +29,21 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = store2.get(STORAGE_KEYS.ACCESS_TOKEN);
-    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
 
     const csrftoken = jsCookie.get(COOKIE_KEYS.CSRF_TOKEN);
-    if (csrftoken) config.headers['x-csrftoken'] = csrftoken;
+    if (csrftoken) {
+      config.headers['x-csrftoken'] = csrftoken;
+    }
 
-    if (config.params) config.params = convertToSnakeCase(config.params);
-    if (config.data && !(config.data instanceof FormData))
+    if (config.params) {
+      config.params = convertToSnakeCase(config.params);
+    }
+    if (config.data && !(config.data instanceof FormData)) {
       config.data = convertToSnakeCase(config.data);
+    }
 
     return config;
   },
@@ -45,13 +52,16 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse<TSuccessResponse>) => {
-    if (response.data) response.data = convertToCamelCase(response.data);
+    if (response.data) {
+      response.data = convertToCamelCase(response.data);
+    }
     return response;
   },
   async (error: AxiosError<TFailureResponse>) => {
     const statusCode = error.response?.status;
-    if (statusCode === HttpStatusCode.Unauthorized)
+    if (statusCode === HttpStatusCode.Unauthorized) {
       return await handleUnauthorizedError(error);
+    }
 
     return Promise.reject(error);
   },

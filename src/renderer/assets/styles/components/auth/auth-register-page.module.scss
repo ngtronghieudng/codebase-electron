@@ -15,17 +15,17 @@
     > h4 {
       text-align: center;
       margin-bottom: 8px;
-      @include text-style(20px, 700, 30px);
+      @include text-style(rem(20px), 700, rem(30px));
     }
   }
 
   &LoginNow {
     margin-top: 12px;
     @include flexbox-style(4px);
-    @include text-style(12px);
+    @include text-style(rem(12px));
 
     > p {
-      @include text-style(12px);
+      @include text-style(rem(12px));
     }
 
     > a {

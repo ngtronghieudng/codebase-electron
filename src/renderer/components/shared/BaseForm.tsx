@@ -11,7 +11,4 @@ export const BaseForm: React.FC<IProps> = memo(
   },
 );
 
-export const useBaseForm: typeof Form.useForm = Form.useForm;
-export const useBaseFormWatch: typeof Form.useWatch = Form.useWatch;
-
 BaseForm.displayName = 'BaseForm';

@@ -21,12 +21,15 @@ interface IState {
 export const useAuthStore = create<IState>()(
   devtools((set, get) => ({
     accessToken: store2.get(STORAGE_KEYS.ACCESS_TOKEN),
-
     initialize: async () => {
-      if (get().isAuthenticated) return;
+      if (get().isAuthenticated) {
+        return;
+      }
 
       const isLoggedIn = Boolean(get().accessToken);
-      if (!isLoggedIn) return;
+      if (!isLoggedIn) {
+        return;
+      }
 
       try {
         const response = await authMeApi();
@@ -35,14 +38,11 @@ export const useAuthStore = create<IState>()(
         logger.error('Auth initialization failed', error);
       }
     },
-
     isAuthenticated: false,
-
     logout: () => {
       store2.remove(STORAGE_KEYS.ACCESS_TOKEN);
       resetAllStores();
     },
-
     refreshToken: async (): Promise<boolean> => {
       let result = true;
       try {
@@ -54,16 +54,13 @@ export const useAuthStore = create<IState>()(
       }
       return result;
     },
-
     setAccessToken: (token: string) => {
       store2.set(STORAGE_KEYS.ACCESS_TOKEN, token);
       set({ accessToken: token });
     },
-
     setUser: (data: IUserInfo) => {
       set({ isAuthenticated: true, userInfo: data });
     },
-
     userInfo: undefined,
   })),
 );

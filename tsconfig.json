@@ -1,13 +1,11 @@
 {
   "include": ["src/**/*.ts", "src/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
   "exclude": ["dist", "node_modules"],
-
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
     }
   },
-
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "target": "ES2022",

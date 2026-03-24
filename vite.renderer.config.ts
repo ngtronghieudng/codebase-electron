@@ -25,7 +25,6 @@ export default defineConfig({
     },
     sourcemap: false,
   },
-
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',
@@ -33,15 +32,14 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         additionalData: `
+          @import "@/renderer/assets/styles/root/functions";
           @import "@/renderer/assets/styles/root/variables";
           @import "@/renderer/assets/styles/root/mixins";
         `,
       },
     },
   },
-
   plugins: [react(), svgr()],
-
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

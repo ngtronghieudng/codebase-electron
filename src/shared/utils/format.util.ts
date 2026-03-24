@@ -24,8 +24,9 @@ export const formatQueryString = (
     !queryParams ||
     (Array.isArray(queryParams) && queryParams.length === 0) ||
     (typeof queryParams === 'object' && Object.keys(queryParams).length === 0)
-  )
+  ) {
     return baseUrl;
+  }
 
   const queryString =
     typeof queryParams === 'string'

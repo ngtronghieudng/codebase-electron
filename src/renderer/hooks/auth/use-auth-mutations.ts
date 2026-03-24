@@ -49,13 +49,14 @@ export const useAuthRegisterMutation = (
       const errorData = handleCatchError<{
         fields: (keyof IAuthRegisterRequest)[];
       }>(error);
-      if (errorData?.fields)
+      if (errorData?.fields) {
         errorData.fields.forEach((field) => {
           registerForm.setError(field, {
             message: `${field} is already taken`,
             type: 'manual',
           });
         });
+      }
     },
     onSuccess: async () => {
       await navigate(AUTH_PAGE.LOGIN);

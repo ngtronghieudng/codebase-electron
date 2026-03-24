@@ -25,13 +25,19 @@ const resources: TResources = Object.values(ELanguageCode).reduce(
 Object.keys(locales).forEach((path) => {
   const match = path.match(/\/locales\/(.*?)\.json$/);
 
-  if (!match || !match[1]) return;
+  if (!match || !match[1]) {
+    return;
+  }
 
   const locale = match[1] as ELanguageCode;
   const data = locales[path].default;
 
-  if (!Object.values(ELanguageCode).includes(locale)) return;
-  if (!resources[locale]) resources[locale] = { translation: {} };
+  if (!Object.values(ELanguageCode).includes(locale)) {
+    return;
+  }
+  if (!resources[locale]) {
+    resources[locale] = { translation: {} };
+  }
 
   Object.assign(resources[locale].translation, data);
 });

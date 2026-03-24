@@ -15,11 +15,9 @@ const forgeConfig: ForgeConfig = {
     new MakerRpm({}),
     new MakerDeb({}),
   ],
-
   packagerConfig: {
     asar: true,
   },
-
   plugins: [
     new VitePlugin({
       build: [
@@ -51,7 +49,6 @@ const forgeConfig: ForgeConfig = {
       version: FuseVersion.V1,
     }),
   ],
-
   rebuildConfig: {},
 };
 

@@ -217,12 +217,13 @@ export const CodebasePage: React.FC = () => {
 
     Object.entries(icons).forEach(([path, module]) => {
       const iconName = path.split('/').pop()?.replace('.svg', '');
-      if (path && iconName)
+      if (path && iconName) {
         newIcons[path] = {
           component: module.default,
           name: iconName,
           path,
         };
+      }
     });
     setSvgIcons(newIcons);
   };

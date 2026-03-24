@@ -13,8 +13,9 @@ export const useLanguage = () => {
   );
 
   useEffect(() => {
-    if (language && Object.values(ELanguageCode).includes(language))
+    if (language && Object.values(ELanguageCode).includes(language)) {
       i18n.changeLanguage(language);
+    }
   }, [language, i18n]);
 
   return {

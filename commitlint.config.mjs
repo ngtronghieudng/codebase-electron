@@ -1,7 +1,6 @@
 /** @type {import('@commitlint/types').UserConfig} */
 export default {
   extends: ['@commitlint/config-conventional'],
-
   plugins: [
     {
       rules: {
@@ -15,7 +14,6 @@ export default {
       },
     },
   ],
-
   rules: {
     'body-empty': [2, 'never'],
     'prefix-commit-message': [2, 'always'],

@@ -34,9 +34,11 @@ const request = async <D = unknown, M = unknown>(
   try {
     let response: AxiosResponse<TSuccessResponse<D, M>>;
 
-    if (method === 'get' || method === 'delete')
+    if (method === 'get' || method === 'delete') {
       response = await axiosInstance[method](url, config);
-    else response = await axiosInstance[method](url, data, config);
+    } else {
+      response = await axiosInstance[method](url, data, config);
+    }
 
     const result: TSuccessResponse<D, M> = {
       data: response.data.data,
@@ -89,17 +91,20 @@ export const handleUnauthorizedError = async (
   error: AxiosError<TFailureResponse>,
 ) => {
   const originalRequest = error.config as IAxiosRequestConfig;
-  if (!originalRequest || originalRequest._retry) return Promise.reject(error);
+  if (!originalRequest || originalRequest._retry) {
+    return Promise.reject(error);
+  }
 
   originalRequest._retry = true;
 
-  if (!refreshTokenPromise)
+  if (!refreshTokenPromise) {
     refreshTokenPromise = useAuthStore
       .getState()
       .refreshToken()
       .finally(() => {
         refreshTokenPromise = null;
       });
+  }
 
   const isTokenRefreshed = await refreshTokenPromise;
   const accessToken = useAuthStore.getState().accessToken;
@@ -109,7 +114,9 @@ export const handleUnauthorizedError = async (
     return Promise.reject(error);
   }
 
-  if (!originalRequest.headers) originalRequest.headers = {};
+  if (!originalRequest.headers) {
+    originalRequest.headers = {};
+  }
   originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
   return await axiosInstance(originalRequest);

@@ -1,21 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useEventListener } from 'usehooks-ts';
 
 export const useWindowScroll = () => {
   const [scroll, setScroll] = useState({
-    x: 0,
-    y: 0,
+    x: window.scrollX,
+    y: window.scrollY,
   });
 
-  const handleScroll = () => {
-    setScroll({ x: window.scrollX, y: window.scrollY });
+  const onResetScroll = () => {
+    window.scrollTo(0, 0);
+    setScroll({ x: 0, y: 0 });
   };
 
-  useEffect(() => {
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
+  const onBackToTop = () => {
+    window.scrollTo({ behavior: 'smooth', top: 0 });
+  };
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useEventListener('scroll', () => {
+    setScroll({ x: window.scrollX, y: window.scrollY });
+  });
 
-  return scroll;
+  return {
+    onBackToTop,
+    onResetScroll,
+    scroll,
+  };
 };
