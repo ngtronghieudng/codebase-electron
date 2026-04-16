@@ -4,6 +4,7 @@ import { ERROR_CODES } from '@/shared/definitions/constants/shared.const';
 import { EResponseStatus } from '@/shared/definitions/enums/shared.enum';
 
 export type TDate = Date | number | string;
+
 export type TErrorCodes = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
 export type TFailureResponse<D = unknown> = {
@@ -38,3 +39,5 @@ export type TSuccessResponse<D = unknown, M = unknown> = {
   status: EResponseStatus;
   statusCode: HttpStatusCode;
 };
+
+export type TThemeMode = 'dark' | 'light' | 'system';

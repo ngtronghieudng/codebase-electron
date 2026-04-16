@@ -2,6 +2,7 @@
   "name": "codebase-electron",
   "description": "This template will help you get started with Electron",
   "version": "0.1.0",
+  "private": true,
   "main": ".vite/build/main.js",
   "engines": {
     "node": ">= 22",

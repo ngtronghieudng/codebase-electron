@@ -6,6 +6,7 @@
     "mhutchie.git-graph",
     "christian-kohler.path-intellisense",
     "streetsidesoftware.code-spell-checker",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "mrmlnc.vscode-scss"
   ]
 }

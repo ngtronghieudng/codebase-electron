@@ -1,8 +1,8 @@
 # Project Index: codebase-electron
 
-**Generated**: 2026-02-27
+**Generated**: 2026-04-16
 **Type**: Electron Desktop Application
-**Stats**: 90+ TypeScript files | ~4,000 LOC | Vitest + RTL
+**Stats**: 97 TypeScript files | ~4,000 LOC | Vitest + RTL
 **Token Efficiency**: ~3K tokens vs ~58K full read (94% reduction)
 
 ---

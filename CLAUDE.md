@@ -84,7 +84,6 @@ src/
 
 ## Ant Design
 
-- Refer to `@docs/llms.txt` for official Ant Design component documentation and patterns
 - Prefer Ant Design official patterns. Avoid deprecated props
 - Use `Base*` wrapper components when available before using Ant Design components directly
 
@@ -134,7 +133,7 @@ src/
 - Colors via `getThemeColor('ICON_SVG')` with optional per-theme overrides
 - Applied via `data-theme` attribute on document root; use `[data-theme='dark']` selector in CSS
 - Theme constants in `@/shared/definitions/constants/style-themes.const`
-- Ant Design theme algorithm switches via `ConfigProvider` context (`contexts/ConfigProvider.tsx`)
+- Ant Design theme algorithm switches via `ConfigProvider` context (`contexts/AntConfigProvider.tsx`)
 
 ## Git Workflow
 

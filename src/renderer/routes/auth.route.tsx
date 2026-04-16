@@ -26,14 +26,11 @@ export default {
       path: AUTH_PAGE.REGISTER,
     },
   ],
-
   element: <GuestLayout />,
-
   meta: {
     requiresAuth: false,
     roles: [],
     title: 'Authentication',
   },
-
   path: AUTH_PAGE.ROOT,
 };

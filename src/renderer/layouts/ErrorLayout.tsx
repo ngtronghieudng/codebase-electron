@@ -2,10 +2,11 @@ import { XCircle } from 'lucide-react';
 import { FallbackProps } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
 
-import styles from '@/renderer/assets/styles/components/shared/error-layout.module.scss';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
 import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { HOME_PAGE } from '@/shared/definitions/constants/route-pages.const';
+
+import styles from './ErrorLayout.module.scss';
 
 type TProps = Partial<FallbackProps>;
 

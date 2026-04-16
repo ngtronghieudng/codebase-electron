@@ -1,11 +1,11 @@
 import { Avatar, Badge, MenuProps } from 'antd';
-import { Bell, Moon, Sun } from 'lucide-react';
+import { Bell, Monitor, Moon, Sun } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 
 import IconEnglish from '@/renderer/assets/icons/shared/IconEnglish.svg?react';
 import IconJapanese from '@/renderer/assets/icons/shared/IconJapanese.svg?react';
 import IconVietnamese from '@/renderer/assets/icons/shared/IconVietnamese.svg?react';
-import styles from '@/renderer/assets/styles/components/shared/the-topbar.module.scss';
 import { BaseDropdown } from '@/renderer/components/shared/BaseDropdown';
 import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { TheBreadcrumb } from '@/renderer/components/shared/TheBreadcrumb';
@@ -16,8 +16,11 @@ import { useAuthStore } from '@/renderer/stores/auth.store';
 import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
 import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
 
+import styles from './TheTopbar.module.scss';
+
 export const TheTopbar: React.FC = () => {
-  const { getThemeColor, isDark, setTheme } = useTheme();
+  const { t } = useTranslation();
+  const { getThemeColor, setTheme, theme } = useTheme();
   const { language, setLanguage } = useLanguage();
   const logout = useAuthStore((state) => state.logout);
   const navigate = useNavigate();
@@ -26,6 +29,41 @@ export const TheTopbar: React.FC = () => {
     label: key,
     value,
   }));
+
+  const themeMenu: MenuProps = {
+    items: [
+      {
+        key: 'system',
+        label: (
+          <div className="flex items-center gap-2">
+            <BaseLucideIcon icon={Monitor} size={16} />
+            <p>{t('shared.theme.system')}</p>
+          </div>
+        ),
+        onClick: () => setTheme('system'),
+      },
+      {
+        key: 'light',
+        label: (
+          <div className="flex items-center gap-2">
+            <BaseLucideIcon icon={Sun} size={16} />
+            <p>{t('shared.theme.light')}</p>
+          </div>
+        ),
+        onClick: () => setTheme('light'),
+      },
+      {
+        key: 'dark',
+        label: (
+          <div className="flex items-center gap-2">
+            <BaseLucideIcon icon={Moon} size={16} />
+            <p>{t('shared.theme.dark')}</p>
+          </div>
+        ),
+        onClick: () => setTheme('dark'),
+      },
+    ],
+  };
 
   const notificationMenu: MenuProps = {
     items: [
@@ -40,12 +78,22 @@ export const TheTopbar: React.FC = () => {
       })),
       {
         key: 'clear-all',
-        label: <p>Clear All</p>,
+        label: <p>{t('shared.clearAll')}</p>,
       },
     ],
   };
 
-  const getIconPathForLanguage = (lang: ELanguageCode) => {
+  const getThemeIcon = () => {
+    if (theme === 'dark') {
+      return <Moon />;
+    }
+    if (theme === 'light') {
+      return <Sun />;
+    }
+    return <Monitor />;
+  };
+
+  const getLanguageIcon = (lang: ELanguageCode) => {
     const iconPaths = {
       [ELanguageCode.English]: <IconEnglish />,
       [ELanguageCode.Japanese]: <IconJapanese />,
@@ -58,8 +106,8 @@ export const TheTopbar: React.FC = () => {
     items: i18nOptions.map((item) => ({
       key: item.value,
       label: (
-        <div style={{ alignItems: 'center', display: 'flex', gap: '8px' }}>
-          {getIconPathForLanguage(item.value)}
+        <div className="flex items-center gap-2">
+          {getLanguageIcon(item.value)}
           <p>{item.label}</p>
         </div>
       ),
@@ -72,16 +120,6 @@ export const TheTopbar: React.FC = () => {
     await navigate(AUTH_PAGE.LOGIN);
   };
 
-  const renderIcon = () => {
-    return (
-      <BaseLucideIcon
-        color={getThemeColor('ICON_SVG')}
-        icon={isDark ? Sun : Moon}
-        onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      />
-    );
-  };
-
   return (
     <section className={styles.container}>
       <div className="flex-center">
@@ -89,19 +127,22 @@ export const TheTopbar: React.FC = () => {
       </div>
 
       <div className={styles.containerMenu}>
-        {renderIcon()}
-
-        <BaseDropdown menu={languageMenu}>
-          <span>{getIconPathForLanguage(language)}</span>
+        <BaseDropdown className="cursor-pointer" menu={themeMenu}>
+          <span>{getThemeIcon()}</span>
         </BaseDropdown>
 
-        <BaseDropdown menu={notificationMenu}>
+        <BaseDropdown className="cursor-pointer" menu={languageMenu}>
+          <span>{getLanguageIcon(language)}</span>
+        </BaseDropdown>
+
+        <BaseDropdown className="cursor-pointer" menu={notificationMenu}>
           <Badge count={notifications.length}>
             <BaseLucideIcon color={getThemeColor('ICON_SVG')} icon={Bell} />
           </Badge>
         </BaseDropdown>
 
         <BaseDropdown
+          className="cursor-pointer"
           menu={{
             items: [
               { key: 'profile', label: 'Profile' },
@@ -111,7 +152,7 @@ export const TheTopbar: React.FC = () => {
             ],
           }}
         >
-          <Avatar className="cursor-pointer">H</Avatar>
+          <Avatar>H</Avatar>
         </BaseDropdown>
       </div>
     </section>

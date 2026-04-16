@@ -7,11 +7,11 @@ import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
 import { logger } from '@/shared/utils/logger.util';
 
 export const languageDetector: LanguageDetectorModule = {
-  cacheUserLanguage: (lng: string) => {
+  cacheUserLanguage: (lang: string) => {
     try {
       const existingLanguage = store2.get(STORAGE_KEYS.LANGUAGE);
       if (!existingLanguage) {
-        store2.set(STORAGE_KEYS.LANGUAGE, lng);
+        store2.set(STORAGE_KEYS.LANGUAGE, lang);
       }
     } catch (error) {
       logger.error('Failed to save language:', error);

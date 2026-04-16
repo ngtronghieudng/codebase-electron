@@ -15,6 +15,7 @@
 | **Name**        | codebase-electron                                     |
 | **Description** | This template will help you get started with Electron |
 | **Version**     | 0.1.0                                                 |
+| **Private**     | True                                                  |
 | **Main**        | .vite/build/main.js                                   |
 
 ## ⚙️ Requirements

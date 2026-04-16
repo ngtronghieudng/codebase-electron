@@ -20,14 +20,11 @@ export default {
       index: true,
     },
   ],
-
   element: isDevelopment ? <DefaultLayout /> : <ErrorLayout />,
-
   meta: {
     requiresAuth: false,
     roles: [],
     title: 'Codebase',
   },
-
   path: CODEBASE_PAGE,
 };

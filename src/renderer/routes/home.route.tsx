@@ -17,9 +17,7 @@ export default {
       index: true,
     },
   ],
-
   element: <DefaultLayout />,
-
   meta: {
     requiresAuth: false,
     roles: [
@@ -30,6 +28,5 @@ export default {
     ],
     title: 'Home',
   },
-
   path: HOME_PAGE,
 };

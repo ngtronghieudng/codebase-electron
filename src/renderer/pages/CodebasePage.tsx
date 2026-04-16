@@ -1,3 +1,4 @@
+/* eslint-disable i18next/no-literal-string */
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CheckboxProps, PaginationProps } from 'antd';
 import { DefaultOptionType } from 'antd/es/select';
@@ -15,7 +16,6 @@ import { useDebounceCallback } from 'usehooks-ts';
 
 import { healthCheckApi } from '@/renderer/apis/shared.api';
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
-import styles from '@/renderer/assets/styles/components/shared/codebase-page.module.scss';
 import { BaseAutoComplete } from '@/renderer/components/shared/BaseAutoComplete';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
 import {
@@ -53,6 +53,8 @@ import { EMessage, EToast } from '@/shared/definitions/enums/shared.enum';
 import { logger } from '@/shared/utils/logger.util';
 import { showMessage, showToast } from '@/shared/utils/notification.util';
 import { sleep } from '@/shared/utils/shared.util';
+
+import styles from './CodebasePage.module.scss';
 
 interface IForm {
   email: string;
@@ -476,18 +478,18 @@ export const CodebasePage: React.FC = () => {
       <section>
         <h4>-- Base Selects --</h4>
         <BaseSelect
+          className="w-[150px]"
           onChange={handleChangeSelect}
           options={baseSelectOptions}
           placeholder="Please select"
-          style={{ width: 150 }}
         />
 
         <BaseSelect
+          className="ml-4 w-[200px]"
           mode="multiple"
           onChange={handleChangeSelect}
           options={baseSelectOptions}
           placeholder="Please multiple select"
-          style={{ marginLeft: 16, width: 200 }}
         />
       </section>
 
@@ -528,11 +530,11 @@ export const CodebasePage: React.FC = () => {
       <section>
         <h4>-- Base Autocompletes --</h4>
         <BaseAutoComplete
+          className="w-[200px]"
           onChange={setBaseAutoComplete}
           onSearch={handleSearch}
           options={options}
           placeholder="Please input"
-          style={{ width: 200 }}
           value={baseAutoComplete}
         />
       </section>
@@ -645,9 +647,9 @@ export const CodebasePage: React.FC = () => {
         <h4>-- Base Forms --</h4>
         <FormProvider {...codebaseForm}>
           <BaseForm
+            className="max-w-[600px]"
             layout="vertical"
             onFinish={codebaseForm.handleSubmit(onSubmit)}
-            style={{ maxWidth: '600px' }}
           >
             <div className="grid grid-cols-2 gap-4">
               <BaseFormItem label="Full Name" name="fullName" required>

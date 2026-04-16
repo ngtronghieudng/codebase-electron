@@ -25,9 +25,9 @@ export const REGEXES = {
 } as const;
 
 export const STORAGE_KEYS = {
-  ACCESS_TOKEN: 'codebaseElectronAccessToken',
-  LANGUAGE: 'codebaseElectronLanguage',
-  THEME: 'codebaseElectronTheme',
+  ACCESS_TOKEN: 'electronAccessToken',
+  LANGUAGE: 'electronLanguage',
+  THEME: 'electronTheme',
 } as const;
 
 export const COOKIE_KEYS = {

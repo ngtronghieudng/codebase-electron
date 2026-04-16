@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import IconRequired from '@/renderer/assets/icons/shared/IconRequired.svg?react';
-import styles from '@/renderer/assets/styles/components/auth/auth-login-page.module.scss';
 import { BaseButton } from '@/renderer/components/shared/BaseButton';
 import { BaseForm } from '@/renderer/components/shared/BaseForm';
 import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
@@ -21,6 +20,8 @@ import { useAuthLoginMutation } from '@/renderer/hooks/auth/use-auth-mutations';
 import { loginSchema } from '@/renderer/schemas/auth.schema';
 import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
 import { IAuthLoginRequest } from '@/shared/definitions/interfaces/auth.interface';
+
+import styles from './AuthLoginPage.module.scss';
 
 export const AuthLoginPage: React.FC = () => {
   const { t } = useTranslation();

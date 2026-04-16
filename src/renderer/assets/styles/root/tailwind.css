@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @source not inline('container');
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
   --font-roboto: var(--roboto-font);
   --color-white: var(--white-color);

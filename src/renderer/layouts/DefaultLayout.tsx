@@ -1,9 +1,10 @@
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
 
-import styles from '@/renderer/assets/styles/components/shared/default-layout.module.scss';
 import { TheSidebar } from '@/renderer/components/shared/TheSidebar';
 import { TheTopbar } from '@/renderer/components/shared/TheTopbar';
+
+import styles from './DefaultLayout.module.scss';
 
 export const DefaultLayout: React.FC = () => {
   return (

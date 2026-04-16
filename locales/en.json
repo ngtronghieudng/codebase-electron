@@ -16,7 +16,6 @@
     "hasAccount": "You already have an account!",
     "loginNow": "Login now"
   },
-
   "errors": {
     "code": "Error",
     "somethingWentWrong": "Something went wrong",
@@ -25,27 +24,29 @@
     "tryAgain": "Try again",
     "goBack": "Go back"
   },
-
   "shared": {
     "hello": "Hello",
     "dashboard": "Dashboard",
     "settings": "Settings",
     "search": "Search",
-
+    "clearAll": "Clear All",
     "errorCodes": {
       "internalError": "An unexpected error occurred. Please try again."
     },
-
     "navigator": {
       "home": "Home",
       "login": "Login",
       "register": "Register",
       "codebase": "Codebase"
     },
-
     "button": {
       "ok": "OK",
       "cancel": "Cancel"
+    },
+    "theme": {
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
     }
   }
 }

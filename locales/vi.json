@@ -16,7 +16,6 @@
     "hasAccount": "Bạn đã có tài khoản!",
     "loginNow": "Đăng nhập ngay"
   },
-
   "errors": {
     "code": "Lỗi",
     "somethingWentWrong": "Đã xảy ra lỗi",
@@ -25,27 +24,29 @@
     "tryAgain": "Thử lại",
     "goBack": "Quay lại"
   },
-
   "shared": {
     "hello": "Xin chào",
     "dashboard": "Bảng điều khiển",
     "settings": "Cài đặt",
     "search": "Tìm kiếm",
-
+    "clearAll": "Xóa tất cả",
     "errorCodes": {
       "internalError": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại."
     },
-
     "navigator": {
       "home": "Trang chủ",
       "login": "Đăng nhập",
       "register": "Đăng ký",
       "codebase": "Thành phần cơ sở"
     },
-
     "button": {
       "ok": "Đồng ý",
       "cancel": "Hủy"
+    },
+    "theme": {
+      "system": "Hệ thống",
+      "light": "Sáng",
+      "dark": "Tối"
     }
   }
 }

@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from 'react-router';
 
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
 import IconLogo from '@/renderer/assets/icons/shared/IconLogo.svg?react';
-import styles from '@/renderer/assets/styles/components/shared/the-sidebar.module.scss';
 import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
 import {
@@ -14,6 +13,8 @@ import {
   HOME_PAGE,
 } from '@/shared/definitions/constants/route-pages.const';
 import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
+
+import styles from './TheSidebar.module.scss';
 
 export const TheSidebar: React.FC = () => {
   const { t } = useTranslation();

@@ -58,7 +58,7 @@ export default [
       ],
       curly: ['error', 'all'],
       'eol-last': ['error', 'always'],
-      'i18next/no-literal-string': 'off',
+      'i18next/no-literal-string': 'error',
       'no-console': 'error',
       'react/jsx-filename-extension': [
         'error',

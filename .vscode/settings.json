@@ -8,7 +8,6 @@
   "scss.lint.unknownAtRules": "ignore",
   "eslint.useFlatConfig": true,
   "tailwindCSS.lint.usedBlocklistedClass": "ignore",
-
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   }
