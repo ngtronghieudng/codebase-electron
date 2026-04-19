@@ -1,8 +1,8 @@
 import { Layout } from 'antd';
 import { Outlet } from 'react-router';
 
-import { TheSidebar } from '@/renderer/components/shared/TheSidebar';
-import { TheTopbar } from '@/renderer/components/shared/TheTopbar';
+import { TheSidebar } from '@/renderer/components/common/TheSidebar';
+import { TheTopbar } from '@/renderer/components/common/TheTopbar';
 
 import styles from './DefaultLayout.module.scss';
 

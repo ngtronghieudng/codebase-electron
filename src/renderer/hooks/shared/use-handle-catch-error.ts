@@ -1,11 +1,11 @@
 import { camelCase } from 'lodash-es';
 import { useTranslation } from 'react-i18next';
 
-import { EToast } from '@/shared/definitions/enums/shared.enum';
-import { TFailureResponse } from '@/shared/definitions/types/shared.type';
-import { logger } from '@/shared/utils/logger.util';
-import { showToast } from '@/shared/utils/notification.util';
-import { isFailureResponse } from '@/shared/utils/shared.util';
+import { EToast } from '@/renderer/definitions/enums/shared.enum';
+import { TFailureResponse } from '@/renderer/definitions/types/shared.type';
+import { logger } from '@/renderer/utils/logger.util';
+import { showToast } from '@/renderer/utils/notification.util';
+import { isFailureResponse } from '@/renderer/utils/shared.util';
 
 export const useHandleCatchError = () => {
   const { t } = useTranslation();

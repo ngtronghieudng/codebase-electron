@@ -91,6 +91,7 @@ dist/
 !.env.sample
 
 # Claude Code
+.agents/
 .claude/
 .playwright-mcp/
 .serena/

@@ -11,15 +11,15 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 
 import IconRequired from '@/renderer/assets/icons/shared/IconRequired.svg?react';
-import { BaseButton } from '@/renderer/components/shared/BaseButton';
-import { BaseForm } from '@/renderer/components/shared/BaseForm';
-import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
-import { BaseInput } from '@/renderer/components/shared/BaseInput';
-import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
+import { BaseButton } from '@/renderer/components/common/BaseButton';
+import { BaseForm } from '@/renderer/components/common/BaseForm';
+import { BaseFormItem } from '@/renderer/components/common/BaseFormItem';
+import { BaseInput } from '@/renderer/components/common/BaseInput';
+import { BaseLucideIcon } from '@/renderer/components/common/BaseLucideIcon';
+import { AUTH_PAGE } from '@/renderer/definitions/constants/route-pages.const';
+import { IAuthLoginRequest } from '@/renderer/definitions/interfaces/auth.interface';
 import { useAuthLoginMutation } from '@/renderer/hooks/auth/use-auth-mutations';
 import { loginSchema } from '@/renderer/schemas/auth.schema';
-import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
-import { IAuthLoginRequest } from '@/shared/definitions/interfaces/auth.interface';
 
 import styles from './AuthLoginPage.module.scss';
 

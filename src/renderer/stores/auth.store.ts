@@ -2,10 +2,10 @@ import store2 from 'store2';
 import { devtools } from 'zustand/middleware';
 
 import { authMeApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
+import { STORAGE_KEYS } from '@/renderer/definitions/constants/shared.const';
+import { IUserInfo } from '@/renderer/definitions/interfaces/shared.interface';
 import { create, resetAllStores } from '@/renderer/libs/zustand/zustand.util';
-import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
-import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
-import { logger } from '@/shared/utils/logger.util';
+import { logger } from '@/renderer/utils/logger.util';
 
 interface IState {
   accessToken: null | string;

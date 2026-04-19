@@ -1,4 +1,4 @@
-import { TObjectUnknown } from '@/shared/definitions/types/shared.type';
+import { TObjectUnknown } from '@/renderer/definitions/types/shared.type';
 
 export const convertToCamelCase = <T>(
   data: TObjectUnknown | TObjectUnknown[],

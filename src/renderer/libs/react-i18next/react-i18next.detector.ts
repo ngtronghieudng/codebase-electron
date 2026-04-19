@@ -2,9 +2,9 @@ import type { LanguageDetectorModule } from 'i18next';
 
 import store2 from 'store2';
 
-import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
-import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
-import { logger } from '@/shared/utils/logger.util';
+import { STORAGE_KEYS } from '@/renderer/definitions/constants/shared.const';
+import { ELanguageCode } from '@/renderer/definitions/enums/shared.enum';
+import { logger } from '@/renderer/utils/logger.util';
 
 export const languageDetector: LanguageDetectorModule = {
   cacheUserLanguage: (lang: string) => {

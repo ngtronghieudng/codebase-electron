@@ -2,7 +2,7 @@ import { Breadcrumb } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router';
 
-import { HOME_PAGE } from '@/shared/definitions/constants/route-pages.const';
+import { HOME_PAGE } from '@/renderer/definitions/constants/route-pages.const';
 
 export const TheBreadcrumb: React.FC = () => {
   const { t } = useTranslation();

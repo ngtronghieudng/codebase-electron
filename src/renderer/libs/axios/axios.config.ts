@@ -3,19 +3,19 @@ import jsCookie from 'js-cookie';
 import { stringify } from 'qs';
 import store2 from 'store2';
 
-import { handleUnauthorizedError } from '@/renderer/libs/axios/axios.util';
 import {
   COOKIE_KEYS,
   STORAGE_KEYS,
-} from '@/shared/definitions/constants/shared.const';
+} from '@/renderer/definitions/constants/shared.const';
 import {
   TFailureResponse,
   TSuccessResponse,
-} from '@/shared/definitions/types/shared.type';
+} from '@/renderer/definitions/types/shared.type';
+import { handleUnauthorizedError } from '@/renderer/libs/axios/axios.util';
 import {
   convertToCamelCase,
   convertToSnakeCase,
-} from '@/shared/utils/convert.util';
+} from '@/renderer/utils/convert.util';
 
 export const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',

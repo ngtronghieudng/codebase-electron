@@ -1,6 +1,9 @@
 import { stringify } from 'qs';
 
-import { TDate, TObjectUnknown } from '@/shared/definitions/types/shared.type';
+import {
+  TDate,
+  TObjectUnknown,
+} from '@/renderer/definitions/types/shared.type';
 
 export const cleanQueryString = <T>(queryParams: TObjectUnknown): T => {
   const result = Object.fromEntries(

@@ -1,12 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
+import { STORAGE_KEYS } from '@/renderer/definitions/constants/shared.const';
 import {
   DARK_THEME,
   LIGHT_THEME,
-} from '@/shared/definitions/constants/style-themes.const';
-import { TThemeMode } from '@/shared/definitions/types/shared.type';
+} from '@/renderer/definitions/constants/style-themes.const';
+import { TThemeMode } from '@/renderer/definitions/types/shared.type';
 
 interface ICustomTheme {
   dark?: string;

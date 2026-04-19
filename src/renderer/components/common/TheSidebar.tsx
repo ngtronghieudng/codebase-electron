@@ -5,14 +5,14 @@ import { Link, useLocation, useNavigate } from 'react-router';
 
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
 import IconLogo from '@/renderer/assets/icons/shared/IconLogo.svg?react';
-import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
-import { useTheme } from '@/renderer/hooks/shared/use-theme';
+import { BaseLucideIcon } from '@/renderer/components/common/BaseLucideIcon';
 import {
   AUTH_PAGE,
   CODEBASE_PAGE,
   HOME_PAGE,
-} from '@/shared/definitions/constants/route-pages.const';
-import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
+} from '@/renderer/definitions/constants/route-pages.const';
+import { ROOT_THEME } from '@/renderer/definitions/constants/style-themes.const';
+import { useTheme } from '@/renderer/hooks/shared/use-theme';
 
 import styles from './TheSidebar.module.scss';
 

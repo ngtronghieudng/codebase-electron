@@ -1,7 +1,7 @@
 import { Tooltip, TooltipProps } from 'antd';
 import { CSSProperties, memo, useMemo } from 'react';
 
-import { BORDER_RADIUS } from '@/shared/definitions/constants/style-variables.const';
+import { BORDER_RADIUS } from '@/renderer/definitions/constants/style-variables.const';
 
 type TProps = TooltipProps;
 

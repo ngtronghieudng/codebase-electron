@@ -1,9 +1,9 @@
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
-import type { TObjectString } from '@/shared/definitions/types/shared.type';
+import type { TObjectString } from '@/renderer/definitions/types/shared.type';
 
-import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
+import { ELanguageCode } from '@/renderer/definitions/enums/shared.enum';
 
 import { languageDetector } from './react-i18next.detector';
 

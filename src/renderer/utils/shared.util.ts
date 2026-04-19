@@ -1,8 +1,8 @@
 import { ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { EResponseStatus } from '@/shared/definitions/enums/shared.enum';
-import { TFailureResponse } from '@/shared/definitions/types/shared.type';
+import { EResponseStatus } from '@/renderer/definitions/enums/shared.enum';
+import { TFailureResponse } from '@/renderer/definitions/types/shared.type';
 
 export const isFailureResponse = (
   response: Error | TFailureResponse,

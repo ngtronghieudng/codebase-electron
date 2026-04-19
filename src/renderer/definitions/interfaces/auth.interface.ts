@@ -1,7 +1,7 @@
 import type {
   TAuthActions,
   TAuthSubjects,
-} from '@/shared/definitions/types/auth.type';
+} from '@/renderer/definitions/types/auth.type';
 
 export interface IAuthLoginRequest {
   email: string;

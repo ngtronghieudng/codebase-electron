@@ -1,14 +1,14 @@
 import { Suspense, useCallback, useEffect, useState } from 'react';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
-import { useAuthStore } from '@/renderer/stores/auth.store';
 import {
   AUTH_PAGE,
   FORBIDDEN_PAGE,
-} from '@/shared/definitions/constants/route-pages.const';
-import { EUserRole } from '@/shared/definitions/enums/shared.enum';
+} from '@/renderer/definitions/constants/route-pages.const';
+import { EUserRole } from '@/renderer/definitions/enums/shared.enum';
+import { useAuthStore } from '@/renderer/stores/auth.store';
 
-import { ThePageLoading } from './components/shared/ThePageLoading';
+import { ThePageLoading } from './components/common/ThePageLoading';
 
 type TRouteObject = Omit<RouteObject, 'children'> & {
   children?: TRouteObject[];

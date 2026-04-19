@@ -2,7 +2,7 @@ import type { LucideIcon, LucideProps } from 'lucide-react';
 
 import { forwardRef, memo } from 'react';
 
-import { cn } from '@/shared/utils/shared.util';
+import { cn } from '@/renderer/utils/shared.util';
 
 interface IProps extends Omit<LucideProps, 'ref'> {
   icon: LucideIcon;

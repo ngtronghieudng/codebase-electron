@@ -2,11 +2,11 @@ import type {
   IAuthLoginRequest,
   IAuthLoginResponse,
   IAuthRegisterRequest,
-} from '@/shared/definitions/interfaces/auth.interface';
+} from '@/renderer/definitions/interfaces/auth.interface';
 
+import { AUTH_API } from '@/renderer/definitions/constants/route-apis.const';
+import { IUserInfo } from '@/renderer/definitions/interfaces/shared.interface';
 import { get, post } from '@/renderer/libs/axios/axios.util';
-import { AUTH_API } from '@/shared/definitions/constants/route-apis.const';
-import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
 
 export const authLoginApi = async (data: IAuthLoginRequest) => {
   const url = AUTH_API.LOGIN;

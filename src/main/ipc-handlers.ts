@@ -1,6 +1,6 @@
 import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 
-import { IPC_CHANNELS } from '@/shared/definitions/types/ipc.type';
+import { IPC_CHANNELS } from '@/renderer/definitions/types/ipc.type';
 
 export const setupIpcHandlers = () => {
   registerAppHandlers();

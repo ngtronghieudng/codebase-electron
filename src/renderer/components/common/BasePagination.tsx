@@ -1,7 +1,7 @@
 import { Pagination, PaginationProps } from 'antd';
 import { memo } from 'react';
 
-import { PAGINATION } from '@/shared/definitions/constants/shared.const';
+import { PAGINATION } from '@/renderer/definitions/constants/shared.const';
 
 interface IProps extends PaginationProps {
   pageSizes?: number[];

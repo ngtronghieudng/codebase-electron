@@ -8,8 +8,8 @@ import { App } from 'antd';
 import enUS from 'antd/locale/en_US';
 import { useState } from 'react';
 
+import { ROOT_THEME } from '@/renderer/definitions/constants/style-themes.const';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
-import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
 
 interface IProps {
   children: React.ReactNode;

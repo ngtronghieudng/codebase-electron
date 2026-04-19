@@ -5,8 +5,8 @@ import {
   IPC_CHANNELS,
   TIpcChannelArgs,
   TIpcChannelReturn,
-} from '@/shared/definitions/types/ipc.type';
-import { logger } from '@/shared/utils/logger.util';
+} from '@/renderer/definitions/types/ipc.type';
+import { logger } from '@/renderer/utils/logger.util';
 
 const ALLOWED_INVOKE_CHANNELS = Object.values(IPC_CHANNELS) as string[];
 

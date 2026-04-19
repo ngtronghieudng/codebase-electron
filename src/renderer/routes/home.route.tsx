@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 
+import { HOME_PAGE } from '@/renderer/definitions/constants/route-pages.const';
+import { EUserRole } from '@/renderer/definitions/enums/shared.enum';
 import { DefaultLayout } from '@/renderer/layouts/DefaultLayout';
-import { HOME_PAGE } from '@/shared/definitions/constants/route-pages.const';
-import { EUserRole } from '@/shared/definitions/enums/shared.enum';
 
 const HomePage = lazy(() =>
   import('@/renderer/pages/HomePage').then((module) => ({

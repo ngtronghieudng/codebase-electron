@@ -1,6 +1,6 @@
 import { object as yupObject, ref as yupRef, string as yupString } from 'yup';
 
-import { REGEXES } from '@/shared/definitions/constants/shared.const';
+import { REGEXES } from '@/renderer/definitions/constants/shared.const';
 
 export const registerSchema = yupObject({
   displayName: yupString()

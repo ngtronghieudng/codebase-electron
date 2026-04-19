@@ -1,6 +1,6 @@
 import { useWindowSize } from 'usehooks-ts';
 
-import { BREAKPOINTS } from '@/shared/definitions/constants/shared.const';
+import { BREAKPOINTS } from '@/renderer/definitions/constants/shared.const';
 
 export const useBreakpoints = () => {
   const { width } = useWindowSize();

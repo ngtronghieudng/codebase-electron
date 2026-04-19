@@ -1,4 +1,4 @@
-import { EUserRole } from '@/shared/definitions/enums/shared.enum';
+import { EUserRole } from '@/renderer/definitions/enums/shared.enum';
 
 export interface IUserInfo {
   createdAt: string;

@@ -1,4 +1,4 @@
-import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
+import { ELanguageCode } from '@/renderer/definitions/enums/shared.enum';
 
 import { useLanguage } from './use-language';
 

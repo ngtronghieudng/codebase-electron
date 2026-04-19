@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
+import { AUTH_PAGE } from '@/renderer/definitions/constants/route-pages.const';
 import { GuestLayout } from '@/renderer/layouts/GuestLayout';
-import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
 
 const AuthLoginPage = lazy(() =>
   import('@/renderer/pages/auth/AuthLoginPage').then((module) => ({

@@ -1,7 +1,7 @@
 import { message, notification } from 'antd';
 import { capitalize } from 'lodash-es';
 
-import { EMessage, EToast } from '@/shared/definitions/enums/shared.enum';
+import { EMessage, EToast } from '@/renderer/definitions/enums/shared.enum';
 
 export const showToast = (
   description: string,

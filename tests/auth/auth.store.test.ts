@@ -2,14 +2,14 @@ import store2 from 'store2';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { authMeApi, authRefreshTokenApi } from '@/renderer/apis/auth.api';
-import { resetAllStores } from '@/renderer/libs/zustand/zustand.util';
-import { useAuthStore } from '@/renderer/stores/auth.store';
-import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
+import { STORAGE_KEYS } from '@/renderer/definitions/constants/shared.const';
 import {
   EResponseStatus,
   EUserRole,
-} from '@/shared/definitions/enums/shared.enum';
-import { IUserInfo } from '@/shared/definitions/interfaces/shared.interface';
+} from '@/renderer/definitions/enums/shared.enum';
+import { IUserInfo } from '@/renderer/definitions/interfaces/shared.interface';
+import { resetAllStores } from '@/renderer/libs/zustand/zustand.util';
+import { useAuthStore } from '@/renderer/stores/auth.store';
 
 vi.mock('@/renderer/apis/auth.api', () => ({
   authMeApi: vi.fn(),

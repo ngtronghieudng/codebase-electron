@@ -1,7 +1,7 @@
 import { HttpStatusCode } from 'axios';
 
-import { ERROR_CODES } from '@/shared/definitions/constants/shared.const';
-import { EResponseStatus } from '@/shared/definitions/enums/shared.enum';
+import { ERROR_CODES } from '@/renderer/definitions/constants/shared.const';
+import { EResponseStatus } from '@/renderer/definitions/enums/shared.enum';
 
 export type TDate = Date | number | string;
 

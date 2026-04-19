@@ -9,13 +9,13 @@ import type {
   TErrorCodes,
   TFailureResponse,
   TSuccessResponse,
-} from '@/shared/definitions/types/shared.type';
+} from '@/renderer/definitions/types/shared.type';
 
+import { AUTH_PAGE } from '@/renderer/definitions/constants/route-pages.const';
+import { ERROR_CODES } from '@/renderer/definitions/constants/shared.const';
+import { EResponseStatus } from '@/renderer/definitions/enums/shared.enum';
 import { axiosInstance } from '@/renderer/libs/axios/axios.config';
 import { useAuthStore } from '@/renderer/stores/auth.store';
-import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
-import { ERROR_CODES } from '@/shared/definitions/constants/shared.const';
-import { EResponseStatus } from '@/shared/definitions/enums/shared.enum';
 
 interface IAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean;

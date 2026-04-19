@@ -16,25 +16,27 @@ import { useDebounceCallback } from 'usehooks-ts';
 
 import { healthCheckApi } from '@/renderer/apis/shared.api';
 import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
-import { BaseAutoComplete } from '@/renderer/components/shared/BaseAutoComplete';
-import { BaseButton } from '@/renderer/components/shared/BaseButton';
+import { BaseAutoComplete } from '@/renderer/components/common/BaseAutoComplete';
+import { BaseButton } from '@/renderer/components/common/BaseButton';
 import {
   BaseCheckbox,
   BaseCheckboxGroup,
-} from '@/renderer/components/shared/BaseCheckbox';
-import { BaseDatePicker } from '@/renderer/components/shared/BaseDatePicker';
-import { BaseForm } from '@/renderer/components/shared/BaseForm';
-import { BaseFormItem } from '@/renderer/components/shared/BaseFormItem';
-import { BaseInput } from '@/renderer/components/shared/BaseInput';
-import { BaseInputNumber } from '@/renderer/components/shared/BaseInputNumber';
-import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
-import { BaseModal } from '@/renderer/components/shared/BaseModal';
-import { BasePagination } from '@/renderer/components/shared/BasePagination';
-import { BaseSelect } from '@/renderer/components/shared/BaseSelect';
-import { BaseSwitch } from '@/renderer/components/shared/BaseSwitch';
-import { BaseTable } from '@/renderer/components/shared/BaseTable';
-import { BaseTimePicker } from '@/renderer/components/shared/BaseTimePicker';
-import { BaseTooltip } from '@/renderer/components/shared/BaseTooltip';
+} from '@/renderer/components/common/BaseCheckbox';
+import { BaseDatePicker } from '@/renderer/components/common/BaseDatePicker';
+import { BaseForm } from '@/renderer/components/common/BaseForm';
+import { BaseFormItem } from '@/renderer/components/common/BaseFormItem';
+import { BaseInput } from '@/renderer/components/common/BaseInput';
+import { BaseInputNumber } from '@/renderer/components/common/BaseInputNumber';
+import { BaseLucideIcon } from '@/renderer/components/common/BaseLucideIcon';
+import { BaseModal } from '@/renderer/components/common/BaseModal';
+import { BasePagination } from '@/renderer/components/common/BasePagination';
+import { BaseSelect } from '@/renderer/components/common/BaseSelect';
+import { BaseSwitch } from '@/renderer/components/common/BaseSwitch';
+import { BaseTable } from '@/renderer/components/common/BaseTable';
+import { BaseTimePicker } from '@/renderer/components/common/BaseTimePicker';
+import { BaseTooltip } from '@/renderer/components/common/BaseTooltip';
+import { ROOT_THEME } from '@/renderer/definitions/constants/style-themes.const';
+import { EMessage, EToast } from '@/renderer/definitions/enums/shared.enum';
 import { useConfirmModal } from '@/renderer/hooks/shared/use-confirm-modal';
 import { useHandleCatchError } from '@/renderer/hooks/shared/use-handle-catch-error';
 import { usePagination } from '@/renderer/hooks/shared/use-pagination';
@@ -48,35 +50,19 @@ import {
 } from '@/renderer/mocks/codebase.mock';
 import { codebaseSchema } from '@/renderer/schemas/shared.schema';
 import { useLoadingStore } from '@/renderer/stores/loading.store';
-import { ROOT_THEME } from '@/shared/definitions/constants/style-themes.const';
-import { EMessage, EToast } from '@/shared/definitions/enums/shared.enum';
-import { logger } from '@/shared/utils/logger.util';
-import { showMessage, showToast } from '@/shared/utils/notification.util';
-import { sleep } from '@/shared/utils/shared.util';
+import { logger } from '@/renderer/utils/logger.util';
+import { showMessage, showToast } from '@/renderer/utils/notification.util';
+import { sleep } from '@/renderer/utils/shared.util';
 
+import { ICodebaseForm } from '../definitions/interfaces/codebase.interface';
+import {
+  TCodebaseIcons,
+  TCodebaseNewIcons,
+} from '../definitions/types/codebase.type';
 import styles from './CodebasePage.module.scss';
 
-interface IForm {
-  email: string;
-  fullName: string;
-  password: string;
-  passwordConfirm: string;
-  terms: boolean;
-  type: string;
-}
-
-type TIcons = Record<
-  string,
-  { default: React.FC<React.SVGProps<SVGSVGElement>> }
->;
-
-type TNewIcons = Record<
-  string,
-  { component: React.FC; name: string; path: string }
->;
-
 export const CodebasePage: React.FC = () => {
-  const codebaseForm = useForm<IForm>({
+  const codebaseForm = useForm<ICodebaseForm>({
     defaultValues: {
       email: '',
       fullName: '',
@@ -86,7 +72,7 @@ export const CodebasePage: React.FC = () => {
       type: '',
     },
     mode: 'onChange',
-    resolver: yupResolver(codebaseSchema) as Resolver<IForm>,
+    resolver: yupResolver(codebaseSchema) as Resolver<ICodebaseForm>,
   });
   const { t } = useTranslation();
   const hideLoading = useLoadingStore((state) => state.hideLoading);
@@ -109,7 +95,7 @@ export const CodebasePage: React.FC = () => {
   const [baseTimePicker, setBaseTimePicker] = useState<Dayjs | null>(null);
   const [baseModal, setBaseModal] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [svgIcons, setSvgIcons] = useState<TNewIcons>({});
+  const [svgIcons, setSvgIcons] = useState<TCodebaseNewIcons>({});
 
   const handleGetHealthCheck = useDebounceCallback(async () => {
     try {
@@ -134,7 +120,7 @@ export const CodebasePage: React.FC = () => {
 
   const handleChangeCheckbox: CheckboxProps['onChange'] = (event) => {
     setBaseCheckbox(event.target.checked);
-    logger.info('handleChangeCheckbox', { value: event.target.checked });
+    logger.info('handleChangeCheckbox', event.target.checked);
   };
 
   const handleCheckAllChange: CheckboxProps['onChange'] = (event) => {
@@ -158,7 +144,7 @@ export const CodebasePage: React.FC = () => {
 
   const handleChangeSwitch = (checked: boolean) => {
     setBaseSwitch(checked);
-    logger.info('handleChangeSwitch', { value: checked });
+    logger.info('handleChangeSwitch', checked);
   };
 
   const handleSearch = (value: string) => {
@@ -170,7 +156,7 @@ export const CodebasePage: React.FC = () => {
   };
 
   const handleChangeInput = useDebounceCallback((value: number | string) => {
-    logger.info('handleChangeInput', { value });
+    logger.info('handleChangeInput', value);
   }, 200);
 
   const handleChangeDatePicker = (
@@ -178,7 +164,7 @@ export const CodebasePage: React.FC = () => {
     dateString: string | string[],
   ) => {
     setBaseDatePicker(date);
-    logger.info('handleChangeDatePicker', { date: dateString });
+    logger.info('handleChangeDatePicker', dateString);
   };
 
   const handleChangeTimePicker = (
@@ -186,7 +172,7 @@ export const CodebasePage: React.FC = () => {
     timeString: string | string[],
   ) => {
     setBaseTimePicker(time);
-    logger.info('handleChangeTimePicker', { time: timeString });
+    logger.info('handleChangeTimePicker', timeString);
   };
 
   const handleActionModal = () => {
@@ -201,8 +187,8 @@ export const CodebasePage: React.FC = () => {
     setPagination({ currentPage: page, pageSize, total: tableData.length });
   };
 
-  const onSubmit: SubmitHandler<IForm> = async (values) => {
-    logger.info('onSubmit', { values });
+  const onSubmit: SubmitHandler<ICodebaseForm> = async (values) => {
+    logger.info('onSubmit', values);
   };
 
   const handleLoadingFullscreen = () => {
@@ -211,11 +197,11 @@ export const CodebasePage: React.FC = () => {
   };
 
   const loadSvgIcons = async () => {
-    const icons: TIcons = import.meta.glob('@/assets/icons/**/*.svg', {
+    const icons: TCodebaseIcons = import.meta.glob('@/assets/icons/**/*.svg', {
       eager: true,
       query: '?react',
     });
-    const newIcons: TNewIcons = {};
+    const newIcons: TCodebaseNewIcons = {};
 
     Object.entries(icons).forEach(([path, module]) => {
       const iconName = path.split('/').pop()?.replace('.svg', '');

@@ -5,7 +5,7 @@ import {
   string as yupString,
 } from 'yup';
 
-import { REGEXES } from '@/shared/definitions/constants/shared.const';
+import { REGEXES } from '@/renderer/definitions/constants/shared.const';
 
 export const codebaseSchema = yupObject({
   email: yupString()

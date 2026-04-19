@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalStorage } from 'usehooks-ts';
 
-import { STORAGE_KEYS } from '@/shared/definitions/constants/shared.const';
-import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
+import { STORAGE_KEYS } from '@/renderer/definitions/constants/shared.const';
+import { ELanguageCode } from '@/renderer/definitions/enums/shared.enum';
 
 export const useLanguage = () => {
   const { i18n } = useTranslation();

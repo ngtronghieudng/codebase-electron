@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
 import { authMeApi } from '@/renderer/apis/auth.api';
+import { QUERY_KEYS } from '@/renderer/definitions/constants/shared.const';
 import { useAuthStore } from '@/renderer/stores/auth.store';
-import { QUERY_KEYS } from '@/shared/definitions/constants/shared.const';
 
 export const useAuthMeQuery = () => {
   const setUser = useAuthStore((state) => state.setUser);

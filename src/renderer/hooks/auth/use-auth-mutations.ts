@@ -3,16 +3,16 @@ import { UseFormReturn } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
 import { authLoginApi, authRegisterApi } from '@/renderer/apis/auth.api';
-import { useHandleCatchError } from '@/renderer/hooks/shared/use-handle-catch-error';
-import { useAuthStore } from '@/renderer/stores/auth.store';
 import {
   AUTH_PAGE,
   HOME_PAGE,
-} from '@/shared/definitions/constants/route-pages.const';
+} from '@/renderer/definitions/constants/route-pages.const';
 import {
   IAuthLoginRequest,
   IAuthRegisterRequest,
-} from '@/shared/definitions/interfaces/auth.interface';
+} from '@/renderer/definitions/interfaces/auth.interface';
+import { useHandleCatchError } from '@/renderer/hooks/shared/use-handle-catch-error';
+import { useAuthStore } from '@/renderer/stores/auth.store';
 
 export const useAuthLoginMutation = () => {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);

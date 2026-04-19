@@ -2,7 +2,7 @@ import { Checkbox, CheckboxProps, CheckboxRef } from 'antd';
 import { CheckboxGroupProps } from 'antd/es/checkbox';
 import { forwardRef, memo } from 'react';
 
-import type { TOptions } from '@/shared/definitions/types/shared.type';
+import type { TOptions } from '@/renderer/definitions/types/shared.type';
 
 interface ICheckboxProps extends CheckboxProps {}
 

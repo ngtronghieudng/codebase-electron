@@ -6,15 +6,15 @@ import { useNavigate } from 'react-router';
 import IconEnglish from '@/renderer/assets/icons/shared/IconEnglish.svg?react';
 import IconJapanese from '@/renderer/assets/icons/shared/IconJapanese.svg?react';
 import IconVietnamese from '@/renderer/assets/icons/shared/IconVietnamese.svg?react';
-import { BaseDropdown } from '@/renderer/components/shared/BaseDropdown';
-import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
-import { TheBreadcrumb } from '@/renderer/components/shared/TheBreadcrumb';
+import { BaseDropdown } from '@/renderer/components/common/BaseDropdown';
+import { BaseLucideIcon } from '@/renderer/components/common/BaseLucideIcon';
+import { TheBreadcrumb } from '@/renderer/components/common/TheBreadcrumb';
+import { AUTH_PAGE } from '@/renderer/definitions/constants/route-pages.const';
+import { ELanguageCode } from '@/renderer/definitions/enums/shared.enum';
 import { useLanguage } from '@/renderer/hooks/shared/use-language';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
 import { notifications } from '@/renderer/mocks/the-topbar.mock';
 import { useAuthStore } from '@/renderer/stores/auth.store';
-import { AUTH_PAGE } from '@/shared/definitions/constants/route-pages.const';
-import { ELanguageCode } from '@/shared/definitions/enums/shared.enum';
 
 import styles from './TheTopbar.module.scss';
 

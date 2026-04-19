@@ -2,9 +2,9 @@ import { XCircle } from 'lucide-react';
 import { FallbackProps } from 'react-error-boundary';
 import { useTranslation } from 'react-i18next';
 
-import { BaseButton } from '@/renderer/components/shared/BaseButton';
-import { BaseLucideIcon } from '@/renderer/components/shared/BaseLucideIcon';
-import { HOME_PAGE } from '@/shared/definitions/constants/route-pages.const';
+import { BaseButton } from '@/renderer/components/common/BaseButton';
+import { BaseLucideIcon } from '@/renderer/components/common/BaseLucideIcon';
+import { HOME_PAGE } from '@/renderer/definitions/constants/route-pages.const';
 
 import styles from './ErrorLayout.module.scss';
 

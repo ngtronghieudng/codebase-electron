@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { logger } from '@/shared/utils/logger.util';
+import { logger } from '@/renderer/utils/logger.util';
 
 export const useElectronAPI = () => {
   const [appVersion, setAppVersion] = useState<string>('');

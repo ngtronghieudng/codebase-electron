@@ -1,9 +1,9 @@
 import { lazy } from 'react';
 
+import { CODEBASE_PAGE } from '@/renderer/definitions/constants/route-pages.const';
+import { NODE_ENVS } from '@/renderer/definitions/constants/shared.const';
 import { DefaultLayout } from '@/renderer/layouts/DefaultLayout';
 import { ErrorLayout } from '@/renderer/layouts/ErrorLayout';
-import { CODEBASE_PAGE } from '@/shared/definitions/constants/route-pages.const';
-import { NODE_ENVS } from '@/shared/definitions/constants/shared.const';
 
 const isDevelopment = import.meta.env.VITE_NODE_ENV === NODE_ENVS.DEVELOPMENT;
 
