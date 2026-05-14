@@ -3,11 +3,11 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-@theme {
-  --font-roboto: var(--roboto-font);
-  --color-white: var(--white-color);
-  --color-black: var(--black-color);
-  --color-primary: var(--primary-color);
+@theme inline {
+  --font-roboto: var(--font-roboto);
+  --color-white: var(--color-white);
+  --color-black: var(--color-black);
+  --color-primary: var(--color-primary);
 }
 
 @utility fixed-center {

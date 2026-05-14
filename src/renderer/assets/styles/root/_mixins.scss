@@ -2,8 +2,8 @@
   $font-size: $base-font-size,
   $font-weight: $base-font-weight,
   $line-height: $base-line-height,
-  $color: var(--theme-text-color),
-  $font-family: var(--roboto-font),
+  $color: var(--color-theme-text),
+  $font-family: var(--font-roboto),
   $important: false
 ) {
   font-size: $font-size;

@@ -1,6 +1,6 @@
 .container {
   height: var(--ant-header-height);
-  background-color: var(--theme-bg-content-color);
+  background-color: var(--color-theme-bg-content);
   @include flexbox-style(0, space-between, center);
 
   &Menu {

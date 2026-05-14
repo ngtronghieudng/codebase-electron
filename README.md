@@ -67,6 +67,8 @@ To get started with this template, clone the repository and install dependencies
 ```bash
 # Install dependencies
 pnpm install
+
+# Install git hooks
 pnpm prepare
 
 # Start development

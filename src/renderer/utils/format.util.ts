@@ -6,6 +6,10 @@ import {
 } from '@/renderer/definitions/types/shared.type';
 
 export const cleanQueryString = <T>(queryParams: TObjectUnknown): T => {
+  if (!queryParams) {
+    return {} as T;
+  }
+
   const result = Object.fromEntries(
     Object.entries(queryParams).filter(
       ([_, value]) => value !== undefined && value !== '',

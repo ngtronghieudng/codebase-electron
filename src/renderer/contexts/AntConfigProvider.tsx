@@ -1,7 +1,7 @@
 import {
+  theme as antTheme,
   ConfigProvider,
   ConfigProviderProps,
-  theme,
   type ThemeConfig,
 } from 'antd';
 import { App } from 'antd';
@@ -22,8 +22,8 @@ export const AntConfigProvider: React.FC<IProps> = ({ children }) => {
 
   const [locale, _setLocale] = useState<TLocale>(enUS);
 
-  const config: ThemeConfig = {
-    algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+  const themeConfig: ThemeConfig = {
+    algorithm: isDark ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     components: {
       Button: {
         primaryShadow: '',
@@ -53,7 +53,7 @@ export const AntConfigProvider: React.FC<IProps> = ({ children }) => {
   };
 
   return (
-    <ConfigProvider locale={locale} theme={config}>
+    <ConfigProvider locale={locale} theme={themeConfig}>
       <App>{children}</App>
     </ConfigProvider>
   );

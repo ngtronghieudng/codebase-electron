@@ -25,7 +25,7 @@ export const BaseTooltip: React.FC<TProps> = memo(
     return (
       <Tooltip
         arrow={arrow}
-        color="var(--theme-bg-content-color)"
+        color="var(--color-theme-bg-content)"
         placement={placement}
         styles={mergedStyles}
         {...otherProps}
@@ -42,7 +42,7 @@ const DEFAULT_ROOT_STYLE: CSSProperties = {
 };
 
 const DEFAULT_BODY_STYLE: CSSProperties = {
-  color: 'var(--theme-text-color)',
+  color: 'var(--color-theme-text)',
   fontSize: '12px',
   fontWeight: 500,
   minHeight: 'auto',

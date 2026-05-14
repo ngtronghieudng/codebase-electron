@@ -43,9 +43,7 @@ export const useTheme = () => {
   };
 
   useEffect(() => {
-    if (document) {
-      document.documentElement.setAttribute('data-theme', resolvedTheme);
-    }
+    document.documentElement.setAttribute('data-theme', resolvedTheme);
   }, [theme]);
 
   return {

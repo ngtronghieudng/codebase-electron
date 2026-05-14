@@ -1,6 +1,6 @@
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--theme-scrollbar-color) transparent;
+  scrollbar-color: var(--color-theme-scrollbar) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -14,7 +14,7 @@
 
 *::-webkit-scrollbar-thumb {
   border-radius: 50px;
-  background-color: var(--theme-scrollbar-color);
+  background-color: var(--color-theme-scrollbar);
 
   &:hover {
     background-color: var(--theme-text-secondary-color);
@@ -22,7 +22,7 @@
 }
 
 *:focus-visible {
-  outline: 2px solid var(--theme-primary-color);
+  outline: 2px solid var(--color-theme-primary);
   outline-offset: 2px;
 }
 
@@ -37,7 +37,7 @@ select:focus-visible,
 textarea:focus-visible,
 [role='button']:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--theme-primary-color);
+  outline: 2px solid var(--color-theme-primary);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
 }
@@ -49,7 +49,7 @@ html {
 body {
   font-style: normal;
   font-optical-sizing: auto;
-  background-color: var(--theme-bg-body-color);
+  background-color: var(--color-theme-bg-body);
   @include text-style;
 }
 

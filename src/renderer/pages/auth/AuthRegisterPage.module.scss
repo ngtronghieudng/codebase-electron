@@ -4,13 +4,13 @@
 
   > section {
     width: 420px;
-    border: 1px solid var(--theme-bg-content-color);
+    border: 1px solid var(--color-theme-bg-content);
     box-shadow:
       0px 0px 6px rgba(0, 0, 0, 0.12),
       0px 4px 4px rgba(0, 0, 0, 0.04);
     border-radius: 20px;
     padding: 52px;
-    background-color: var(--theme-bg-content-color);
+    background-color: var(--color-theme-bg-content);
 
     > h4 {
       text-align: center;
@@ -29,7 +29,7 @@
     }
 
     > a {
-      color: var(--primary-color);
+      color: var(--color-primary);
     }
   }
 }

@@ -1,29 +1,29 @@
 :root {
-  --roboto-font: 'Roboto', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
 
-  --white-color: #ffffff;
-  --black-color: #000000;
-  --primary-color: #01c0c8;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-primary: #01c0c8;
 
-  --theme-primary-color: #01c0c8;
-  --theme-text-color: #000000;
-  --theme-text-tertiary-color: rgba(0, 0, 0, 0.4);
+  --color-theme-primary: #01c0c8;
+  --color-theme-text: #000000;
+  --color-theme-text-tertiary: rgba(0, 0, 0, 0.4);
 
-  --theme-bg-body-color: #f0f2f5;
-  --theme-bg-content-color: #ffffff;
+  --color-theme-bg-body: #f0f2f5;
+  --color-theme-bg-content: #ffffff;
 
-  --theme-box-shadow-color: #2553b91a;
-  --theme-scrollbar-color: #b0b0b0;
+  --color-theme-box-shadow: #2553b91a;
+  --color-theme-scrollbar: #b0b0b0;
 }
 
 [data-theme='dark'] {
-  --theme-primary-color: #01c0c8;
-  --theme-text-color: #ffffff;
-  --theme-text-tertiary-color: rgba(255, 255, 255, 0.5);
+  --color-theme-primary: #01c0c8;
+  --color-theme-text: #ffffff;
+  --color-theme-text-tertiary: rgba(255, 255, 255, 0.5);
 
-  --theme-bg-body-color: #16293e;
-  --theme-bg-content-color: #111c2d;
+  --color-theme-bg-body: #16293e;
+  --color-theme-bg-content: #111c2d;
 
-  --theme-box-shadow-color: #2553b91a;
-  --theme-scrollbar-color: #555;
+  --color-theme-box-shadow: #2553b91a;
+  --color-theme-scrollbar: #555;
 }
