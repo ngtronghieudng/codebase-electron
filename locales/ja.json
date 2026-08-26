@@ -20,6 +20,9 @@
     "code": "エラー",
     "somethingWentWrong": "問題が発生しました",
     "pageNotFound": "ページが見つかりません",
+    "pageNotFoundDescription": "お探しのページは存在しないか、移動された可能性があります。",
+    "forbidden": "アクセスが拒否されました",
+    "forbiddenDescription": "このページにアクセスする権限がありません。",
     "description": "ご心配なく、あなたのせいではありません。もう一度お試しいただくか、ホームページに戻ってください。",
     "tryAgain": "再試行",
     "goBack": "戻る"
@@ -36,8 +39,7 @@
     "navigator": {
       "home": "ホーム",
       "login": "ログイン",
-      "register": "登録する",
-      "codebase": "ベースコンポーネント"
+      "register": "登録する"
     },
     "button": {
       "ok": "はい",

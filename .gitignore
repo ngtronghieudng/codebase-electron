@@ -90,15 +90,6 @@ dist/
 .env.*
 !.env.sample
 
-# Claude Code
-.agents/
-.claude/
-.playwright-mcp/
-.serena/
-claudedocs/
-**/CLAUDE.md
-!/CLAUDE.md
-
 # Lock files
 bun.lockb
 package-lock.json
@@ -108,7 +99,21 @@ yarn.lock
 .nyc_output/
 coverage/
 
+# Claude Code
+.agents/
+.claude/scheduled_tasks.lock
+.claude/settings.local.json
+.codegraph/
+.playwright-mcp/
+.serena/
+claudedocs/
+harness/security/*.jsonl
+**/CLAUDE.md
+!/CLAUDE.md
+
 # Others
+__pycache__/
+.mypy_cache/
 .idea/
 *.tsbuildinfo
 vite.config.ts.timestamp-*

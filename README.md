@@ -2,9 +2,8 @@
 
 > This template will help you get started with Electron
 
-[![React](https://img.shields.io/badge/React-18-61DAFB.svg)](https://reactjs.org/)
-[![Node](https://img.shields.io/badge/Node-%3E%3D22-brightgreen.svg)](https://nodejs.org/)
-[![pnpm](https://img.shields.io/badge/pnpm-%3E%3D10-orange.svg)](https://pnpm.io/)
+[![Electron Forge](https://img.shields.io/badge/Electron%20Forge-%5E7.8.1-47848F.svg?logo=electron&logoColor=white)](https://www.electronforge.io/)
+[![Vite](https://img.shields.io/badge/Vite-%5E6.4.1-9135FF.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 
 ---
 
@@ -15,15 +14,15 @@
 | **Name**        | codebase-electron                                     |
 | **Description** | This template will help you get started with Electron |
 | **Version**     | 0.1.0                                                 |
-| **Private**     | True                                                  |
 | **Main**        | .vite/build/main.js                                   |
+| **Private**     | True                                                  |
 
 ## ⚙️ Requirements
 
 | Requirement | Version           |
 | ----------- | ----------------- |
-| **Node**    | `>= 22`           |
-| **pnpm**    | `>= 10`           |
+| **Node**    | `>=22`            |
+| **pnpm**    | `>=10`            |
 | **npm**     | `please-use-pnpm` |
 | **Yarn**    | `please-use-pnpm` |
 | **Bun**     | `please-use-pnpm` |
@@ -53,11 +52,11 @@ pnpm publish        # Publish application
 ### Testing
 
 ```bash
-pnpm test                     # Run tests in watch mode
-pnpm test:ui                  # Run tests with UI
-pnpm test:run                 # Run tests once
-pnpm test:coverage            # Run tests with coverage report
-pnpm test:run tests/auth      # Run tests in a specific directory
+pnpm test                       # Run tests in watch mode
+pnpm test:ui                    # Run tests with UI
+pnpm test:run                   # Run tests once
+pnpm test:coverage              # Run tests with coverage report
+pnpm test:run tests/stores      # Run tests in a specific directory
 ```
 
 ## 🚀 Getting Started

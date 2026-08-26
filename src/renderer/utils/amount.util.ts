@@ -1,15 +1,22 @@
-export const formatAmount = (amount: number | string): string => {
-  if (!amount) {
+export const formatAmount = (
+  amount: number | string,
+  decimals: number = 0,
+): string => {
+  if (amount === null || amount === undefined || amount === '') {
     return '';
   }
 
   const cleanNumber = String(amount).replace(/[^0-9.]/g, '');
+
   const number = parseFloat(cleanNumber);
   if (isNaN(number)) {
     return '';
   }
 
-  return number.toLocaleString('en-US');
+  return number.toLocaleString('en-US', {
+    maximumFractionDigits: decimals,
+    minimumFractionDigits: 0,
+  });
 };
 
 export const parseAmount = (formattedAmount: string): number => {

@@ -20,6 +20,9 @@
     "code": "Error",
     "somethingWentWrong": "Something went wrong",
     "pageNotFound": "Page not found",
+    "pageNotFoundDescription": "The page you're looking for doesn't exist or has been moved.",
+    "forbidden": "Access denied",
+    "forbiddenDescription": "You don't have permission to access this page.",
     "description": "Don't worry, it's not your fault. Please try again or go back to the home page.",
     "tryAgain": "Try again",
     "goBack": "Go back"
@@ -36,8 +39,7 @@
     "navigator": {
       "home": "Home",
       "login": "Login",
-      "register": "Register",
-      "codebase": "Codebase"
+      "register": "Register"
     },
     "button": {
       "ok": "OK",

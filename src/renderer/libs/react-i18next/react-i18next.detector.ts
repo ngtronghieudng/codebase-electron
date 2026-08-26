@@ -9,15 +9,11 @@ import { logger } from '@/renderer/utils/logger.util';
 export const languageDetector: LanguageDetectorModule = {
   cacheUserLanguage: (lang: string) => {
     try {
-      const existingLanguage = store2.get(STORAGE_KEYS.LANGUAGE);
-      if (!existingLanguage) {
-        store2.set(STORAGE_KEYS.LANGUAGE, lang);
-      }
+      store2.set(STORAGE_KEYS.LANGUAGE, lang);
     } catch (error) {
       logger.error('Failed to save language:', error);
     }
   },
-
   detect: () => {
     try {
       const savedLanguage = store2.get(STORAGE_KEYS.LANGUAGE);
@@ -27,7 +23,6 @@ export const languageDetector: LanguageDetectorModule = {
       return ELanguageCode.English;
     }
   },
-
   init: () => {},
   type: 'languageDetector',
 };

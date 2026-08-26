@@ -49,7 +49,6 @@ html {
 body {
   font-style: normal;
   font-optical-sizing: auto;
-  background-color: var(--color-theme-bg-body);
   @include text-style;
 }
 

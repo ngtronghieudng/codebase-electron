@@ -4,7 +4,6 @@ export const AUTH_PAGE = {
   ROOT: '/auth',
 } as const;
 
-export const CODEBASE_PAGE = '/codebase';
 export const FORBIDDEN_PAGE = '/forbidden';
 export const HOME_PAGE = '/';
 export const NOT_FOUND_PAGE = '/not-found';

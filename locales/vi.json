@@ -20,6 +20,9 @@
     "code": "Lỗi",
     "somethingWentWrong": "Đã xảy ra lỗi",
     "pageNotFound": "Không tìm thấy trang",
+    "pageNotFoundDescription": "Trang bạn tìm không tồn tại hoặc đã bị di chuyển.",
+    "forbidden": "Không có quyền truy cập",
+    "forbiddenDescription": "Bạn không có quyền truy cập trang này.",
     "description": "Đừng lo, đây không phải lỗi của bạn. Vui lòng thử lại hoặc quay về trang chủ.",
     "tryAgain": "Thử lại",
     "goBack": "Quay lại"
@@ -36,8 +39,7 @@
     "navigator": {
       "home": "Trang chủ",
       "login": "Đăng nhập",
-      "register": "Đăng ký",
-      "codebase": "Thành phần cơ sở"
+      "register": "Đăng ký"
     },
     "button": {
       "ok": "Đồng ý",

@@ -3,15 +3,12 @@ import { LayoutDashboard, Settings } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router';
 
-import IconFolderShared from '@/renderer/assets/icons/shared/IconFolderShared.svg?react';
 import IconLogo from '@/renderer/assets/icons/shared/IconLogo.svg?react';
 import { BaseLucideIcon } from '@/renderer/components/common/BaseLucideIcon';
 import {
   AUTH_PAGE,
-  CODEBASE_PAGE,
   HOME_PAGE,
 } from '@/renderer/definitions/constants/route-pages.const';
-import { ROOT_THEME } from '@/renderer/definitions/constants/style-themes.const';
 import { useTheme } from '@/renderer/hooks/shared/use-theme';
 
 import styles from './TheSidebar.module.scss';
@@ -39,21 +36,6 @@ export const TheSidebar: React.FC = () => {
       ),
       key: AUTH_PAGE.REGISTER,
       label: t('shared.navigator.register'),
-    },
-    {
-      icon: (
-        <IconFolderShared
-          fill={getThemeColor('ICON_SVG', {
-            dark: ROOT_THEME.WHITE,
-            light:
-              location.pathname === CODEBASE_PAGE
-                ? ROOT_THEME.WHITE
-                : ROOT_THEME.BLACK,
-          })}
-        />
-      ),
-      key: CODEBASE_PAGE,
-      label: t('shared.navigator.codebase'),
     },
   ];
   const selectedKey =

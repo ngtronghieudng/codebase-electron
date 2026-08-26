@@ -1,22 +1,20 @@
-import { Suspense, useCallback, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Navigate, Route, RouteObject, Routes } from 'react-router';
 
-import {
-  AUTH_PAGE,
-  FORBIDDEN_PAGE,
-} from '@/renderer/definitions/constants/route-pages.const';
-import { EUserRole } from '@/renderer/definitions/enums/shared.enum';
 import { useAuthStore } from '@/renderer/stores/auth.store';
 
 import { ThePageLoading } from './components/common/ThePageLoading';
+import {
+  AUTH_PAGE,
+  FORBIDDEN_PAGE,
+  HOME_PAGE,
+} from './definitions/constants/route-pages.const';
+import { EUserRole } from './definitions/enums/shared.enum';
+import { TRouteMeta } from './definitions/types/shared.type';
 
 type TRouteObject = Omit<RouteObject, 'children'> & {
   children?: TRouteObject[];
-  meta?: {
-    requiresAuth: boolean;
-    roles: EUserRole[];
-    title: string;
-  };
+  meta?: TRouteMeta;
 };
 
 const modules = import.meta.glob<{ default: TRouteObject }>('@/routes/*.tsx');
@@ -41,17 +39,22 @@ export const AppRoutes: React.FC = () => {
   };
 
   useEffect(() => {
-    const loadAllRoutes = async () => {
-      const loadedRoutes = await Promise.all(
+    const bootstrap = async () => {
+      const loadRoutesPromise = Promise.all(
         Object.entries(modules).map(([path, loader]) =>
           loadRouteConfig(path, loader),
         ),
       );
+      const [loadedRoutes] = await Promise.all([
+        loadRoutesPromise,
+        useAuthStore.getState().initialize(),
+      ]);
+
       setRoutes(loadedRoutes);
       setIsLoading(false);
     };
 
-    loadAllRoutes();
+    bootstrap();
   }, []);
 
   if (isLoading) {
@@ -98,44 +101,36 @@ const renderRoutes = (routes: TRouteObject[]) => {
   });
 };
 
+const resolveRouteElement = (
+  route: TRouteObject,
+  isAuthenticated: boolean,
+  userRole: EUserRole | undefined,
+): React.ReactNode => {
+  if (route.meta?.guestOnly && isAuthenticated) {
+    return <Navigate replace to={HOME_PAGE} />;
+  }
+
+  if (route.meta?.requiresAuth) {
+    if (!isAuthenticated) {
+      return <Navigate replace to={AUTH_PAGE.LOGIN} />;
+    }
+
+    const requiresRoles = route.meta.roles || [];
+    const hasRequiredRole = requiresRoles.some((role) => role === userRole);
+
+    if (requiresRoles.length && !hasRequiredRole) {
+      return <Navigate replace to={FORBIDDEN_PAGE} />;
+    }
+  }
+
+  return route.element;
+};
+
 const ProtectedRoute: React.FC<{ route: TRouteObject }> = ({ route }) => {
-  const [element, setElement] = useState<React.ReactNode>(null);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const userRole = useAuthStore((state) => state.userInfo?.role);
 
-  const handleRouteGuard = useCallback(async () => {
-    if (route.meta?.title) {
-      document.title = route.meta.title;
-    }
+  const routeElement = resolveRouteElement(route, isAuthenticated, userRole);
 
-    if (route.meta?.requiresAuth) {
-      await useAuthStore.getState().initialize();
-
-      const isAuthenticated = useAuthStore.getState().isAuthenticated;
-      if (!isAuthenticated) {
-        setElement(<Navigate replace to={AUTH_PAGE.LOGIN} />);
-        return;
-      }
-
-      const userRole = useAuthStore.getState().userInfo?.role;
-      const requiresRoles = route.meta.roles || [];
-      const hasRequiredRole = requiresRoles.some((role) => role === userRole);
-
-      if (requiresRoles.length && !hasRequiredRole) {
-        setElement(<Navigate replace to={FORBIDDEN_PAGE} />);
-        return;
-      }
-    }
-
-    setElement(route.element);
-  }, [
-    route.element,
-    route.meta?.requiresAuth,
-    route.meta?.roles,
-    route.meta?.title,
-  ]);
-
-  useEffect(() => {
-    handleRouteGuard();
-  }, [handleRouteGuard]);
-
-  return element;
+  return <>{routeElement}</>;
 };

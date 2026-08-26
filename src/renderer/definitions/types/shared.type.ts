@@ -1,7 +1,10 @@
 import { HttpStatusCode } from 'axios';
 
 import { ERROR_CODES } from '@/renderer/definitions/constants/shared.const';
-import { EResponseStatus } from '@/renderer/definitions/enums/shared.enum';
+import {
+  EResponseStatus,
+  EUserRole,
+} from '@/renderer/definitions/enums/shared.enum';
 
 export type TDate = Date | number | string;
 
@@ -31,6 +34,13 @@ export type TOptions<V = boolean | number | string | TObjectUnknown> = {
   key?: number | string;
   label: string;
   value: V;
+};
+
+export type TRouteMeta = {
+  guestOnly?: boolean;
+  requiresAuth: boolean;
+  roles: EUserRole[];
+  title: string;
 };
 
 export type TSuccessResponse<D = unknown, M = unknown> = {

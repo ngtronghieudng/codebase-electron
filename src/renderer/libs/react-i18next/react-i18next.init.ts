@@ -47,12 +47,9 @@ i18next
   .use(initReactI18next)
   .init({
     fallbackLng: ELanguageCode.English,
-
     interpolation: {
       escapeValue: false,
     },
-
-    lng: ELanguageCode.English,
     resources,
   });
 

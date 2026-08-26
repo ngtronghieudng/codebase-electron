@@ -19,10 +19,22 @@ export default {
   children: [
     {
       element: <AuthLoginPage />,
+      meta: {
+        guestOnly: true,
+        requiresAuth: false,
+        roles: [],
+        title: 'Login',
+      },
       path: AUTH_PAGE.LOGIN,
     },
     {
       element: <AuthRegisterPage />,
+      meta: {
+        guestOnly: true,
+        requiresAuth: false,
+        roles: [],
+        title: 'Register',
+      },
       path: AUTH_PAGE.REGISTER,
     },
   ],

@@ -5,7 +5,7 @@ import { EUserRole } from '@/renderer/definitions/enums/shared.enum';
 import { DefaultLayout } from '@/renderer/layouts/DefaultLayout';
 
 const HomePage = lazy(() =>
-  import('@/renderer/pages/HomePage').then((module) => ({
+  import('@/renderer/pages/home/HomePage').then((module) => ({
     default: module.HomePage,
   })),
 );
