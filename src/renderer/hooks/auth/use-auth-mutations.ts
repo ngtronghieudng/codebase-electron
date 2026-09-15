@@ -16,6 +16,7 @@ import { useAuthStore } from '@/renderer/stores/auth.store';
 
 export const useAuthLoginMutation = () => {
   const setAccessToken = useAuthStore((state) => state.setAccessToken);
+  const initialize = useAuthStore((state) => state.initialize);
   const navigate = useNavigate();
   const { handleCatchError } = useHandleCatchError();
 
@@ -29,6 +30,7 @@ export const useAuthLoginMutation = () => {
     },
     onSuccess: async (data) => {
       setAccessToken(data.accessToken);
+      await initialize();
       await navigate(HOME_PAGE);
     },
   });
